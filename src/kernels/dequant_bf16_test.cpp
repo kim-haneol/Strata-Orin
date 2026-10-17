@@ -9,6 +9,7 @@
 #include "strata/artifact/gguf_reader.hpp"
 #include "strata/kernels/dequant_bf16.hpp"
 
+#include <cuda_fp16.h>
 #include <cuda_runtime.h>
 
 #include <cmath>
@@ -72,11 +73,26 @@ int main(int argc, char** argv) {
             cudaMalloc(&d_h, (size_t) (rows * cols) * 2);
             cudaMemcpy(d_blocks, host, (size_t) (rows * row_bytes), cudaMemcpyHostToDevice);
             strata::kernels::dequant_f32(type, d_blocks, 0, rows, cols, d_f, nullptr);
+            // FP16 (the prompt path's dense projections): bit for bit the device FP32 value rounded to nearest, from
+            // row 0 and from row 1 (a slice: row0 > 0)
+            std::vector<uint16_t> g16((size_t) (rows * cols)), g16b((size_t) ((rows - 1) * cols));
+            strata::kernels::dequant_f16(type, d_blocks, 0, rows, cols, d_h, nullptr);
+            cudaMemcpy(g16.data(), d_h, g16.size() * 2, cudaMemcpyDeviceToHost);
+            if (rows > 1) {
+                strata::kernels::dequant_f16(type, d_blocks, 1, rows - 1, cols, d_h, nullptr);
+                cudaMemcpy(g16b.data(), d_h, g16b.size() * 2, cudaMemcpyDeviceToHost);
+            }
             strata::kernels::dequant_bf16(type, d_blocks, 0, rows, cols, d_h, nullptr);
             std::vector<float> gf((size_t) (rows * cols));
             std::vector<uint16_t> gh((size_t) (rows * cols));
             cudaMemcpy(gf.data(), d_f, gf.size() * 4, cudaMemcpyDeviceToHost);
             cudaMemcpy(gh.data(), d_h, gh.size() * 2, cudaMemcpyDeviceToHost);
+            int64_t bad_16 = 0;
+            for (size_t i = 0; i < g16.size(); ++i) {
+                const uint16_t want = __half_as_ushort(__float2half_rn(gf[i]));
+                if (g16[i] != want) ++bad_16;
+                if (rows > 1 && i >= (size_t) cols && g16b[i - (size_t) cols] != want) ++bad_16;
+            }
             cudaFree(d_blocks);
             cudaFree(d_f);
             cudaFree(d_h);
@@ -96,11 +112,12 @@ int main(int argc, char** argv) {
             }
             ++checked;
             done[type] = true;
-            const bool ok = bad_f == 0 && bad_h == 0;
+            const bool ok = bad_f == 0 && bad_h == 0 && bad_16 == 0;
             if (!ok) ++fails;
-            std::printf("type %2d  %-40s %lld x %lld: f32 %s (%lld off, worst rel %.2e), bf16 %s (%lld off)\n", type,
-                        t.name.c_str(), (long long) rows, (long long) cols, bad_f ? "FAIL" : "ok", (long long) bad_f,
-                        worst, bad_h ? "FAIL" : "ok", (long long) bad_h);
+            std::printf("type %2d  %-40s %lld x %lld: f32 %s (%lld off, worst rel %.2e), bf16 %s (%lld off), f16 %s "
+                        "(%lld off)\n", type, t.name.c_str(), (long long) rows, (long long) cols, bad_f ? "FAIL" : "ok",
+                        (long long) bad_f, worst, bad_h ? "FAIL" : "ok", (long long) bad_h, bad_16 ? "FAIL" : "ok",
+                        (long long) bad_16);
         }
     }
     std::printf("dequant_bf16_test: %d types checked, %s\n", checked, fails ? "FAILED" : "OK");

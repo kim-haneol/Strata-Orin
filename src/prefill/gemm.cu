@@ -304,6 +304,7 @@ Gemm::~Gemm() {
     if (handle_) cublasDestroy((cublasHandle_t) handle_);
     if (tc_w_) cudaFree(tc_w_);
     if (tc_x_) cudaFree(tc_x_);
+    for (auto& [w, c] : f16_cache_) cudaFree(c.w);
     if (!external_) {
         if (scratch_) cudaFree(scratch_);
         if (workspace_) cudaFree(workspace_);
@@ -537,6 +538,61 @@ void Gemm::f16(const uint16_t* X, const uint16_t* W, float* Y, int64_t T, int64_
 
 void Gemm::native(const uint16_t* X, int ggml_type, const void* W_blocks, float* Y, int64_t T, int64_t N, int64_t K,
                   int64_t ldy, float beta) {
+    // The FP16 copy of this weight, made by its first call and kept (STRATA_DENSE_F16_CACHE_MIB, default 6144; 0 = off):
+    // a short prompt read spent ~110 ms of its ~800 dequantizing the same dense weights again every time.  The copy
+    // holds exactly the values the scratch would, and the products below are the same calls (the same row slices
+    // over the same scratch size), so the results are bit for bit those of the scratch path.  A copy is made only
+    // while the cache stays under its cap and STRATA_DENSE_F16_CACHE_FLOOR_MIB (default 8192) stays free after it;
+    // once one does not fit, no further ones are tried.
+    static const int64_t cap_mib = [] {
+        const char* v = std::getenv("STRATA_DENSE_F16_CACHE_MIB");
+        return v != nullptr ? (int64_t) std::atoll(v) : (int64_t) 6144;
+    }();
+    static const int64_t floor_mib = [] {
+        const char* v = std::getenv("STRATA_DENSE_F16_CACHE_FLOOR_MIB");
+        return v != nullptr ? (int64_t) std::atoll(v) : (int64_t) 8192;
+    }();
+    const uint16_t* cached = nullptr;
+    if (cap_mib > 0 && W_blocks != nullptr) {
+        auto it = f16_cache_.find(W_blocks);
+        if (it != f16_cache_.end()) {
+            if (it->second.n == N && it->second.k == K && it->second.type == ggml_type) cached = it->second.w;
+        } else if (!f16_cache_closed_) {
+            const size_t bytes = (size_t) N * (size_t) K * 2;
+            size_t free_b = 0, total_b = 0;
+            uint16_t* w = nullptr;
+            if (f16_cache_bytes_ + bytes <= (size_t) cap_mib << 20 && cudaMemGetInfo(&free_b, &total_b) == cudaSuccess &&
+                free_b >= bytes + ((size_t) floor_mib << 20) && cudaMalloc((void**) &w, bytes) == cudaSuccess) {
+                strata::kernels::dequant_f16(ggml_type, W_blocks, 0, N, K, w, stream_);
+                f16_cache_[W_blocks] = F16Copy{w, N, K, ggml_type};
+                f16_cache_bytes_ += bytes;
+                cached = w;
+                if (f16_cache_.size() % 50 == 0)
+                    std::fprintf(stderr, "strata prefill: dense FP16 cache %zu weights, %.0f MiB, %.0f MiB free\n",
+                                 f16_cache_.size(), (double) f16_cache_bytes_ / 1048576.0,
+                                 (double) (free_b - bytes) / 1048576.0);
+            } else {
+                cudaGetLastError();
+                f16_cache_closed_ = true;
+                std::fprintf(stderr, "strata prefill: dense FP16 cache stops at %.0f MiB (%zu weights)\n",
+                             (double) f16_cache_bytes_ / 1048576.0, f16_cache_.size());
+            }
+        }
+    }
+    if (cached != nullptr) {
+        if (N * K > scratch_elems_) {   // the scratch path's row slices, so the products are the same calls
+            const int64_t rows = scratch_elems_ / K;
+            if (rows <= 0) { std::fprintf(stderr, "prefill gemm: scratch too small for K=%lld\n", (long long) K); std::exit(1); }
+            if (ldy <= 0) ldy = N;
+            for (int64_t r0 = 0; r0 < N; r0 += rows) {
+                const int64_t n = (N - r0 < rows) ? N - r0 : rows;
+                f16(X, cached + r0 * K, Y + r0, T, n, K, ldy, beta);
+            }
+            return;
+        }
+        f16(X, cached, Y, T, N, K, ldy, beta);
+        return;
+    }
     if (N * K > scratch_elems_) {
         // Too large for the scratch at once: in row slices.
         const int64_t rows = scratch_elems_ / K;

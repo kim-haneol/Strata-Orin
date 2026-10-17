@@ -8,6 +8,7 @@
 #include <cuda_fp16.h>
 #include <cuda_runtime.h>
 
+#include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 
@@ -174,6 +175,20 @@ __global__ void dequant_kernel(const uint8_t* __restrict__ blocks, int64_t row_b
     group32<TYPE>(blocks + (row0 + r) * row_bytes, (int) gi, out + r * groups_per_row * 32 + gi * 32);
 }
 
+// Q8_0 to FP16 with coalesced stores: a thread per pair of elements, so a warp writes 128 contiguous bytes (the
+// generic kernel above gives each thread a whole group, 32 scalar stores 64 bytes apart).  The same value per element:
+// (float) q * d, rounded to nearest.
+__global__ void dequant_q8_0_f16_pairs(const uint8_t* __restrict__ blocks, int64_t row_bytes, int64_t row0, int64_t rows,
+                                       int64_t cols, __half2* __restrict__ out) {
+    const int64_t p = (int64_t) blockIdx.x * blockDim.x + threadIdx.x;   // pair index over rows * cols / 2
+    if (p >= rows * (cols / 2)) return;
+    const int64_t r = p / (cols / 2), c = (p % (cols / 2)) * 2;
+    const uint8_t* b = blocks + (row0 + r) * row_bytes + (c / 32) * 34;
+    const float d = h2f(b);
+    const int j = (int) (c % 32);
+    out[p] = __halves2half2(__float2half_rn((float) (int8_t) b[2 + j] * d), __float2half_rn((float) (int8_t) b[3 + j] * d));
+}
+
 bool geometry(int type, int& block_elems, int& block_bytes) {
     switch (type) {
     case 2: block_elems = 32; block_bytes = 18; return true;
@@ -244,6 +259,19 @@ void dequant_f16(int ggml_type, const void* blocks, int64_t row0, int64_t rows, 
     if (iq_only(ggml_type)) {
         iq_dequant_f16(ggml_type, (const uint8_t*) blocks + (size_t) row0 * iq_row_bytes(ggml_type, cols), rows * cols,
                        out, stream);
+        return;
+    }
+    // STRATA_DQ_PAIRS=0: Q8_0 through the generic per-group kernel (the A/B)
+    static const bool pairs = [] {
+        const char* v = std::getenv("STRATA_DQ_PAIRS");
+        return v == nullptr || std::atoi(v) != 0;
+    }();
+    if (pairs && ggml_type == 8 && cols % 32 == 0 && rows > 0 && ((uintptr_t) out & 3) == 0) {
+        const int64_t total = rows * (cols / 2);
+        dequant_q8_0_f16_pairs<<<(unsigned) ((total + 255) / 256), 256, 0, (cudaStream_t) stream>>>(
+            (const uint8_t*) blocks, cols / 32 * 34, row0, rows, cols, reinterpret_cast<__half2*>(out));
+        const cudaError_t e = cudaGetLastError();
+        if (e != cudaSuccess) { std::fprintf(stderr, "dequant launch: %s\n", cudaGetErrorString(e)); std::exit(1); }
         return;
     }
     launch<H16>(ggml_type, blocks, row0, rows, cols, reinterpret_cast<H16*>(out), stream);

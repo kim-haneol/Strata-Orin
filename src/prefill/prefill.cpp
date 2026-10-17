@@ -518,6 +518,12 @@ struct Prefill::Impl {
     int32_t *ids = nullptr, *slot_dev = nullptr, *src_dev = nullptr;
     uint16_t *Xs = nullptr, *Hh = nullptr, *sh_h = nullptr;
     float* Xr = nullptr;   // APR: Hadamard-rotated copy of `mixed` for the MMQ path
+    // STRATA_PF_NATIVE_MAX: a short chunk's routed experts on the decode path's grouped kernels, read in place from
+    // their cache slots (no gather): the q8_1 rows of the layer's input, the kernels' scratch, and the group table
+    // [blob pointers | starts | count] on the device and its host copy (allocated on first use, kept)
+    void *nat_xq = nullptr, *nat_scratch = nullptr, *nat_tab = nullptr;
+    int64_t nat_cap_tok = 0;
+    std::vector<uint8_t> nat_tab_host;
     // step 2b (MMQ): the activations quantized per layer, H in FP32 and its group's quantized rows, the identity
     // row map, the group bounds, the group buffers of gathered experts
     void *Xq = nullptr, *Hq = nullptr;
@@ -2416,7 +2422,77 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                             }
                             rows_local = T * K - rows_peer;
                         }
-                        {
+                        // MMQ straight from the expert cache (STRATA_PF_MMQ_DIRECT=1; default off: the gather into group
+                        // buffers).  Measured on Orin: 5x slower, the slot range spanning nearly the whole arena: a layer whose routed experts are all resident, in slots of one stride holding
+                        // [gate | up | down] back to back, runs ONE gate/up and ONE down product over the slots
+                        // [smin, smax] as channels, the rows ordered by slot (an unrouted slot has no rows).  The same
+                        // MMQ products on the same bytes, without copying every routed expert first (~200 ms of a short
+                        // read).  The down product reads up to a tile past each expert's last row: here that is the
+                        // next slot's first gate blocks (same type, so whole, finite blocks), which is why every slot
+                        // must hold an expert and the last routed slot must not be the arena's last.
+                        static const bool mmq_direct_env = [] {
+                            const char* v = std::getenv("STRATA_PF_MMQ_DIRECT");
+                            return v != nullptr && std::atoi(v) != 0;
+                        }();
+                        // (not with the native short-chunk path, STRATA_PF_NATIVE_MAX: its groups need rows in id order)
+                        static const bool native_short_on = [] {
+                            const char* v = std::getenv("STRATA_PF_NATIVE_MAX");
+                            return v != nullptr && std::atoll(v) > 0;
+                        }();
+                        bool direct = mmq_direct_env && !native_short_on && pre_mmq && !stream_all && lay.native && on_peer.empty() &&
+                                      !m.pp && m.host_res && m.cache && m.ids_identity && N % 256 == 0 &&
+                                      m.cache->full_slots() == m.g->n_layers * m.g->n_expert;
+                        int32_t d_smin = 0;
+                        int64_t d_nch = 0, d_maxr = 0;
+                        size_t d_stride = 0;
+                        const uint8_t* d_base = nullptr;
+                        std::vector<int32_t> d_expert;   // channel -> expert (-1: no rows)
+                        if (direct) {
+                            const auto& f = lay.fmt[(size_t) l];
+                            const size_t gub = mmq::matrix_bytes(f.gu_type, 1280, N), db = mmq::matrix_bytes(f.d_type, N, 640);
+                            direct = f.gu_type == f.d_type && 2 * f.up_off == gub && f.down_off == gub &&
+                                     (size_t) lay.blob_bytes(l) == gub + db;
+                            int32_t smin = INT32_MAX, smax = -1;
+                            for (int32_t e = 0; direct && e < m.g->n_expert; ++e) {
+                                if (m.cnt[(size_t) e] == 0) continue;
+                                const int32_t sl = m.host_res[(size_t) l * m.g->n_expert + e];
+                                if (sl < 0) { direct = false; break; }
+                                smin = std::min(smin, sl);
+                                smax = std::max(smax, sl);
+                                d_maxr = std::max<int64_t>(d_maxr, m.cnt[(size_t) e]);
+                            }
+                            direct = direct && smax >= 0 && (int64_t) smax + 1 < m.cache->full_slots();
+                            // the channel bounds go to bounds_dev (2 * (n_expert + n_expert / 16 + 2) ints): a wider
+                            // range would overrun it.  On Orin the profile places a layer's experts all over the arena
+                            // (~23,000 slots apart), so this path rarely applies there (see the 2026-10-08 evidence).
+                            if (direct && (int64_t) smax - smin + 1 > (int64_t) (2 * (m.g->n_expert + m.g->n_expert / MMQ_GROUP + 2)) - 1)
+                                direct = false;
+                            if (direct) {
+                                d_smin = smin;
+                                d_nch = (int64_t) smax - smin + 1;
+                                d_base = m.cache->device_slot(smin);
+                                d_stride = smax > smin ? (size_t) (m.cache->device_slot(smin + 1) - d_base) : (size_t) lay.blob_bytes(l);
+                                direct = d_stride == (size_t) lay.blob_bytes(l) && d_stride % mmq::matrix_bytes(f.gu_type, 1, N) == 0;
+                                d_expert.assign((size_t) d_nch, -1);
+                                for (int32_t e = 0; direct && e < m.g->n_expert; ++e) {
+                                    if (m.cnt[(size_t) e] == 0) continue;
+                                    const int32_t sl = m.host_res[(size_t) l * m.g->n_expert + e];
+                                    // one stride across the range (sized slots: a layer's range is uniform, check it)
+                                    if (m.cache->device_slot(sl) != d_base + (size_t) (sl - smin) * d_stride) direct = false;
+                                    else d_expert[(size_t) (sl - smin)] = e;
+                                }
+                            }
+                        }
+                        if (direct) {   // rows in slot order
+                            int32_t r = 0;
+                            for (int64_t c = 0; c < d_nch; ++c) {
+                                const int32_t e = d_expert[(size_t) c];
+                                if (e >= 0) { m.off[(size_t) e] = r; r += m.cnt[(size_t) e]; }
+                            }
+                            for (int32_t e = 0; e < m.g->n_expert; ++e)
+                                if (m.cnt[(size_t) e] == 0) m.off[(size_t) e] = r;
+                            m.off[(size_t) m.g->n_expert] = r;
+                        } else {
                             int32_t r = 0;
                             for (int32_t e = 0; e < m.g->n_expert; ++e)
                                 if (on_peer.empty() || !on_peer[(size_t) e]) { m.off[(size_t) e] = r; r += m.cnt[(size_t) e]; }
@@ -2450,6 +2526,74 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                         n_order = order.size();
                         const size_t mmq_gub = use_mmq ? mmq::matrix_bytes(mmq_gt, 1280, N) : 0;
                         const size_t mmq_db = use_mmq ? mmq::matrix_bytes(mmq_dt, N, 640) : 0;
+                        // A chunk of at most STRATA_PF_NATIVE_MAX tokens (default 0 = never: on Orin a ~100-token read
+                        // took as long as MMQ + gather, 769-814 vs 775-844 ms, and changed 54 of 61 replayed outputs) whose routed experts
+                        // are all resident: the decode path's grouped kernels (native_expert_grouped), each expert read
+                        // in place from its cache slot.  MMQ would first copy every routed expert into a group buffer
+                        // and then read it at a few rows an expert; here the weights are read once, without the copy.
+                        // The products are the verify window's (q8_1 activations and h), not MMQ's: not bitwise the
+                        // same as the MMQ path.  The rows land where MMQ puts them (Dm, row = the entry's place), so
+                        // the combine below is unchanged.
+                        static const int64_t pf_native_max = [] {
+                            const char* v = std::getenv("STRATA_PF_NATIVE_MAX");
+                            return v != nullptr ? (int64_t) std::atoll(v) : (int64_t) 0;
+                        }();
+                        bool nat_small = pf_native_max > 0 && T <= pf_native_max && !stream_all && lay.native &&
+                                         on_peer.empty() && !m.pp && m.host_res && m.cache && m.ids_identity &&
+                                         strata::kernels::native_expert_supported(lay.fmt[(size_t) l].gu_type,
+                                                                                  lay.fmt[(size_t) l].d_type, N, 640);
+                        for (size_t j = 0; nat_small && j < order.size(); ++j)
+                            nat_small = m.host_res[(size_t) l * m.g->n_expert + order[j]] >= 0;
+                        if (nat_small && m.nat_xq != nullptr && T > m.nat_cap_tok) nat_small = false;
+                        if (nat_small && m.nat_xq == nullptr) {
+                            m.nat_cap_tok = pf_native_max;   // the env cap, whatever chunk this layout has now
+                            const int64_t ce = m.nat_cap_tok * K;
+                            const size_t xb = (size_t) m.nat_cap_tok * (N / 32) * 36,
+                                         sb = strata::kernels::native_expert_scratch_bytes(ce, 640),
+                                         tb = (size_t) m.g->n_expert * 8 + ((size_t) m.g->n_expert + 2) * 4;
+                            if (cudaMalloc(&m.nat_xq, xb) != cudaSuccess || cudaMalloc(&m.nat_scratch, sb) != cudaSuccess ||
+                                cudaMalloc(&m.nat_tab, tb) != cudaSuccess) {
+                                err = "prefill: allocating the native expert path's buffers failed";
+                                return false;
+                            }
+                            m.owned.push_back(m.nat_xq);
+                            m.owned.push_back(m.nat_scratch);
+                            m.owned.push_back(m.nat_tab);
+                            m.nat_tab_host.resize(tb);
+                        }
+                        if (nat_small) {
+                            pt.mark(kPfGather, cs);
+                            const float* xs = m.mixed;
+                            if (had_gu) {
+                                strata::kernels::hadamard_rows(m.mixed, m.Xr, T, N, had_block, had_sx, m.cs);
+                                xs = m.Xr;
+                            }
+                            strata::kernels::quantize_q8_1_rows(xs, T, N, m.nat_xq, m.cs);
+                            const size_t n = order.size();
+                            unsigned long long* ptr_h = (unsigned long long*) m.nat_tab_host.data();
+                            int32_t* start_h = (int32_t*) (m.nat_tab_host.data() + (size_t) m.g->n_expert * 8);
+                            for (size_t j = 0; j < n; ++j) {
+                                const int32_t e = order[j];
+                                ptr_h[j] = (unsigned long long) (uintptr_t) m.cache->device_slot(
+                                    m.host_res[(size_t) l * m.g->n_expert + e]);
+                                start_h[j] = m.off[(size_t) e];
+                            }
+                            start_h[n] = (int32_t) rows_local;
+                            start_h[m.g->n_expert + 1] = (int32_t) n;   // the group count
+                            // (pageable source: staged before the call returns, so the next layer may rewrite it)
+                            cudaMemcpyAsync(m.nat_tab, m.nat_tab_host.data(), m.nat_tab_host.size(), cudaMemcpyHostToDevice,
+                                            m.cs);
+                            const unsigned long long* ptr_d = (const unsigned long long*) m.nat_tab;
+                            const int32_t* start_d = (const int32_t*) ((const uint8_t*) m.nat_tab + (size_t) m.g->n_expert * 8);
+                            pt.mark(kPfGemmGU, cs);
+                            const auto& f = lay.fmt[(size_t) l];
+                            strata::kernels::NativeExpertLayout L = strata::kernels::native_expert_layout(f.gu_type, f.d_type, N, 640);
+                            if (had_d) { L.had_block = had_block; L.d_signs = had_sh; }
+                            strata::kernels::native_expert_grouped(L, ptr_d, start_d, start_d + m.g->n_expert + 1,
+                                                                   m.ids_identity, m.src_dev, (int64_t) n, T * K, m.nat_xq,
+                                                                   m.nat_scratch, m.Dm, m.cs);
+                            stats_.experts_resident += (int64_t) n;
+                        } else {
                         pt.mark(kPfGather, cs);
                         // the routed experts' input: `mixed`, or (APR) its rotated copy, which the peer / the layer
                         // split's helper also take (one rotation for both cards; `mixed` itself feeds the shared expert)
@@ -2461,6 +2605,15 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                                 xsrc = m.Xr;
                             }
                             mmq::quantize(xsrc, m.src_dev, m.Xq, mmq_gt, N, N, T * K, m.cs);
+                            if (direct) {   // one bound per channel (slot), absolute, for both products
+                                m.bounds_host.resize((size_t) d_nch + 1);
+                                int32_t r = 0;
+                                for (int64_t c = 0; c < d_nch; ++c) {
+                                    m.bounds_host[(size_t) c] = r;
+                                    if (d_expert[(size_t) c] >= 0) r += m.cnt[(size_t) d_expert[(size_t) c]];
+                                }
+                                m.bounds_host[(size_t) d_nch] = r;
+                            } else {
                             // each group's rows: absolute bounds (gate/up reads the layer's rows), relative ones (down
                             // reads the group's own quantized H)
                             const size_t n = order.size(), ng = (n + MMQ_GROUP - 1) / MMQ_GROUP;
@@ -2471,6 +2624,7 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                                 for (size_t i = 0; i <= MMQ_GROUP; ++i)
                                     m.bounds_host[n + 1 + g * (MMQ_GROUP + 1) + i] =
                                         m.bounds_host[std::min(n, g * MMQ_GROUP + i)] - m.bounds_host[g * MMQ_GROUP];
+                            }
                             if (grp_mapped) {
                                 int32_t* bh = m.grp_host + 3 * m.grp_tk;
                                 std::memcpy(bh, m.bounds_host.data(), m.bounds_host.size() * 4);
@@ -2484,6 +2638,25 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                             // APR: Hadamard-folded gate/up take H (s * x); Xs is this layer's private gathered copy
                             if (had_gu) strata::kernels::hadamard_rows_f16(m.Xs, T * K, N, had_block, had_sx, m.cs);
                         }
+                        if (direct) {
+                            pt.mark(kPfGemmGU, cs);
+                            const auto& f = lay.fmt[(size_t) l];
+                            mmq::Product gu;
+                            gu.w = d_base; gu.type = mmq_gt; gu.w_rows = 1280; gu.w_cols = N; gu.expert_bytes = d_stride;
+                            gu.n = (int) d_nch; gu.xq = m.Xq; gu.bounds = m.bounds_dev; gu.ids = m.ids_identity;
+                            gu.total_rows = T * K; gu.max_rows = d_maxr; gu.dst = m.GU; gu.ld_dst = 1280;
+                            m.mmq_ctx->run(gu, m.cs);
+                            mmq::swiglu(m.GU, m.H, T * K, 640, !lay.native, m.cs);
+                            if (had_d) strata::kernels::hadamard_rows(m.H, m.H, T * K, 640, had_block, had_sh, m.cs);
+                            pt.mark(kPfGemmD, cs);
+                            mmq::quantize(m.H, nullptr, m.Hq, mmq_dt, 640, 640, T * K, m.cs);
+                            mmq::Product dn;
+                            dn.w = d_base + f.down_off; dn.type = mmq_dt; dn.w_rows = N; dn.w_cols = 640;
+                            dn.expert_bytes = d_stride; dn.n = (int) d_nch; dn.xq = m.Hq; dn.bounds = m.bounds_dev;
+                            dn.ids = m.ids_identity; dn.total_rows = T * K; dn.max_rows = d_maxr; dn.dst = m.Dm; dn.ld_dst = N;
+                            m.mmq_ctx->run(dn, m.cs);
+                            stats_.experts_resident += (int64_t) order.size();
+                        } else {
                         // multi-GPU: the peer's share, enqueued before the primary's own experts so both cards work at once
                         peer_now = use_mmq && !order_peer.empty();
                         if (peer_now) {
@@ -2751,8 +2924,20 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                             const char* v = std::getenv("STRATA_PREFILL_GROUP_GATHER");
                             return v == nullptr || std::atoi(v) != 0;
                         }();
-                        const bool group_gather = group_env && stream_all && use_mmq && lay.native &&
-                                                  MMQ_GROUP <= mmq::kGatherGroupMax;
+                        // The walk without streaming (a short read) takes the same one-launch group gather when every
+                        // routed expert of the layer is resident: no ring slots, so no copy waits or slot events are
+                        // involved, only the per-expert gather launches become one per group.  The same bytes into the
+                        // same group slots; groups, order and products unchanged.  STRATA_PREFILL_GROUP_RESIDENT=0: one
+                        // gather per expert there, as before.
+                        static const bool group_resident_env = [] {
+                            const char* v = std::getenv("STRATA_PREFILL_GROUP_RESIDENT");
+                            return v == nullptr || std::atoi(v) != 0;
+                        }();
+                        bool all_resident = !stream_all && m.host_res && m.cache;
+                        for (size_t j = 0; all_resident && j < order.size(); ++j)
+                            all_resident = m.host_res[(size_t) l * m.g->n_expert + order[j]] >= 0;
+                        const bool group_gather = group_env && (stream_all || (group_resident_env && all_resident)) &&
+                                                  use_mmq && lay.native && MMQ_GROUP <= mmq::kGatherGroupMax;
                         mmq::GatherGroup gg;
                         int gg_slots[MMQ_GROUP];
                         int gg_nslots = 0;   // ring slots gathered by the next flush
@@ -2910,6 +3095,8 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                             }
                             release_to(m.g->n_expert);
                         }
+                        }   // direct
+                        }   // nat_small
                     }
                     pt.mark(kPfCombine, cs);
                     if (peer_now) {   // multi-GPU: the peer's rows are in Dm (or, without P2P, in host memory)

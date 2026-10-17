@@ -403,6 +403,72 @@ int check_blob(const cpu::NativeFmt& f, const std::vector<uint8_t>& blob, int se
             const bool exact = f.gu_type == 8 && f.d_type == 8;
             if (!(dq_err < 1e-6) || h_differ || (exact && (differ || emb_differ))) ++failures;
         }
+        if (const char* bench = std::getenv("STRATA_BENCH_GROUPED")) {
+            // Decode-shaped timing (no check): a verify window of T tokens routes each to 10 experts that rarely
+            // overlap, so 10 T groups of one entry each, every group on its own copy of this layer's blob.  64 copies
+            // rotate between calls so the 4 MB L2 does not hold the next call's weights.  "T:iters" (default 1:200).
+            int T = 1, iters = 200;
+            std::sscanf(bench, "%d:%d", &T, &iters);
+            const int G = 10 * T, copies = 64;
+            std::vector<void*> blobs(copies);
+            for (auto& b : blobs) {
+                cudaMalloc(&b, blob.size());
+                cudaMemcpy(b, blob.data(), blob.size(), cudaMemcpyHostToDevice);
+            }
+            std::vector<float> bx((size_t) T * H);
+            std::mt19937 brng(5);
+            std::normal_distribution<float> bnd(0.f, 1.f);
+            for (auto& v : bx) v = bnd(brng);
+            void *bdx, *bdxq, *bdscr;
+            float* bdout;
+            unsigned long long* bdptr;
+            int32_t *bdstart, *bdn, *bddst, *bdtok;
+            cudaMalloc(&bdx, bx.size() * 4);
+            cudaMalloc(&bdxq, (size_t) T * H / 32 * 36);
+            cudaMalloc(&bdscr, strata::kernels::native_expert_scratch_bytes(G, FF));
+            cudaMalloc((void**) &bdout, (size_t) G * H * 4);
+            cudaMalloc((void**) &bdptr, (size_t) G * 8 * (copies / 1));
+            cudaMalloc((void**) &bdstart, (size_t) (G + 1) * 4);
+            cudaMalloc((void**) &bdn, 4);
+            cudaMalloc((void**) &bddst, (size_t) G * 4);
+            cudaMalloc((void**) &bdtok, (size_t) G * 4);
+            cudaMemcpy(bdx, bx.data(), bx.size() * 4, cudaMemcpyHostToDevice);
+            strata::kernels::quantize_q8_1_rows((const float*) bdx, T, H, bdxq, s);
+            std::vector<int32_t> st(G + 1), dst(G), tok(G);
+            for (int g = 0; g <= G; ++g) st[g] = g;
+            for (int g = 0; g < G; ++g) { dst[g] = g; tok[g] = g / 10; }
+            // one pointer table per rotation step: call i uses table i % copies, group g -> copy (i * G + g) % copies
+            std::vector<unsigned long long> ptrs((size_t) copies * G);
+            for (int i = 0; i < copies; ++i)
+                for (int g = 0; g < G; ++g) ptrs[(size_t) i * G + g] = (unsigned long long) blobs[(size_t) (i * G + g) % copies];
+            cudaMemcpy(bdptr, ptrs.data(), ptrs.size() * 8, cudaMemcpyHostToDevice);
+            cudaMemcpy(bdstart, st.data(), st.size() * 4, cudaMemcpyHostToDevice);
+            cudaMemcpy(bdn, &G, 4, cudaMemcpyHostToDevice);
+            cudaMemcpy(bddst, dst.data(), dst.size() * 4, cudaMemcpyHostToDevice);
+            cudaMemcpy(bdtok, tok.data(), tok.size() * 4, cudaMemcpyHostToDevice);
+            auto call = [&](int i) {
+                strata::kernels::native_expert_grouped(L, bdptr + (size_t) (i % copies) * G, bdstart, bdn, bddst, bdtok,
+                                                       G, G, bdxq, bdscr, bdout, s);
+            };
+            for (int i = 0; i < 20; ++i) call(i);   // warm-up (clocks, instruction caches)
+            cudaEvent_t e0, e1;
+            cudaEventCreate(&e0);
+            cudaEventCreate(&e1);
+            cudaEventRecord(e0, (cudaStream_t) s);
+            for (int i = 0; i < iters; ++i) call(i);
+            cudaEventRecord(e1, (cudaStream_t) s);
+            cudaEventSynchronize(e1);
+            float ms = 0.f;
+            cudaEventElapsedTime(&ms, e0, e1);
+            const double us = 1e3 * ms / iters, gb = (double) G * blob.size() / 1e9;
+            std::printf("          bench grouped T=%d: %d groups x 1 entry, %.1f us per call, %.1f GB/s of expert "
+                        "weights (%d calls)\n", T, G, us, gb / (us * 1e-6), iters);
+            cudaEventDestroy(e0);
+            cudaEventDestroy(e1);
+            for (auto b : blobs) cudaFree(b);
+            cudaFree(bdx); cudaFree(bdxq); cudaFree(bdscr); cudaFree(bdout); cudaFree(bdptr);
+            cudaFree(bdstart); cudaFree(bdn); cudaFree(bddst); cudaFree(bdtok);
+        }
         cudaFree(dblob); cudaFree(dx); cudaFree(dxq); cudaFree(dscr); cudaFree(dout); cudaFree(dptr);
         cudaFree(dstart); cudaFree(dn); cudaFree(ddst); cudaFree(dtok);
     }

@@ -9,6 +9,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <string>
+#include <unordered_map>
 
 namespace strata::prefill {
 
@@ -59,6 +60,11 @@ private:
     int64_t tc_w_elems_ = 0;
     uint16_t* tc_x_ = nullptr;
     int64_t tc_x_elems_ = 0;
+    // STRATA_DENSE_F16_CACHE_MIB: each native weight's FP16 copy, kept after its first dequantization (`native`)
+    struct F16Copy { uint16_t* w = nullptr; int64_t n = 0, k = 0; int type = -1; };
+    std::unordered_map<const void*, F16Copy> f16_cache_;
+    size_t f16_cache_bytes_ = 0;
+    bool f16_cache_closed_ = false;   // a copy did not fit: no further ones
 };
 
 

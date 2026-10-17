@@ -5321,6 +5321,7 @@ int main(int argc, char** argv) {
             return true;
         };
         int64_t pp_total = 0, pp_from = 0, pp_next_check = 0;
+        double pt_draft_ms = 0, pt_mid_ckpt_ms = 0;   // STRATA_PROMPT_TIMING: inside the batched read
         // #471: the position the prompt pass has read up to (a chunk's or a window's end): what a request cancelled
         // mid-read reports as read, instead of the whole prompt
         int64_t pp_reached = 0;
@@ -5349,12 +5350,25 @@ int main(int argc, char** argv) {
                        ") - a GPU hang; on Windows the driver is then reset";
             return false;
         };
+        // A checkpoint's running-state copy (~118 MB) is saved into the buffers of one evicted earlier, when there
+        // is one: fresh vectors cost a page fault per page and a zero fill on every save (~75 ms a turn on Orin).
+        // Single GPU only (a split's stage parts keep their own).  STRATA_CKPT_RECYCLE=0: always fresh buffers.
+        static const bool ckpt_recycle = [] {
+            const char* v = std::getenv("STRATA_CKPT_RECYCLE");
+            return v == nullptr || std::atoi(v) != 0;
+        }();
+        std::vector<ConvCheckpoint> ckpt_spare;
         auto checkpoint_at = [&](int64_t L, std::vector<ConvCheckpoint>* parts = nullptr) -> bool {
             ckpt_why.clear();
             if (o.prompt_cache <= 0 || L < 1) return true;
             for (ConvCheckpoint& c : checks)
                 if ((int64_t) c.ids.size() == L) { c.used = ++check_clock; return true; }
             ConvCheckpoint c;
+            if (ckpt_recycle && parts == nullptr && stages.empty() && !ckpt_spare.empty()) {
+                c = std::move(ckpt_spare.back());   // same session, same sizes: the save's resizes keep the pages
+                ckpt_spare.pop_back();
+                c.stage_parts.clear();
+            }
             c.ids.assign(cur.begin(), cur.begin() + L);
             c.imgs = imgs_below(req_imgs, L);
             if (parts != nullptr) {
@@ -5383,16 +5397,20 @@ int main(int argc, char** argv) {
                 for (const ConvCheckpoint& k : checks) stamps.push_back(k.used);
                 const size_t victim = strata::program::conv_cache::eviction_victim(stamps.data(), stamps.size(),
                                                                                    o.prompt_cache);
+                if (ckpt_recycle && stages.empty() && ckpt_spare.empty())
+                    ckpt_spare.push_back(std::move(checks[victim]));
                 checks.erase(checks.begin() + (std::ptrdiff_t) victim);
             }
             return true;
         };
         sp.on_chunk = [&](const float* R_rows, int64_t T, int64_t p0, std::string& e) -> bool {
+            const auto pt_d0 = Clock::now();
             std::vector<int32_t> nxt((size_t) T);
             for (int64_t t = 0; t < T; ++t) nxt[(size_t) t] = (int32_t) cur[(size_t) (p0 + t + 1)];
             // E-9: batched through the prompt path when it can (one GPU: a layer split's drafter is on the last stage)
             const bool batched = !multi_gpu && sp.draft_kv(mtp, R_rows, nxt.data(), T, p0, e);
             if (!e.empty() || (!batched && !mtp.prefill(R_rows, nxt.data(), T, p0, e))) return false;
+            pt_draft_ms += std::chrono::duration<double, std::milli>(Clock::now() - pt_d0).count();
             if (std::getenv("STRATA_SNAPSHOT_VERIFY") != nullptr)
                 std::fprintf(stderr, "strata serve: DRAFT_PREFILL path=%s mode=%d cells=%lld\n",
                              batched ? "batched" : "token", mtp.kv_state().kv_mode, (long long) T);
@@ -5419,7 +5437,9 @@ int main(int argc, char** argv) {
                     for (const ConvCheckpoint& k : parts) complete = complete && !k.gdn.empty();
                     saved = !complete || checkpoint_at(done, &parts);   // an incomplete set: no checkpoint here
                 } else {
+                    const auto pt_c0 = Clock::now();
                     saved = checkpoint_at(done);
+                    pt_mid_ckpt_ms += std::chrono::duration<double, std::milli>(Clock::now() - pt_c0).count();
                 }
                 if (!saved) { e = "saving a conversation checkpoint failed" + ckpt_why; return false; }
                 pp_next_check = done + o.prompt_cache_every;
@@ -6427,6 +6447,25 @@ int main(int argc, char** argv) {
             }
             cur = ids;
             const Clock::time_point r0 = Clock::now();
+            // STRATA_PROMPT_TIMING=1: where a request's prompt time went (host time between the steps, no device
+            // syncs added), one stderr line per request after its prompt line
+            static const bool pt_on = std::getenv("STRATA_PROMPT_TIMING") != nullptr;
+            std::string pt_txt;
+            Clock::time_point pt_last = r0;
+            pt_draft_ms = 0;
+            pt_mid_ckpt_ms = 0;
+            auto pt = [&](const char* what, long long tokens = -1) {
+                if (!pt_on) return;
+                const auto now = Clock::now();
+                char b[96];
+                if (tokens >= 0)
+                    std::snprintf(b, sizeof(b), " %s(%lld)=%.1f", what, tokens,
+                                  std::chrono::duration<double, std::milli>(now - pt_last).count());
+                else
+                    std::snprintf(b, sizeof(b), " %s=%.1f", what, std::chrono::duration<double, std::milli>(now - pt_last).count());
+                pt_txt += b;
+                pt_last = now;
+            };
             // ---- where this request starts reading: the live session, or a checkpoint, whose tokens AND pictures are
             // exactly the start of this prompt - at most n - 1 of them, the last token is always the first window
             auto starts_with = [&](const std::vector<int32_t>& pre, const std::vector<ImgKey>& pre_imgs) -> bool {
@@ -6505,10 +6544,35 @@ int main(int argc, char** argv) {
             }
             // Preserve the outgoing branch before any checkpoint rewind, reset,
             // or incoming restore overwrites the positional state it requires.
-            if ((!from_live || incoming || slot_source >= 0) && !park_current(incoming ? incoming->bytes() : 0)) {
+            pt("match");
+            // A request that continues the live conversation from its DEEPEST checkpoint (the last turn boundary: the
+            // next turn of an agent, whose client re-rendered the reply) would park a copy that differs from what
+            // stays only in that reply's tail - the next park drops it as superseded (#342).  It is not parked; the
+            // copies it supersedes still go.  STRATA_PARK_CONTINUE=1: park it anyway (the A/B).
+            static const bool park_continue = [] {
+                const char* v = std::getenv("STRATA_PARK_CONTINUE");
+                return v != nullptr && std::atoi(v) != 0;
+            }();
+            bool continues = false;
+            if (!park_continue && !from_live && !incoming && slot_source < 0 && resume > 0 && live_ok &&
+                (int64_t) live.size() > resume && conversations.enabled()) {
+                int64_t deepest = 0;
+                for (const ConvCheckpoint& c : checks) deepest = std::max<int64_t>(deepest, (int64_t) c.ids.size());
+                continues = deepest == resume;
+            }
+            if (continues) {
+                if (const size_t dropped = conversations.drop_superseded(live, live_imgs, checks, cvec_cached))
+                    std::fprintf(stderr, "strata serve: conversation cache: dropped %zu superseded cop%s of this "
+                                 "conversation; parked=%zu\n", dropped, dropped == 1 ? "y" : "ies", conversations.size());
+                std::fprintf(stderr, "strata serve: conversation cache: not parked (continues from its last turn "
+                             "checkpoint at %lld of %zu tokens)\n", (long long) resume, live.size());
+            }
+            if ((!from_live || incoming || slot_source >= 0) && !continues &&
+                !park_current(incoming ? incoming->bytes() : 0)) {
                 std::printf("ERR %s\n", err.c_str());
                 return 1;
             }
+            pt("park");
             if (slot_source >= 0) {
                 const auto t0 = Clock::now();
                 if (!copy_from_slot(slot_source, slot_ck, err)) {
@@ -6605,6 +6669,7 @@ int main(int argc, char** argv) {
                              std::chrono::duration<double, std::milli>(Clock::now() - t0).count(),
                              conversations.size(), conversations.bytes());
             }
+            pt("conv_restore");
             if (want_cvec != cvec_cached) {
                 live_ok = false;
                 checks.clear();
@@ -6663,6 +6728,7 @@ int main(int argc, char** argv) {
             // KV streaming: the drafter's ring may hold cells past `resume` from a longer turn; the main layers'
             // host copies and slots are always current (every writer writes both), so they need nothing
             if (resume > 0 && reread_to <= 0) mtp.kv_restore(resume);
+            pt(resume == 0 ? "session_zero" : from_live ? "live_restore" : "ckpt_restore");
             tr("request", n, geni ? 1 : 0);
             mtp.set_prompt_len(n);
             const int64_t read_from = reread_to > 0 ? 0 : resume;
@@ -6975,6 +7041,7 @@ int main(int argc, char** argv) {
             const int hist_n = std::min(req_sp.penalty_last_n, kPenaltyWindowCap);
             ver.set_history(hist_n > 0 ? d_hist : nullptr, hist_n);
             bool cancelled = false;
+            pt("setup");
             tr("prompt start", n - 1);
             // The prompt is read in two parts when it has a turn boundary past `resume`: up to the last <|im_start|>
             // (the conversation so far), a checkpoint there, then the new turn's header.  The next request of the same
@@ -7018,6 +7085,7 @@ int main(int argc, char** argv) {
                     std::printf("ERR lending the prompt path its slots failed: %s\n", err.c_str());
                     return 1;
                 }
+                pt(win ? "refill_before" : "lend");
                 const auto tsp = Clock::now();
                 const bool sp_ok = win ? read_windows(at, to, err) : read_part(at, to, err);
                 if (trace) {
@@ -7042,16 +7110,19 @@ int main(int argc, char** argv) {
                     cancelled = true;   // stopped while reading the prompt: refill the lent slots below, then DONE cancel
                     break;
                 }
+                pt(win ? "read_windows" : "read_batched", to - at);
                 at = to;
                 if ((to == turn_at || to == root_at) && !checkpoint_at(to)) {
                     std::printf("ERR saving a conversation checkpoint failed%s\n", ckpt_why.c_str());
                     return 1;
                 }
+                if (to == turn_at || to == root_at) pt("ckpt_save");
             }
             if (!refill(err)) {
                 std::printf("ERR refilling a lent slot failed: %s\n", err.c_str());
                 return 1;
             }
+            pt("refill");
             tr("prompt done (slots refilled)");
             if (il_parts > 0)
                 std::fprintf(stderr, "strata batch: the prompt was read in %lld parts, the slots decoding %.0f ms between "
@@ -7412,6 +7483,8 @@ int main(int argc, char** argv) {
                          prompt_ms > 0 ? 1000.0 * read_n / prompt_ms : 0.0, (long long) produced_n, decode_ms,
                          decode_ms > 0 ? 1000.0 * produced_n / decode_ms : 0.0, (long long) draft_accepted,
                          (long long) draft_offered, checks.size(), cancelled ? " (cancelled)" : "");
+            if (pt_on) std::fprintf(stderr, "strata serve: prompt timing ms:%s (batched reads include draft=%.1f "
+                                    "mid_ckpt=%.1f)\n", pt_txt.c_str(), pt_draft_ms, pt_mid_ckpt_ms);
             // the VRAM share of the experts the pool looked up while decoding; experts it sent over PCIe for the GPU
             // to read (--pcie-frac) are in neither count - #588: so that share is said beside it (raising --pcie-frac
             // raises the hit rate while the PCIe reads may make the decode slower)
