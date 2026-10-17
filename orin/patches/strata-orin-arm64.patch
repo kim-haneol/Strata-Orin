@@ -1,0 +1,773 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b3a8175..76094ab 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -924,12 +924,26 @@ if(STRATA_BUILD_TESTS OR STRATA_BUILD_CONVERSATION_TESTS)
+   add_test(NAME bf16_bits_test COMMAND bf16_bits_test)
+ endif()
+ 
++# Arm64 (e.g. NVIDIA GB10): Strata's AVX kernels are x86-only; portable_stubs.cpp stands in for them and ggml-cpu's
++# NEON dot products run the native (i-quant) experts.
++if(CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64|arm64|ARM64)$")
++  set(STRATA_CPU_ARM64 ON)
++endif()
++if(STRATA_CPU_ARM64)
++  add_library(strata_kernels_cpu STATIC src/kernels/cpu/pool.cpp src/kernels/cpu/expert_layout.cpp
++              src/kernels/cpu/portable_stubs.cpp)
++else()
+ add_library(strata_kernels_cpu STATIC src/kernels/cpu/expert.cpp src/kernels/cpu/pool.cpp
+-            src/kernels/cpu/expert_layout.cpp src/kernels/cpu/q2_avx2.cpp src/kernels/cpu/hadamard.cpp)
++            src/kernels/cpu/expert_layout.cpp src/kernels/cpu/q2_avx2.cpp)
++endif()
++# Gyro's activation rotation is portable and required on both ARM64 and x86.
++target_sources(strata_kernels_cpu PRIVATE src/kernels/cpu/hadamard.cpp)
+ target_include_directories(strata_kernels_cpu PUBLIC include)
+ # Plan v0.3 P6: only the kernel files get the AVX-512 / AVX2 flags; the pool and the probe run on any x86-64,
+ # and the engine picks the kernels at run time (cpu_avx512_ok).
+-if(MSVC)
++if(STRATA_CPU_ARM64)
++  # no x86 flags
++elseif(MSVC)
+   set_source_files_properties(src/kernels/cpu/expert.cpp PROPERTIES COMPILE_OPTIONS "/arch:AVX512")
+   set_source_files_properties(src/kernels/cpu/q2_avx2.cpp PROPERTIES COMPILE_OPTIONS "/arch:AVX2")
+ else()
+@@ -1003,11 +1017,17 @@ if(STRATA_NATIVE_EXPERTS)
+   endif()
+   # part of strata_kernels_cpu (the pool calls these and they call its CPU probe: one library, so GNU ld's
+   # one-pass static linking has no cycle to resolve)
++  if(STRATA_CPU_ARM64)
++    target_sources(strata_kernels_cpu PRIVATE src/kernels/cpu/native_expert.cpp)
++  else()
+   target_sources(strata_kernels_cpu PRIVATE src/kernels/cpu/native_expert.cpp src/kernels/cpu/iq_avx512.cpp
+                                            src/kernels/cpu/iq_avx2.cpp src/kernels/cpu/kq_avx2.cpp
+                                            src/kernels/cpu/kq_avx1.cpp)
++  endif()
+   target_include_directories(strata_kernels_cpu PRIVATE third_party/ggml)
+-  if(MSVC)
++  if(STRATA_CPU_ARM64)
++    # no x86 flags
++  elseif(MSVC)
+     set_source_files_properties(src/kernels/cpu/iq_avx512.cpp PROPERTIES COMPILE_OPTIONS "/arch:AVX512")
+     set_source_files_properties(src/kernels/cpu/iq_avx2.cpp PROPERTIES COMPILE_OPTIONS "/arch:AVX2")
+     set_source_files_properties(src/kernels/cpu/kq_avx2.cpp PROPERTIES COMPILE_OPTIONS "/arch:AVX2")
+diff --git a/include/strata/platform/cpu_relax.hpp b/include/strata/platform/cpu_relax.hpp
+new file mode 100644
+index 0000000..6e124af
+--- /dev/null
++++ b/include/strata/platform/cpu_relax.hpp
+@@ -0,0 +1,22 @@
++// include/strata/platform/cpu_relax.hpp - the spin-wait hint and the store fence, per CPU architecture.
++// x86: `pause` / `sfence`.  Arm64: `yield` / `dmb ishst`.
++#pragma once
++
++#if defined(_MSC_VER) || defined(__x86_64__) || defined(__i386__)
++#include <immintrin.h>
++namespace strata {
++inline void cpu_pause() noexcept { _mm_pause(); }
++inline void store_fence() noexcept { _mm_sfence(); }
++}  // namespace strata
++#elif defined(__aarch64__)
++namespace strata {
++inline void cpu_pause() noexcept { __asm__ volatile("yield" ::: "memory"); }
++inline void store_fence() noexcept { __asm__ volatile("dmb ishst" ::: "memory"); }
++}  // namespace strata
++#else
++#include <atomic>
++namespace strata {
++inline void cpu_pause() noexcept {}
++inline void store_fence() noexcept { std::atomic_thread_fence(std::memory_order_release); }
++}  // namespace strata
++#endif
+diff --git a/setup.py b/setup.py
+index 80d1fba..6e1606f 100644
+--- a/setup.py
++++ b/setup.py
+@@ -59,6 +59,7 @@ from pathlib import Path
+ 
+ ROOT = Path(__file__).resolve().parent
+ WIN = os.name == "nt"
++ARM64 = platform.machine().lower() in ("aarch64", "arm64")   # e.g. NVIDIA GB10 (DGX Spark): no AVX, one memory for CPU and GPU
+ # #214: every Hugging Face file comes from a fixed commit of its repository (the `sha` of
+ # https://huggingface.co/api/models/<repo> when this was pinned), so a checkout installs the same files on any
+ # day.  A revision the repository no longer has falls back to its current files, with a message (download()).
+@@ -409,6 +410,10 @@ def cpu_info():
+         n = out(["powershell", "-NoProfile", "-Command", "(Get-CimInstance Win32_Processor).Name"]).strip()
+         name = n or name
+         avx512 = bool(pf(41)) and _cpuid_avx512_full()
++    elif ARM64:                                        # NEON is the baseline of every Arm64 CPU; no AVX-512 kernels
++        avx2 = True
++        m = re.search(r"^Model name:\s*(.*)$", out(["lscpu"]), re.M)
++        name = (m.group(1).strip() if m else name) + " (Arm64, NEON)"
+     else:
+         try:
+             txt = open("/proc/cpuinfo").read()
+@@ -534,13 +539,22 @@ def gpus():
+     for line in s.strip().splitlines():
+         try:
+             idx, name, mem, cc, drv = [x.strip() for x in line.split(",")]
+-            found.append({"index": int(idx), "name": name, "vram_gb": float(mem) / 1024.0, "arch": cc.replace(".", ""),
+-                          "driver": drv})
++            unified = not mem.replace(".", "").isdigit()      # "[N/A]": the GPU shares the system's memory (GB10)
++            vram = unified_vram_gb() if unified else float(mem) / 1024.0
++            found.append({"index": int(idx), "name": name, "vram_gb": vram, "arch": cc.replace(".", ""),
++                          "driver": drv, **({"unified": True} if unified else {})})
+         except ValueError:
+             continue
+     return found
+ 
+ 
++def unified_vram_gb() -> float:
++    """A GPU that reports no memory size of its own (NVIDIA GB10 / DGX Spark: CPU and GPU share one pool): the part of
++    that pool counted as VRAM.  A quarter of the RAM, at most 32 GB - the experts live in RAM as well, and the same
++    bytes must not be counted twice."""
++    return min(ram_gb() / 4, 32.0)
++
++
+ GPU_PICK = None                                         # --gpu N (issue #51); None: the card with the most VRAM
+ SPLIT_MIN_VRAM_GB = 8                                   # a card sharing a model holds the dense weights and its own
+                                                         # prompt buffers too (docs/MULTI_GPU.md)
+@@ -3819,7 +3833,7 @@ def main() -> int:
+         warn(f"Windows' page file is {pf:.1f} GB: the graphics card's memory needs room there too (issue #60), so "
+              "the model may not start or may use less VRAM. Set it to \"System managed\": System > About > "
+              "Advanced system settings > Performance > Advanced > Virtual memory")
+-    ok(f"CPU: {cpu} ({'AVX-512' if avx512 else 'AVX2' if avx2 else 'no AVX2'})")
++    ok(f"CPU: {cpu} ({'AVX-512' if avx512 else 'NEON' if ARM64 else 'AVX2' if avx2 else 'no AVX2'})")
+     floor = cpu_floor(avx2)
+     if floor == "unsupported":
+         fail("this CPU has neither AVX2 nor SSE4.2; Strata needs at least SSE4.2 (Intel Nehalem, 2008, or newer)")
+@@ -4105,8 +4119,8 @@ def main() -> int:
+         gpu = hip_card(eng, gpu, amd)
+         a.gpu = gpu["index"] if gpu["count"] > 1 else a.gpu
+     else:
+-        eng = None if a.build or hip else get_prebuilt(a.prebuilt, gpu, vision, **({"toolkit": 12} if cuda_tk == 12
+-                                                                                    else {}))
++        eng = None if a.build or hip or ARM64 else get_prebuilt(   # no ready-made Arm64 engine
++            a.prebuilt, gpu, vision, **({"toolkit": 12} if cuda_tk == 12 else {}))
+     if eng is not None and not hip and json.loads((eng / "BUILD.json").read_text()).get("source") != "local":
+         pip_cuda_libs(cuda_tk)
+         if vision != "none" and not (eng / VEXE).exists():
+diff --git a/src/core/graph.cpp b/src/core/graph.cpp
+index 2e9c7e7..ed04239 100644
+--- a/src/core/graph.cpp
++++ b/src/core/graph.cpp
+@@ -1,7 +1,7 @@
+ // src/core/graph.cpp - P2.S5: the GraphRegistry implementation.
+ #include "strata/core/graph.hpp"
+ 
+-#include <immintrin.h>
++#include "strata/platform/cpu_relax.hpp"
+ 
+ #include <chrono>
+ #include <cstdio>
+@@ -97,7 +97,7 @@ bool CapturedGraph::wait_ms(int timeout_ms) const {
+         if (q == cudaSuccess) return true;
+         if (q != cudaErrorNotReady) return false;   // a real error, not "not finished"
+         if (std::chrono::steady_clock::now() >= deadline) return false;
+-        for (int i = 0; i < 64; ++i) _mm_pause();
++        for (int i = 0; i < 64; ++i) strata::cpu_pause();
+     }
+ }
+ 
+diff --git a/src/core/mtp.cpp b/src/core/mtp.cpp
+index e9953e3..1f2180d 100644
+--- a/src/core/mtp.cpp
++++ b/src/core/mtp.cpp
+@@ -38,11 +38,7 @@
+ #include <fstream>
+ #include <sstream>
+ #include <vector>
+-#if defined(_WIN32)
+-#include <intrin.h>
+-#elif defined(__x86_64__)
+-#include <immintrin.h>
+-#endif
++#include "strata/platform/cpu_relax.hpp"
+ 
+ namespace strata::core {
+ namespace {
+@@ -910,9 +906,7 @@ bool MtpDrafter::draft(int T, const int32_t* tokens, int64_t p, int a, int32_t*
+         for (int j = 0; j + 1 < max_steps; ++j) {
+             uint32_t spins = 0;
+             while (((volatile int32_t*) h_out_)[j] < 0) {
+-#if defined(_WIN32) || defined(__x86_64__)
+-                _mm_pause();
+-#endif
++strata::cpu_pause();
+                 if ((++spins & 1023u) == 0 && cudaStreamQuery(cs_) != cudaErrorNotReady) break;
+             }
+             drafts[j] = ((volatile int32_t*) h_out_)[j];
+@@ -938,9 +932,7 @@ bool MtpDrafter::draft(int T, const int32_t* tokens, int64_t p, int a, int32_t*
+         auto wait_step = [&](int j) {
+             uint32_t spins = 0;
+             while (((volatile int32_t*) h_out_)[j] < 0) {
+-#if defined(_WIN32) || defined(__x86_64__)
+-                _mm_pause();
+-#endif
++strata::cpu_pause();
+                 if ((++spins & 1023u) == 0 && cudaStreamQuery(cs_) != cudaErrorNotReady) break;
+             }
+         };
+diff --git a/src/core/session.cpp b/src/core/session.cpp
+index 40a44bd..ea9bd0e 100644
+--- a/src/core/session.cpp
++++ b/src/core/session.cpp
+@@ -21,12 +21,8 @@
+ 
+ // `_mm_pause` for the doorbell spin.  Guarded because it is x86-only; a target without it still builds, the
+ // spin is just less polite to the pipeline.
+-#if defined(_MSC_VER) || defined(__x86_64__) || defined(__i386__)
+-#include <immintrin.h>
+-#define STRATA_SPIN_PAUSE() _mm_pause()
+-#else
+-#define STRATA_SPIN_PAUSE() ((void) 0)
+-#endif
++#include "strata/platform/cpu_relax.hpp"
++#define STRATA_SPIN_PAUSE() strata::cpu_pause()
+ 
+ namespace strata::core {
+ namespace {
+@@ -948,7 +944,7 @@ bool session_run_token(const ModelGeometry& g, int64_t pos, int32_t pos_base, Se
+         progress_at("token: the CPU experts of layer", l);
+         if (pool != nullptr) pool(user, s.db->h_x_f, s.db->h_ids, s.db->h_weights, g.n_embd, s.k, y_miss_host);
+         std::atomic_thread_fence(std::memory_order_seq_cst);
+-        _mm_sfence();
++        strata::store_fence();
+         *flag = want;
+         const auto t2 = Clock::now();
+         tg.ms_wait += std::chrono::duration<double, std::milli>(t1 - t0).count();
+diff --git a/src/core/verify.cpp b/src/core/verify.cpp
+index b6e3d95..ec307e8 100644
+--- a/src/core/verify.cpp
++++ b/src/core/verify.cpp
+@@ -5,6 +5,7 @@
+ #include <intrin.h>
+ #endif
+ 
++#include "strata/platform/cpu_relax.hpp"
+ #include "strata/core/native_head.hpp"
+ #include "strata/core/on_device.hpp"
+ #include "strata/core/peer_experts.hpp"
+@@ -50,7 +51,6 @@
+ #include <cstdlib>
+ #include <cstring>
+ #include <exception>
+-#include <immintrin.h>
+ 
+ namespace strata::core {
+ namespace {
+@@ -181,7 +181,7 @@ bool Verifier::release_gpu_waits(int timeout_ms) {
+     for (uint32_t* p : {h_flag_, h_flagA_, h_flagB_})
+         if (p != nullptr) *(volatile uint32_t*) p = UINT32_MAX;
+     std::atomic_thread_fence(std::memory_order_seq_cst);
+-    _mm_sfence();
++    strata::store_fence();
+     const OnDevice on_device(device_);
+     const Clock::time_point t0 = Clock::now();
+     for (cudaStream_t s : {cs_, copy_}) {
+@@ -1450,7 +1450,7 @@ bool Verifier::run(int T, const int32_t* tokens, int64_t pos0, PoolMultiFn pool,
+             const Clock::time_point tp = Clock::now();
+             if (!ss.ple.table->gather_batch(ple_rows, (size_t) T, h_ple_, err)) return false;
+             std::atomic_thread_fence(std::memory_order_seq_cst);
+-            _mm_sfence();
++            strata::store_fence();
+             *flag = 1;
+             ms_host += ms_since(tp);
+         } else {
+@@ -1466,7 +1466,7 @@ bool Verifier::run(int T, const int32_t* tokens, int64_t pos0, PoolMultiFn pool,
+         uint32_t spins = 0;
+         progress_at("verify window: waiting for the GPU to reach layer", l);
+         while (*seq < want) {
+-            _mm_pause();
++            strata::cpu_pause();
+             if ((++spins & 1023u) != 0) continue;
+             const auto now = Clock::now();
+             if (now - last_flush > std::chrono::microseconds(2000)) {
+@@ -1511,7 +1511,7 @@ bool Verifier::run(int T, const int32_t* tokens, int64_t pos0, PoolMultiFn pool,
+                               (int64_t) ms_since(b));   // aux: ms the CPU experts took
+         progress_tick();
+         std::atomic_thread_fence(std::memory_order_seq_cst);
+-        _mm_sfence();
++        strata::store_fence();
+         if (*(volatile uint32_t*) h_flagA_ != want) {        // the pool did not publish a plan: an empty one
+             sink_.counts[0] = 0;
+             sink_.counts[1] = 0;
+@@ -1530,7 +1530,7 @@ bool Verifier::run(int T, const int32_t* tokens, int64_t pos0, PoolMultiFn pool,
+             const Clock::time_point tp = Clock::now();
+             if (!ss.ple.table->gather_batch(ple_rows, (size_t) T, h_ple_, err)) return false;
+             std::atomic_thread_fence(std::memory_order_seq_cst);
+-            _mm_sfence();
++            strata::store_fence();
+             ms_host += ms_since(tp);
+         }
+         if (!(test_stall && k + 1 == steps)) *flag = want;
+@@ -1649,7 +1649,7 @@ void Verifier::fetch_dma(void* ctx, const uint8_t* const* src, int n, size_t byt
+ 
+ void Verifier::publish_plan(void* ctx) {
+     Verifier* v = (Verifier*) ctx;
+-    _mm_sfence();
++    strata::store_fence();
+     *(volatile uint32_t*) v->h_flagA_ = v->cur_layer_ + 1;
+ }
+ 
+@@ -1991,7 +1991,7 @@ bool Verifier::run_slot_rows(const int* rows, int S, const int32_t* tokens, cons
+         uint32_t spins = 0;
+         progress_at("verify batch: waiting for the GPU to reach layer", l);
+         while (*seq < want) {
+-            _mm_pause();
++            strata::cpu_pause();
+             if ((++spins & 1023u) != 0) continue;
+             const auto now = Clock::now();
+             if (now - last_flush > std::chrono::microseconds(2000)) {
+@@ -2015,7 +2015,7 @@ bool Verifier::run_slot_rows(const int* rows, int S, const int32_t* tokens, cons
+         if (pool != nullptr) pool(user, h_x_, h_ids_, S, ss_->k, h_ymiss_, l);
+         progress_tick();
+         std::atomic_thread_fence(std::memory_order_seq_cst);
+-        _mm_sfence();
++        strata::store_fence();
+         if (*(volatile uint32_t*) h_flagA_ != want) {        // the pool did not publish a plan: an empty one
+             sink_.counts[0] = 0;
+             sink_.counts[1] = 0;
+@@ -2132,7 +2132,7 @@ int Verifier::batch_poll(PoolMultiFn pool, void* user, std::string& err) {
+         if (pool != nullptr) pool(user, h_x_, h_ids_, S, ss_->k, h_ymiss_, lb_ + b_k_);
+         progress_tick();
+         std::atomic_thread_fence(std::memory_order_seq_cst);
+-        _mm_sfence();
++        strata::store_fence();
+         if (*(volatile uint32_t*) h_flagA_ != want) {        // the pool did not publish a plan: an empty one
+             sink_.counts[0] = 0;
+             sink_.counts[1] = 0;
+diff --git a/src/kernels/cpu/expert_layout.cpp b/src/kernels/cpu/expert_layout.cpp
+index fb54a58..34f3f40 100644
+--- a/src/kernels/cpu/expert_layout.cpp
++++ b/src/kernels/cpu/expert_layout.cpp
+@@ -6,7 +6,9 @@
+ #include <cstdlib>
+ #include <cstring>
+ #include <string>
+-#if defined(_MSC_VER)
++#if defined(__aarch64__)
++#define STRATA_CPU_ARM64 1
++#elif defined(_MSC_VER)
+ #include <intrin.h>
+ #include <immintrin.h>
+ #else
+@@ -38,6 +40,27 @@ int cpu_isa_cap() {
+     return cap;
+ }
+ 
++#if defined(STRATA_CPU_ARM64)
++// Arm64: no AVX.  The i-quant experts run on ggml-cpu's NEON dot products (native_expert.cpp); NEON is the baseline
++// of every Arm64 CPU, so the "AVX2-class" check passes.  Strata's own AVX-512 / AVX-2 kernels are not built.
++bool cpu_avx512_ok() { return false; }
++bool cpu_avx2_ok() { return true; }
++bool cpu_avx1_ok() { return false; }    // the older-x86 floors (#394 #595 #623) do not apply
++bool cpu_sse42_ok() { return false; }
++const char* isa_floor_build() { return ""; }
++
++std::string cpu_name() {
++    std::ifstream f("/proc/cpuinfo");
++    std::string line;
++    while (std::getline(f, line)) {
++        if (line.rfind("model name", 0) == 0 || line.rfind("Model", 0) == 0 || line.rfind("Hardware", 0) == 0) {
++            const size_t c = line.find(':');
++            if (c != std::string::npos && c + 2 <= line.size()) return line.substr(c + 2);
++        }
++    }
++    return "aarch64";
++}
++#else
+ bool cpu_avx512_ok() {
+     static const bool ok = [] {
+         if (const char* f = std::getenv("STRATA_FORCE_AVX2"); f != nullptr && f[0] == '1') return false;
+@@ -209,6 +232,7 @@ std::string cpu_name() {
+     const size_t b0 = name.find_first_not_of(' '), b1 = name.find_last_not_of(' ');
+     return b0 == std::string::npos ? std::string("unknown") : name.substr(b0, b1 - b0 + 1);
+ }
++#endif
+ 
+ void q2_rows_any(const uint8_t* w, size_t row_bytes, int nblocks, const ActQ* const* a, int nt, float* const* out,
+                  int r0, int r1) {
+diff --git a/src/kernels/cpu/native_expert.cpp b/src/kernels/cpu/native_expert.cpp
+index 8d9c21c..4d33d6a 100644
+--- a/src/kernels/cpu/native_expert.cpp
++++ b/src/kernels/cpu/native_expert.cpp
+@@ -153,7 +153,11 @@ void native_down_rows(const NativeFmt& f, const uint8_t* blob, const void* const
+                       int r0, int r1) {
+     // IQ4_NL down rows: the AVX-2 multi-token kernel decodes the nibbles and absolutises the weights once per
+     // block instead of once per token; ggml-cpu's dot is single-token.  STRATA_NO_IQ4NL falls back to it.
++    #if defined(__aarch64__)
++    static const bool iq4nl_mt = false;   // the AVX-2 kernel is x86-only: ggml-cpu's NEON dot below
++#else
+     static const bool iq4nl_mt = std::getenv("STRATA_NO_IQ4NL") == nullptr;
++#endif
+     static const int mt_min = [] { const char* e = std::getenv("STRATA_IQ_MT_MIN"); return e ? std::atoi(e) : 2; }();
+     static const bool kq = [] { const char* v = std::getenv("STRATA_KQ256"); return v != nullptr && std::atoi(v) != 0; }();
+     // Both multi-token kernels below are /arch:AVX2 translation units (kq_avx2.cpp and iq_avx2.cpp),
+diff --git a/src/kernels/cpu/pool.cpp b/src/kernels/cpu/pool.cpp
+index c644629..68d5387 100644
+--- a/src/kernels/cpu/pool.cpp
++++ b/src/kernels/cpu/pool.cpp
+@@ -6,7 +6,7 @@
+ #include <algorithm>
+ #include <cmath>
+ #include <chrono>
+-#include <immintrin.h>
++#include "strata/platform/cpu_relax.hpp"
+ 
+ #include <cstdio>
+ #include <cstdlib>
+@@ -443,7 +443,7 @@ void ExpertPool::worker(int id) {
+         uint32_t spins = 0;
+         while (epoch_.load(std::memory_order_acquire) == seen) {
+             if (stop_.load(std::memory_order_relaxed)) return;
+-            _mm_pause();
++            strata::cpu_pause();
+             if ((++spins & 1023u) != 0) continue;
+             if (std::chrono::steady_clock::now() - parked_at < spin_before_sleep_) continue;
+             std::unique_lock<std::mutex> lk(sleep_mu_);
+@@ -501,7 +501,7 @@ void ExpertPool::wait_parked(const char* what) {
+     uint32_t spins = 0;
+     std::chrono::steady_clock::time_point t0{};
+     while (parked_.load(std::memory_order_acquire) != (uint32_t) n_) {
+-        _mm_pause();
++        strata::cpu_pause();
+         if ((++spins & 1023u) != 0) continue;
+         const auto now = std::chrono::steady_clock::now();
+         if (spins == 1024u) t0 = now;
+@@ -524,7 +524,7 @@ void ExpertPool::wait_done(int n) {
+     for (;;) {
+         const uint32_t d = done_.load(std::memory_order_acquire);
+         if (d >= (uint32_t) n) return;                                // `>=`: never a wait that an overshoot outlives
+-        _mm_pause();
++        strata::cpu_pause();
+         if ((++spins & 1023u) != 0) continue;
+         const auto now = std::chrono::steady_clock::now();
+         if (spins == 1024u || d != seen) { t0 = now; seen = d; }     // progress restarts the clock
+@@ -738,7 +738,7 @@ void ExpertPool::run(ExpertJob* jobs, int n) {
+ 
+     // ---- **THE HOST DRAINS TOO (R2.2), INSTEAD OF SPINNING ON `done_`.**
+     //
+-    // The loop below used to be `while (done_ != n) _mm_pause();`.  The host is pinned to core 0 - the core
++    // The loop below used to be `while (done_ != n) strata::cpu_pause();`.  The host is pinned to core 0 - the core
+     // `physical_cores(true)` deliberately keeps the five workers off - so for the whole drain that core was
+     // idle while five cores did six cores' worth of work.  Measured before the change: 33.7 GB/s against
+     // 5/6 x 44.14 = 36.8 for five workers and 44.14 for six.
+diff --git a/src/kernels/cpu/portable_stubs.cpp b/src/kernels/cpu/portable_stubs.cpp
+new file mode 100644
+index 0000000..a1447c9
+--- /dev/null
++++ b/src/kernels/cpu/portable_stubs.cpp
+@@ -0,0 +1,222 @@
++// src/kernels/cpu/portable_stubs.cpp - the CPU kernels' entry points on a CPU that is not x86-64 (Arm64).
++//
++// Strata's own expert kernels (expert.cpp, q2_avx2.cpp, iq_avx512.cpp, iq_avx2.cpp, kq_avx2.cpp) are AVX-512 / AVX-2
++// intrinsics and are built on x86-64 only.  Here a native (i-quant) pack runs on ggml-cpu's own dot products - its
++// NEON / dotprod code - which native_expert.cpp reaches whenever the "supported" probes below say no.  What has no
++// portable form (the canonical Q2_0 pack's VNNI kernel, the multi-token i-quant kernels) refuses by name instead of
++// computing something else.
++#include "strata/kernels/cpu/expert.hpp"
++#include "strata/kernels/cpu/iq_avx2.hpp"
++#include "strata/kernels/cpu/iq_avx512.hpp"
++#include "strata/kernels/cpu/kq_avx1.hpp"
++#include "strata/kernels/cpu/kq_avx2.hpp"
++
++#include <arm_neon.h>
++
++#include <cmath>
++#include <cstdio>
++#include <cstdlib>
++#include <cstring>
++
++namespace strata::kernels::cpu {
++namespace {
++
++[[noreturn]] void x86_only(const char* what) {
++    std::fprintf(stderr,
++                 "strata: %s is an x86-64 (AVX) kernel and is not built for this CPU.\n"
++                 "        On Arm64 use a native i-quant pack (IQ2_XS, IQ3_XXS, IQ3_S, ...), whose experts run on ggml-cpu.\n",
++                 what);
++    std::abort();
++}
++
++inline float bf16_to_f32(uint16_t b) {
++    const uint32_t u = (uint32_t) b << 16;
++    float f;
++    std::memcpy(&f, &u, sizeof f);
++    return f;
++}
++
++}  // namespace
++
++// ---- the i-quant multi-token kernels: none; native_expert.cpp falls back to ggml-cpu's vec_dot
++bool iq512_supported(int) noexcept { return false; }
++void iq512_gu_rows(int, const uint8_t*, size_t, size_t, int, const void* const*, int, float* const*, int, int) {
++    x86_only("the AVX-512 i-quant kernel");
++}
++void iq512_rows(int, const uint8_t*, size_t, int, const void* const*, int, float* const*, int, int) {
++    x86_only("the AVX-512 i-quant kernel");
++}
++bool iq256_supported(int) noexcept { return false; }
++void iq256_gu_rows(int, const uint8_t*, size_t, size_t, int, const void* const*, int, float* const*, int, int) {
++    x86_only("the AVX-2 i-quant kernel");
++}
++void iq256_rows(int, const uint8_t*, size_t, int, const void* const*, int, float* const*, int, int) {
++    x86_only("the AVX-2 i-quant kernel");
++}
++void iq4nl256_down_rows(const uint8_t*, size_t, int, const void* const*, int, float* const*, int, int) {
++    x86_only("the AVX-2 IQ4_NL kernel");
++}
++bool kq256_supported(int) noexcept { return false; }
++void kq256_gu_rows(int, const uint8_t*, size_t, size_t, int, const void* const*, int, float* const*, int, int) {
++    x86_only("the AVX-2 K-quant kernel");
++}
++void kq256_rows(int, const uint8_t*, size_t, int, const void* const*, int, float* const*, int, int) {
++    x86_only("the AVX-2 K-quant kernel");
++}
++
++// ---- the routing-aware prefetch's router estimate: plain loops (the compiler vectorizes them for NEON)
++void bf16_rows_dot(const uint16_t* w, int rows, int cols, const float* x, float* out) {
++    for (int r = 0; r < rows; ++r) {
++        const uint16_t* row = w + (size_t) r * cols;
++        float s = 0.f;
++        for (int c = 0; c < cols; ++c) s += bf16_to_f32(row[c]) * x[c];
++        out[r] = s;
++    }
++}
++
++void bf16_rows_dot_multi(const uint16_t* w, int rows, int cols, const float* x, int nt, float* out) {
++    for (int t = 0; t < nt; ++t) bf16_rows_dot(w, rows, cols, x + (size_t) t * cols, out + (size_t) t * rows);
++}
++
++void bf16_rows_dot_multi_avx1(const uint16_t* w, int rows, int cols, const float* x, int nt, float* out) {
++    bf16_rows_dot_multi(w, rows, cols, x, nt, out);   // never selected (cpu_avx1_ok is false here)
++}
++
++// ---- the canonical Q2_0 pack's CPU expert kernel (AVX-512 VNNI + VBMI): x86-64 only
++const char* CpuFeatures::reason() const { return "not an x86-64 CPU"; }
++CpuFeatures cpu_features() { return CpuFeatures{}; }
++
++void cpu_require_expert_support() {
++    std::fprintf(stderr,
++                 "strata: this CPU cannot run the canonical Q2_0 pack's expert kernel (AVX-512 VNNI + VBMI, x86-64 only).\n"
++                 "        On Arm64 use a native i-quant pack: IQ2_XS, IQ3_XXS or IQ3_S.\n");
++    std::exit(1);
++}
++
++void expert_set_oracle_q8_0(bool) {}
++bool expert_oracle_q8_0_enabled() { return false; }
++// Called for every layer even with a native pack, whose kernels never read this ActQ (expert_source.cpp): a no-op here.
++// The Q2_0 kernels that would read it are the stubs below and refuse.
++void act_quant_q8_1(const float*, int, ActQ& a) { a.nchunks = 0; }
++void s2_expert_vnni(const uint8_t*, const float*, float*, ExpertScratch&) { x86_only("the Q2_0 expert kernel"); }
++void s2_expert_vnni_q(const uint8_t*, const ActQ&, float*, ExpertScratch&) { x86_only("the Q2_0 expert kernel"); }
++void s2_expert_gu_rows(const uint8_t*, const ActQ&, float*, int, int) { x86_only("the Q2_0 expert kernel"); }
++void s2_expert_down_rows(const uint8_t*, const ActQ&, float*, int, int) { x86_only("the Q2_0 expert kernel"); }
++void s2_expert_gu_rows_multi(const uint8_t*, const ActQ* const*, int, float* const*, int, int) {
++    x86_only("the Q2_0 expert kernel");
++}
++void s2_expert_down_rows_multi(const uint8_t*, const ActQ* const*, int, float* const*, int, int) {
++    x86_only("the Q2_0 expert kernel");
++}
++void s2_expert_vnni_multi(const uint8_t*, const ActQ* const*, int, float* const*, ExpertScratchMulti&) {
++    x86_only("the Q2_0 expert kernel");
++}
++void s2_expert_scalar(const uint8_t*, const float*, float*, bool) { x86_only("the Q2_0 expert kernel"); }
++void q2_0_gguf_rows_multi(const uint8_t*, size_t, int, const ActQ* const*, int, float* const*, int, int) {
++    x86_only("the Q2_0 row kernel");
++}
++
++
++// ---- Q2_0 rows in the GGUF block layout (18 bytes per 64 weights: fp16 d, 16 bytes of 2-bit codes) against `nt`
++// activations - q2_avx2.cpp's arithmetic on NEON: codes 0..3 times the int8 activation per 32-value chunk (exact in
++// int32), times the weight scale and the chunk scale, minus the weight scale times the chunk's hx (the -1 offset).
++namespace {
++
++inline float h2f(const uint8_t* p) {
++    __fp16 h;
++    std::memcpy(&h, p, 2);
++    return (float) h;
++}
++
++// 16 code bytes -> 64 codes in value order (value i is in byte i/4, bits 2*(i%4)); vst4q interleaves them
++inline void unpack64(const uint8_t* codes, uint8_t* out64) {
++    const uint8x16_t b = vld1q_u8(codes), m3 = vdupq_n_u8(3);
++    uint8x16x4_t c;
++    c.val[0] = vandq_u8(b, m3);
++    c.val[1] = vandq_u8(vshrq_n_u8(b, 2), m3);
++    c.val[2] = vandq_u8(vshrq_n_u8(b, 4), m3);
++    c.val[3] = vshrq_n_u8(b, 6);
++    vst4q_u8(out64, c);
++}
++
++// sum of 32 codes (0..3) * int8 activations, exactly
++inline int32_t dot32(const uint8_t* codes32, const int8_t* q) {
++    int32x4_t acc = vdupq_n_s32(0);
++    for (int i = 0; i < 32; i += 16) {
++        const int8x16_t c = vreinterpretq_s8_u8(vld1q_u8(codes32 + i)), x = vld1q_s8(q + i);
++        acc = vpadalq_s16(acc, vmull_s8(vget_low_s8(c), vget_low_s8(x)));
++        acc = vpadalq_s16(acc, vmull_high_s8(c, x));
++    }
++    return vaddvq_s32(acc);
++}
++
++template <int NT>
++inline void row_multi(const uint8_t* row, const ActQ* const* a, int nblocks, float* res) {
++    float acc[NT], corr[NT];
++    for (int t = 0; t < NT; ++t) { acc[t] = 0.f; corr[t] = 0.f; }
++    alignas(16) uint8_t codes[64];
++    for (int b = 0; b < nblocks; ++b) {
++        const uint8_t* blk = row + (size_t) b * 18;
++        const float d = h2f(blk);
++        unpack64(blk + 2, codes);
++        for (int t = 0; t < NT; ++t) {
++            const int8_t* q = a[t]->q + b * 64;
++            acc[t] += d * a[t]->scale[2 * b] * (float) dot32(codes, q);
++            acc[t] += d * a[t]->scale[2 * b + 1] * (float) dot32(codes + 32, q + 32);
++            corr[t] += d * (a[t]->hx[2 * b] + a[t]->hx[2 * b + 1]);
++        }
++    }
++    for (int t = 0; t < NT; ++t) res[t] = acc[t] - corr[t];
++}
++
++template <int NT>
++void rows(const uint8_t* w, size_t row_bytes, int nblocks, const ActQ* const* a, float* const* out, int r0, int r1) {
++    float res[NT];
++    for (int r = r0; r < r1; ++r) {
++        row_multi<NT>(w + (size_t) r * row_bytes, a, nblocks, res);
++        for (int t = 0; t < NT; ++t) out[t][r] = res[t];
++    }
++}
++
++}  // namespace
++
++void q2_0_gguf_rows_multi_avx2(const uint8_t* w, size_t row_bytes, int nblocks, const ActQ* const* a, int nt,
++                               float* const* out, int r0, int r1) {
++    switch (nt) {
++        case 1: rows<1>(w, row_bytes, nblocks, a, out, r0, r1); break;
++        case 2: rows<2>(w, row_bytes, nblocks, a, out, r0, r1); break;
++        case 3: rows<3>(w, row_bytes, nblocks, a, out, r0, r1); break;
++        case 4: rows<4>(w, row_bytes, nblocks, a, out, r0, r1); break;
++        default:
++            for (int t0 = 0; t0 < nt; t0 += 4) {
++                const int k = nt - t0 < 4 ? nt - t0 : 4;
++                q2_0_gguf_rows_multi_avx2(w, row_bytes, nblocks, a + t0, k, out + t0, r0, r1);
++            }
++    }
++}
++
++// the legacy activation quantizer (the scalar rule of expert.cpp: half away from zero, clamp to +-127)
++void act_quant_q8_1_avx2(const float* x, int n, ActQ& a) {
++    a.nchunks = n / QKA;
++    for (int k = 0; k < a.nchunks; ++k) {
++        const float* xb = x + k * QKA;
++        float amax = 0.f;
++        for (int j = 0; j < QKA; ++j) amax = std::fmax(amax, std::fabs(xb[j]));
++        const float s = amax > 0.f ? amax / 127.f : 0.f;
++        const float inv = s > 0.f ? 1.f / s : 0.f;
++        int32_t sum = 0;
++        int8_t* q = a.q + k * QKA;
++        for (int j = 0; j < QKA; ++j) {
++            const float t = xb[j] * inv;
++            int v = (int) (t + (t >= 0.f ? 0.5f : -0.5f));
++            v = v < -127 ? -127 : (v > 127 ? 127 : v);
++            q[j] = (int8_t) v;
++            sum += v;
++        }
++        a.scale[k] = s;
++        a.sum[k] = sum;
++        a.hx[k] = s * (float) sum;
++    }
++}
++
++}  // namespace strata::kernels::cpu
+diff --git a/tools/test_setup_choices.py b/tools/test_setup_choices.py
+index c706a62..6cd8daa 100644
+--- a/tools/test_setup_choices.py
++++ b/tools/test_setup_choices.py
+@@ -21,6 +21,8 @@ sys.path.insert(0, str(ROOT))
+ sys.path.insert(0, str(ROOT / "tools"))
+ import setup  # noqa: E402
+ 
++setup.ARM64 = False   # these tests describe an x86-64 PC whatever machine runs them
++
+ 
+ def quiet(fn, *args, **kw):
+     out = io.StringIO()
+diff --git a/tools/test_setup_config.py b/tools/test_setup_config.py
+index cd29764..04be1c9 100644
+--- a/tools/test_setup_config.py
++++ b/tools/test_setup_config.py
+@@ -18,6 +18,8 @@ ROOT = Path(__file__).resolve().parents[1]
+ sys.path.insert(0, str(ROOT))
+ sys.path.insert(0, str(ROOT / "tools"))
+ import setup  # noqa: E402
++
++setup.ARM64 = False   # these tests describe an x86-64 PC whatever machine runs them
+ from test_setup_golden import PROFILES, install  # noqa: E402
+ 
+ 
+diff --git a/tools/test_setup_hybrid.py b/tools/test_setup_hybrid.py
+index a5b9a16..0ed9d2a 100644
+--- a/tools/test_setup_hybrid.py
++++ b/tools/test_setup_hybrid.py
+@@ -14,6 +14,8 @@ ROOT = Path(__file__).resolve().parents[1]
+ sys.path.insert(0, str(ROOT))
+ sys.path.insert(0, str(ROOT / "tools"))
+ import setup  # noqa: E402
++
++setup.ARM64 = False   # these tests describe an x86-64 PC whatever machine runs them
+ from test_setup_golden import PROFILES, install  # noqa: E402
+ 
+ 
+diff --git a/tools/test_setup_pins.py b/tools/test_setup_pins.py
+index c600f69..06988f9 100644
+--- a/tools/test_setup_pins.py
++++ b/tools/test_setup_pins.py
+@@ -23,6 +23,8 @@ sys.path.insert(0, str(ROOT))
+ sys.path.insert(0, str(ROOT / "tools"))
+ import setup  # noqa: E402
+ 
++setup.ARM64 = False   # these tests describe an x86-64 PC whatever machine runs them
++
+ SHA = re.compile(r"/resolve/[0-9a-f]{40}/")
+ 
+ 
+diff --git a/tools/test_setup_remote_opt.py b/tools/test_setup_remote_opt.py
+index 7e57ee4..9a75d50 100644
+--- a/tools/test_setup_remote_opt.py
++++ b/tools/test_setup_remote_opt.py
+@@ -14,6 +14,8 @@ ROOT = Path(__file__).resolve().parents[1]
+ sys.path.insert(0, str(ROOT))
+ sys.path.insert(0, str(ROOT / "tools"))
+ import setup  # noqa: E402
++
++setup.ARM64 = False   # these tests describe an x86-64 PC whatever machine runs them
+ from test_setup_golden import PROFILES, install  # noqa: E402
+ 
+ FLAG = "--remote-expert-opt"
+diff --git a/tools/test_setup_risk.py b/tools/test_setup_risk.py
+index 366421d..4dfab9f 100644
+--- a/tools/test_setup_risk.py
++++ b/tools/test_setup_risk.py
+@@ -21,6 +21,8 @@ ROOT = Path(__file__).resolve().parents[1]
+ sys.path.insert(0, str(ROOT))
+ sys.path.insert(0, str(ROOT / "tools"))
+ import setup  # noqa: E402
++
++setup.ARM64 = False   # these tests describe an x86-64 PC whatever machine runs them
+ from test_setup_golden import PROFILES, card, install  # noqa: E402
+ 
+ 
+diff --git a/tools/test_setup_unsloth.py b/tools/test_setup_unsloth.py
+index 9b9d271..24e8631 100644
+--- a/tools/test_setup_unsloth.py
++++ b/tools/test_setup_unsloth.py
+@@ -22,6 +22,8 @@ ROOT = Path(__file__).resolve().parents[1]
+ sys.path.insert(0, str(ROOT))
+ import setup  # noqa: E402
+ 
++setup.ARM64 = False   # these tests describe an x86-64 PC whatever machine runs them
++
+ M = "UD-Q4_K_XL"
+ REV = "38bb39ee97821de2c9009abb7e93950eec396e66"
+ 

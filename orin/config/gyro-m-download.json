@@ -1,0 +1,9 @@
+{
+  "repo": "agentionai/Qwen3.8-Flash-Next-Gyro-GGUF",
+  "revision": "e40c350d6a8974dc1b70cd46ec451a6e63561cb6",
+  "filename": "Qwen3.8-Flash-Next-Gyro-M-TQ2_0.gguf",
+  "size": 91965774272,
+  "sha256": "5edfedf7398e18cb9d7cc32f40035acfc5f66bb9051e8216a053ac72d5324ee9",
+  "cache": "${HF_CACHE}/hub",
+  "scope": "Gyro-M only; no Gyro-S, vision projector or MTP weights"
+}

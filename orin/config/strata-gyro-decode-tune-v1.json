@@ -1,0 +1,157 @@
+{
+  "protocol": "orin-strata-gyro-decode-tune-v1",
+  "runtime_directory": "${RUNTIME}",
+  "workload": "Korean explanation of inference latency with varied reference notes",
+  "input_lengths": [
+    2048
+  ],
+  "output_tokens": 512,
+  "concurrency": 1,
+  "warmup_requests_per_length_and_mode": 1,
+  "measured_requests_per_length_and_mode": 3,
+  "mode_order": [
+    "base",
+    "p03",
+    "p07",
+    "sh0",
+    "fuse",
+    "max4",
+    "stage",
+    "cap3",
+    "cap6",
+    "cap6p07",
+    "cap8"
+  ],
+  "max_context": 32768,
+  "prefill_chunk": 8192,
+  "kv": "int8",
+  "verifier_capacity": 4,
+  "mtp_max_t": {
+    "base": 4,
+    "p03": 4,
+    "p07": 4,
+    "sh0": 4,
+    "fuse": 4,
+    "max4": 4,
+    "stage": 4,
+    "cap3": 3,
+    "cap6": 6,
+    "cap6p07": 6,
+    "cap8": 8
+  },
+  "spec_min_p": 0.5,
+  "expert_cache": 24576,
+  "pool_workers": 2,
+  "prompt_cache": 0,
+  "prompt_cache_every": 0,
+  "conversation_cache_mib": 0,
+  "short_read": 0,
+  "suffix_draft": 0,
+  "sampling": {
+    "temperature": 0
+  },
+  "eos_ids": [
+    2147483647
+  ],
+  "power_mode": "MAXN",
+  "input_scope": "Synthetic exact Qwen token lengths. 25K approximates the earlier gpchan size estimate; it is not a replay of the gpchan system prompt/tools.",
+  "eos_scope": "Unreachable EOS id forces exactly 512 tokens, including any natural end-of-turn followed by continuation. Record natural EOS positions; not an answer-quality evaluation.",
+  "timers": {
+    "internal_prompt_ms": "DONE.prompt_ms: engine r0 to prompt completion after expert-cache refill, including reset, target prefill and draft KV prefill. Last input token is processed by first verify window.",
+    "internal_prefill_tps": "(input_tokens - 1) / (DONE.prompt_ms / 1000), after verifying zero reused tokens and final PP position=input_tokens-1.",
+    "last_pp_ms": "Cumulative engine r0-to-last-prefill-chunk timer; includes target and draft prefill. Excludes subsequent cache refill; not a pure target kernel timer.",
+    "internal_decode_ms": "DONE.decode_ms: first verify window (last prompt token and first output), subsequent verify/draft windows, completion bookkeeping.",
+    "internal_decode_tps": "512 / (DONE.decode_ms / 1000).",
+    "ttft_seconds": "IPC client time immediately before GEN serialization/write to first received token; excludes model startup, includes prefill/first generation/IPC.",
+    "stream_decode_tps": "511 / (last_token_received - first_token_received); tokens accepted together arrive in bursts.",
+    "elapsed_seconds": "IPC client time immediately before GEN serialization/write to DONE receipt; excludes model startup."
+  },
+  "limitations": [
+    "Screening on one 2,048-token Korean explanation prompt; acceptance and the best MTP policy are content-dependent. Validate winners on varied prompts (chat, code, tool/JSON) before adopting.",
+    "Three measurements share one engine load per mode; single mode order. Sub-percent differences need alternating engine starts.",
+    "Existing dynamic CPU/GPU governors (EMC already at 3,199 MHz via bwmgr); NVMe APST off and 2 s I/O timeout active.",
+    "GPU power is unavailable in ASTOP; tegrastats VDD_GPU_SOC is a board rail including SoC."
+  ],
+  "comparison": [
+    "base",
+    "p03",
+    "p07",
+    "sh0",
+    "fuse",
+    "max4",
+    "stage",
+    "cap3",
+    "cap6",
+    "cap6p07",
+    "cap8"
+  ],
+  "mode_args": {
+    "base": [
+      "--no-prefill-borrow"
+    ],
+    "p03": [
+      "--no-prefill-borrow",
+      "--spec-min-p",
+      "0.3"
+    ],
+    "p07": [
+      "--no-prefill-borrow",
+      "--spec-min-p",
+      "0.7"
+    ],
+    "sh0": [
+      "--no-prefill-borrow"
+    ],
+    "fuse": [
+      "--no-prefill-borrow"
+    ],
+    "max4": [
+      "--no-prefill-borrow"
+    ],
+    "stage": [
+      "--no-prefill-borrow"
+    ],
+    "cap3": [
+      "--no-prefill-borrow"
+    ],
+    "cap6": [
+      "--no-prefill-borrow",
+      "--spec",
+      "6"
+    ],
+    "cap6p07": [
+      "--no-prefill-borrow",
+      "--spec",
+      "6",
+      "--spec-min-p",
+      "0.7"
+    ],
+    "cap8": [
+      "--no-prefill-borrow",
+      "--spec",
+      "8"
+    ]
+  },
+  "hypothesis": "Screen decode-side knobs on top of the adopted serving setup (owned 8,192-token prefill): MTP confidence (0.3/0.5/0.7), MTP window cap (3/4/6/8 with matching verifier capacity), shared-expert stream off, final head/mixer fusion, the 4-token fused-GR down variant and staged codebooks for single-matrix MMVQ (the last two documented as bitwise-identical).",
+  "decision_metrics": [
+    "internal and stream decode tok/s relative to base",
+    "decode timing per window: verify, draft, tokens/window",
+    "acceptance",
+    "output identity with base (expected for bitwise-identical kernels; MTP policy should not change greedy target output but window shapes may)"
+  ],
+  "chunk_scope": "All modes use --no-prefill-borrow --prefill 8192. Later --spec / --spec-min-p in mode_args override the protocol values (last flag wins in the engine parser).",
+  "mode_env": {
+    "sh0": {
+      "STRATA_SH_STREAM": "0"
+    },
+    "fuse": {
+      "STRATA_FUSE_HEAD_GR": "1"
+    },
+    "max4": {
+      "STRATA_GR_DOWN_MAX4": "1"
+    },
+    "stage": {
+      "STRATA_IQ_STAGE_GRID_MMVQ": "1"
+    }
+  }
+}

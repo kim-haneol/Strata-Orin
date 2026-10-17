@@ -1,0 +1,116 @@
+From a4f8bd9650dbd4f69a763aa44f5dca9d59a5bea2 Mon Sep 17 00:00:00 2001
+From: Kim Haneol <50127697+kim-haneol@users.noreply.github.com>
+Date: Wed, 7 Oct 2026 14:00:37 +0000
+Subject: [PATCH] Fetch a TQ2_T row's lane steps before decoding them in
+ row_dot_multi
+
+Same values and additions as the per-step loop; one global-load round trip per
+row instead of one per step (Gyro-M: 5 for gate/up, 2 for down).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01Q5nxsJp1JYZC9vLYGn2kQC
+---
+ src/kernels/cuda/iq_kernels.cu | 73 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 73 insertions(+)
+
+diff --git a/src/kernels/cuda/iq_kernels.cu b/src/kernels/cuda/iq_kernels.cu
+index 43b965c..a13d282 100644
+--- a/src/kernels/cuda/iq_kernels.cu
++++ b/src/kernels/cuda/iq_kernels.cu
+@@ -559,6 +559,33 @@ __device__ __forceinline__ TqLane tq_load(const void* __restrict__ vbq, int kbx,
+     r.d = tq_h2f(b->d);
+     return r;
+ }
++// TQ2_T's tq_load in two halves, so that a row's loads for all of a lane's steps can be in flight before any of
++// them is decoded (row_dot_tq2t_pf below): tq2t_fetch reads the step words, the previous step's byte and the scale;
++// tq2t_decode does tq_states4<144> and tq_load's codebook lookups on them.  Same values, same operations.
++struct TqRaw { uint32_t w01, w23, prev, d; };
++__device__ __forceinline__ TqRaw tq2t_fetch(const void* __restrict__ vbq, int kbx, int iqs) {
++    const block_tq2_t* b = (const block_tq2_t*) vbq + kbx;
++    const int l = iqs / 4;
++    const uint16_t* qs16 = (const uint16_t*) b->qs;
++    TqRaw r;
++    r.w01 = qs16[2 * l + 0];
++    r.w23 = qs16[2 * l + 1];
++    r.prev = b->qs[(4 * l + 31) & 31];
++    r.d = b->d;   // the conversion tq_load's tq_h2f(b->d) argument makes
++    return r;
++}
++__device__ __forceinline__ TqLane tq2t_decode(const TqRaw& raw) {
++    const uint32_t b0 = raw.w01 & 0xFF, b1 = raw.w01 >> 8, b2 = raw.w23 & 0xFF, b3 = raw.w23 >> 8;
++    const uint32_t s[4] = { (raw.prev << 8) | b0, (b0 << 8) | b1, (b1 << 8) | b2, (b2 << 8) | b3 };
++    TqLane r;
++#pragma unroll
++    for (int i = 0; i < 4; ++i) {
++        const uint32_t x = (s[i] & TQ_STATE_MASK) * 0x9e3779b1u;
++        r.q[i] = (int) ((uint32_t) tq_lut_i8[x >> 21] | ((uint32_t) tq_lut_i8[(x >> 10) & 2047u] << 16));
++    }
++    r.d = tq_h2f(raw.d);
++    return r;
++}
+ __device__ __forceinline__ float tq_apply(const TqLane& r, const block_q8_1* __restrict__ bq8_1, int iqs) {
+     const int l = iqs / 4;
+     const block_q8_1* b8 = bq8_1 + l / 2;
+@@ -986,6 +1013,32 @@ template<> struct Split<146> : SplitTq<146> {};
+ // One row against the n <= NC activations x + off[0..n) (n >= 1, warp-uniform; offsets in q8_1 blocks, 32-bit to
+ // spare registers), the whole warp.  Per activation this is row_dot: the same calls k, lane-strided the same way,
+ // summed in the same order, then the same warp_sum.  Only the weight side moves out of the per-activation loop.
++// row_dot_multi's per-lane loop for TQ2_T with the lane's NIT steps (k = lane, lane + 32, ...) fetched first and then
++// decoded and summed in the loop's order: the same additions, but one memory round trip per row instead of NIT.  On
++// Orin the loop's load -> decode -> dp4a chain left the expert kernels waiting on global loads (Nsight Compute: 63%
++// of the gate/up stalls), at a small fraction of the DRAM bandwidth.
++template<int NC, bool EXACT_N, int NIT>
++__device__ __forceinline__ void row_dot_tq2t_pf(const uint8_t* row, const block_q8_1* x, const int (&off)[NC], int n,
++                                                int K, int lane, float (&s)[NC]) {
++    TqRaw raw[NIT];
++#pragma unroll
++    for (int i = 0; i < NIT; ++i) {
++        const int k = lane + 32 * i;
++        if (k < K) raw[i] = tq2t_fetch(row, k / 8, 4 * (k % 8));
++    }
++#pragma unroll
++    for (int i = 0; i < NIT; ++i) {
++        const int k = lane + 32 * i;
++        if (k < K) {
++            const TqLane w = tq2t_decode(raw[i]);
++            const int kbx = k / 8, iqs = 4 * (k % 8);
++#pragma unroll
++            for (int c = 0; c < NC; ++c)
++                if (EXACT_N || c < n) s[c] += tq_apply(w, x + off[c] + kbx * 4, iqs);
++        }
++    }
++}
++
+ template<int TY, int NC, bool EXACT_N = false, bool STAGE_GRID = false>
+ __device__ __forceinline__ void row_dot_multi(const uint8_t* row, const block_q8_1* x, const int (&off)[NC], int n,
+                                               int nb, int lane, float (&s)[NC], const uint32_t* __restrict__ s_grid = nullptr) {
+@@ -993,6 +1046,26 @@ __device__ __forceinline__ void row_dot_multi(const uint8_t* row, const block_q8
+     using S = Split<TY>;
+ #pragma unroll
+     for (int c = 0; c < NC; ++c) s[c] = 0.0f;
++    if constexpr (TY == 144) {
++        static_assert(F::qk == 128 && F::ipb == 8 && F::step == 4, "row_dot_tq2t_pf assumes TQ2_T's lane layout");
++        // up to 5 steps per lane: Gyro-M's gate/up rows (n_embd 2560) take 5, its down rows (n_ff 640) 2
++        const int K = nb * F::ipb, nit = (K + 31) / 32;
++        bool done = true;
++        switch (nit) {
++            case 1: row_dot_tq2t_pf<NC, EXACT_N, 1>(row, x, off, n, K, lane, s); break;
++            case 2: row_dot_tq2t_pf<NC, EXACT_N, 2>(row, x, off, n, K, lane, s); break;
++            case 3: row_dot_tq2t_pf<NC, EXACT_N, 3>(row, x, off, n, K, lane, s); break;
++            case 4: row_dot_tq2t_pf<NC, EXACT_N, 4>(row, x, off, n, K, lane, s); break;
++            case 5: row_dot_tq2t_pf<NC, EXACT_N, 5>(row, x, off, n, K, lane, s); break;
++            default: done = false;
++        }
++        if (done) {
++#pragma unroll
++            for (int c = 0; c < NC; ++c)
++                if (EXACT_N || c < n) s[c] = warp_sum(s[c]);
++            return;
++        }
++    }
+     for (int k = lane; k < nb * F::ipb; k += 32) {
+         const int kbx = k / F::ipb, iqs = F::step * (k % F::ipb);
+         const typename S::W w = S::template load<STAGE_GRID>(row, kbx, iqs, s_grid);
+-- 
+2.47.3
+

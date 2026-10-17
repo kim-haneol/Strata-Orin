@@ -1,0 +1,45 @@
+{
+  "protocol": "orin-strata-gyro-profile-sub8-graph-v1",
+  "purpose": "Low-overhead Nsight Systems decode capture of the serving build (build-sm87-sub8) with CUDA graphs traced as whole graphs, to time verify and draft graphs per window and separate tracing gaps from real waits; the node-level capture (evidence/strata-gyro-profile-sub8-20261008-v1) gives the per-kernel split.",
+  "runtime_directory": "${RUNTIME}",
+  "prompt_source": "${TEST_HOME}/.local/share/jetson-orin/strata-gyro-prefill-chunk-own-20261007-v2/prompts",
+  "session": "gyro-profile-sub8-graph-20261008",
+  "nsys": {
+    "binary": "/usr/local/cuda/bin/nsys",
+    "trace": "cuda,nvtx,osrt",
+    "cuda_graph_trace": "graph"
+  },
+  "max_context": 32768,
+  "prefill_chunk": 8192,
+  "kv": "int8",
+  "verifier_capacity": 4,
+  "mtp_max_t": 4,
+  "spec_min_p": 0.5,
+  "expert_cache": 24576,
+  "pool_workers": 2,
+  "eos_ids": [
+    2147483647
+  ],
+  "extra_args": [
+    "--no-prefill-borrow"
+  ],
+  "sampling": {
+    "temperature": 0
+  },
+  "warmup": {
+    "input_tokens": 2048,
+    "max_new": 32
+  },
+  "captures": [
+    {
+      "name": "decode2k",
+      "input_tokens": 2048,
+      "max_new": 256
+    }
+  ],
+  "power_mode": "MAXN",
+  "limitations": [
+    "Single prompt per capture; tracing overhead from node-level graph tracing; decode2k includes its 2K prefill, split by the recorded first-token time."
+  ],
+  "build": "build-sm87-sub8"
+}

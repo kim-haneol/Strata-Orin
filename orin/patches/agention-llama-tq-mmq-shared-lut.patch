@@ -1,0 +1,32 @@
+--- a/ggml/src/ggml-cuda/mmq.cuh
++++ b/ggml/src/ggml-cuda/mmq.cuh
+@@ -1021,6 +1021,14 @@
+     }
+     __syncthreads();
+ 
++#ifndef GGML_CUDA_TQ_F32_DOT
++    // Trellis types: the int8 codebook in shared memory for load_tiles (tq_lane_to_q8). Every lane's codebook reads
++    // are random over 4 KB; from global memory a warp load touches ~21 L1 sectors (Nsight Compute on Orin SM87).
++    if constexpr (ggml_cuda_type_is_tq(type)) {
++        tq_lut_i8_load_shared(threadIdx.y*warp_size + threadIdx.x, nwarps*warp_size);
++    }
++#endif // GGML_CUDA_TQ_F32_DOT
++
+     if constexpr (!ggml_cuda_mmq_get_stream_k(type, J, fallback, prec_src1)) {
+         const uint2 tmp2 = fast_div_modulo(blockIdx.z, nchannels_y);
+         const int wt = tmp2.x;
+--- a/ggml/src/ggml-cuda/tq.cuh
++++ b/ggml/src/ggml-cuda/tq.cuh
+@@ -204,10 +204,11 @@
+ 
+ #ifndef GGML_CUDA_TQ_F32_DOT
+     // The int8 codebook already is int8 with one scale: no decode to float and per-lane requantization.
++    // Read from the shared copy mul_mat_q fills at kernel start (tq_lut_i8_load_shared): the same entries.
+ #pragma unroll
+     for (int i = 0; i < TQ_STEPS_LANE; ++i) {
+         const uint32_t xh = (s[i] & TQ_STATE_MASK) * 0x9e3779b1u;
+-        q[i] = (int) ((uint32_t) tq_lut_i8[xh >> 21] | ((uint32_t) tq_lut_i8[(xh >> 10) & 2047u] << 16));
++        q[i] = (int) ((uint32_t) tq_lut_i8_s[xh >> 21] | ((uint32_t) tq_lut_i8_s[(xh >> 10) & 2047u] << 16));
+     }
+     return __half2float(b->d) * TQ_LUT_I8_SCALE;
+ #else

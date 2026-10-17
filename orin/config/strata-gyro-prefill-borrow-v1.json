@@ -1,0 +1,78 @@
+{
+  "protocol": "orin-strata-gyro-prefill-borrow-v1",
+  "runtime_directory": "${RUNTIME}",
+  "workload": "Korean explanation of inference latency with varied reference notes",
+  "input_lengths": [
+    2048,
+    25000
+  ],
+  "output_tokens": 512,
+  "concurrency": 1,
+  "warmup_requests_per_length_and_mode": 1,
+  "measured_requests_per_length_and_mode": 3,
+  "mode_order": [
+    "borrow",
+    "own"
+  ],
+  "max_context": 32768,
+  "prefill_chunk": 1024,
+  "kv": "int8",
+  "verifier_capacity": 4,
+  "mtp_max_t": {
+    "borrow": 4,
+    "own": 4
+  },
+  "spec_min_p": 0.5,
+  "expert_cache": 24576,
+  "pool_workers": 2,
+  "prompt_cache": 0,
+  "prompt_cache_every": 0,
+  "conversation_cache_mib": 0,
+  "short_read": 0,
+  "suffix_draft": 0,
+  "sampling": {
+    "temperature": 0
+  },
+  "eos_ids": [
+    2147483647
+  ],
+  "power_mode": "MAXN",
+  "input_scope": "Synthetic exact Qwen token lengths. 25K approximates the earlier gpchan size estimate; it is not a replay of the gpchan system prompt/tools.",
+  "eos_scope": "Unreachable EOS id forces exactly 512 tokens, including any natural end-of-turn followed by continuation. Record natural EOS positions; not an answer-quality evaluation.",
+  "timers": {
+    "internal_prompt_ms": "DONE.prompt_ms: engine r0 to prompt completion after expert-cache refill, including reset, target prefill and draft KV prefill. Last input token is processed by first verify window.",
+    "internal_prefill_tps": "(input_tokens - 1) / (DONE.prompt_ms / 1000), after verifying zero reused tokens and final PP position=input_tokens-1.",
+    "last_pp_ms": "Cumulative engine r0-to-last-prefill-chunk timer; includes target and draft prefill. Excludes subsequent cache refill; not a pure target kernel timer.",
+    "internal_decode_ms": "DONE.decode_ms: first verify window (last prompt token and first output), subsequent verify/draft windows, completion bookkeeping.",
+    "internal_decode_tps": "512 / (DONE.decode_ms / 1000).",
+    "ttft_seconds": "IPC client time immediately before GEN serialization/write to first received token; excludes model startup, includes prefill/first generation/IPC.",
+    "stream_decode_tps": "511 / (last_token_received - first_token_received); tokens accepted together arrive in bursts.",
+    "elapsed_seconds": "IPC client time immediately before GEN serialization/write to DONE receipt; excludes model startup."
+  },
+  "limitations": [
+    "One explanation prompt at each length, three repeated measurements; no workload-wide generalization.",
+    "Single mode order borrow then own; report thermal/clock telemetry and observed variability.",
+    "OS/model/PLE cache warming is allowed; prompt/prefix/KV result reuse is forbidden.",
+    "GPU power is unavailable in ASTOP; tegrastats VDD_GPU_SOC is a board rail including SoC, not GPU-only power. GPU temperature can be null at idle; preserve nulls.",
+    "Existing dynamic CPU/GPU/EMC governors; no jetson_clocks."
+  ],
+  "comparison": [
+    "borrow",
+    "own"
+  ],
+  "mode_args": {
+    "borrow": [],
+    "own": [
+      "--no-prefill-borrow"
+    ]
+  },
+  "hypothesis": "With the default prompt path, each 1,024-token chunk borrows 528 expert-cache slots and streams the lent experts from the mmap GGUF through host copies, leaving periodic GPU-idle gaps (v1: 20-29% of 25K prefill samples below 50% GR3D; +17,693.5 MB GGUF-in-place reads per 25K request). Session-owned prompt buffers (--no-prefill-borrow) should remove the streaming while keeping all 24,576 experts resident.",
+  "decision_metrics": [
+    "internal_prefill_tps and TTFT ratio own/borrow",
+    "gguf_in_place_mb_delta per request (expected near zero with own buffers)",
+    "prefill-phase tegrastats GR3D below-50% fraction",
+    "engine expert_slots unchanged at 24576 and decode tok/s unchanged",
+    "exact output equality between modes"
+  ],
+  "chunk_scope": "Explicit 1,024 chunk in both modes. A bare --prefill auto with --no-prefill-borrow switches to 2,048, so auto is not used; chunk sweeps follow separately."
+}

@@ -1,0 +1,689 @@
+diff --git a/src/kernels/cuda/dequant_bf16.cu b/src/kernels/cuda/dequant_bf16.cu
+index 32601d6..de3b2a3 100644
+--- a/src/kernels/cuda/dequant_bf16.cu
++++ b/src/kernels/cuda/dequant_bf16.cu
+@@ -8,6 +8,7 @@
+ #include <cuda_fp16.h>
+ #include <cuda_runtime.h>
+ 
++#include <cstdint>
+ #include <cstdio>
+ #include <cstdlib>
+ 
+@@ -174,6 +175,20 @@ __global__ void dequant_kernel(const uint8_t* __restrict__ blocks, int64_t row_b
+     group32<TYPE>(blocks + (row0 + r) * row_bytes, (int) gi, out + r * groups_per_row * 32 + gi * 32);
+ }
+ 
++// Q8_0 to FP16 with coalesced stores: a thread per pair of elements, so a warp writes 128 contiguous bytes (the
++// generic kernel above gives each thread a whole group, 32 scalar stores 64 bytes apart).  The same value per element:
++// (float) q * d, rounded to nearest.
++__global__ void dequant_q8_0_f16_pairs(const uint8_t* __restrict__ blocks, int64_t row_bytes, int64_t row0, int64_t rows,
++                                       int64_t cols, __half2* __restrict__ out) {
++    const int64_t p = (int64_t) blockIdx.x * blockDim.x + threadIdx.x;   // pair index over rows * cols / 2
++    if (p >= rows * (cols / 2)) return;
++    const int64_t r = p / (cols / 2), c = (p % (cols / 2)) * 2;
++    const uint8_t* b = blocks + (row0 + r) * row_bytes + (c / 32) * 34;
++    const float d = h2f(b);
++    const int j = (int) (c % 32);
++    out[p] = __halves2half2(__float2half_rn((float) (int8_t) b[2 + j] * d), __float2half_rn((float) (int8_t) b[3 + j] * d));
++}
++
+ bool geometry(int type, int& block_elems, int& block_bytes) {
+     switch (type) {
+     case 2: block_elems = 32; block_bytes = 18; return true;
+@@ -246,6 +261,19 @@ void dequant_f16(int ggml_type, const void* blocks, int64_t row0, int64_t rows,
+                        out, stream);
+         return;
+     }
++    // STRATA_DQ_PAIRS=0: Q8_0 through the generic per-group kernel (the A/B)
++    static const bool pairs = [] {
++        const char* v = std::getenv("STRATA_DQ_PAIRS");
++        return v == nullptr || std::atoi(v) != 0;
++    }();
++    if (pairs && ggml_type == 8 && cols % 32 == 0 && rows > 0 && ((uintptr_t) out & 3) == 0) {
++        const int64_t total = rows * (cols / 2);
++        dequant_q8_0_f16_pairs<<<(unsigned) ((total + 255) / 256), 256, 0, (cudaStream_t) stream>>>(
++            (const uint8_t*) blocks, cols / 32 * 34, row0, rows, cols, reinterpret_cast<__half2*>(out));
++        const cudaError_t e = cudaGetLastError();
++        if (e != cudaSuccess) { std::fprintf(stderr, "dequant launch: %s\n", cudaGetErrorString(e)); std::exit(1); }
++        return;
++    }
+     launch<H16>(ggml_type, blocks, row0, rows, cols, reinterpret_cast<H16*>(out), stream);
+ }
+ 
+diff --git a/src/kernels/cuda/iq_kernels.cu b/src/kernels/cuda/iq_kernels.cu
+index 43b965c..65f3614 100644
+--- a/src/kernels/cuda/iq_kernels.cu
++++ b/src/kernels/cuda/iq_kernels.cu
+@@ -545,8 +545,10 @@ __device__ __forceinline__ void tq_states4(const uint8_t* qs, int l, uint32_t s[
+ // 4 weights are two 2-byte entries = one int, so the apply side is 4 dp4a instead of 16 int8->float + 16 FMAs, and
+ // a decoded lane takes 5 registers instead of 17.  load/apply split as before: bitwise equal by construction.
+ struct TqLane { int q[4]; float d; };
++// `lut` is tq_lut_i8 itself or a shared-memory copy of it (stage_iq_grid<144>): the same entries either way.
+ template<int TY>
+-__device__ __forceinline__ TqLane tq_load(const void* __restrict__ vbq, int kbx, int iqs) {
++__device__ __forceinline__ TqLane tq_load(const void* __restrict__ vbq, int kbx, int iqs,
++                                          const uint16_t* __restrict__ lut = tq_lut_i8) {
+     const auto* b = (const typename TqInfo<TY>::block_t*) vbq + kbx;
+     uint32_t s[4];
+     tq_states4<TY>(b->qs, iqs / 4, s);
+@@ -554,7 +556,7 @@ __device__ __forceinline__ TqLane tq_load(const void* __restrict__ vbq, int kbx,
+ #pragma unroll
+     for (int i = 0; i < 4; ++i) {
+         const uint32_t x = (s[i] & TQ_STATE_MASK) * 0x9e3779b1u;
+-        r.q[i] = (int) ((uint32_t) tq_lut_i8[x >> 21] | ((uint32_t) tq_lut_i8[(x >> 10) & 2047u] << 16));
++        r.q[i] = (int) ((uint32_t) lut[x >> 21] | ((uint32_t) lut[(x >> 10) & 2047u] << 16));
+     }
+     r.d = tq_h2f(b->d);
+     return r;
+@@ -665,7 +667,7 @@ template<int TY> struct Split;
+ // per-entry ones, which call Fmt<TY>::dot per column exactly as before #242 (the launchers test kSplit at compile
+ // time, so the multi kernels are never instantiated for a type without a Split).
+ template<int TY> inline constexpr bool kSplit = false;
+-template<int TY> inline constexpr bool kStageIqGrid = (TY == 16 || TY == 17 || TY == 22 || TY == 29);
++template<int TY> inline constexpr bool kStageIqGrid = (TY == 16 || TY == 17 || TY == 22 || TY == 29 || TY == 144);
+ 
+ template<> inline constexpr bool kSplit<16> = true;
+ template<> struct Split<16> {   // IQ2_XXS
+@@ -973,9 +975,13 @@ template<> inline constexpr bool kSplit<145> = true;
+ template<> inline constexpr bool kSplit<146> = true;
+ template<int TY> struct SplitTq {
+     using W = TqLane;
+-    template<bool STAGE_GRID = false>   // (no grid table to stage: the codebook is read where it is)
+-    __device__ static W load(const void* __restrict__ vbq, int kbx, int iqs, const uint32_t* __restrict__ = nullptr) {
+-        return tq_load<TY>(vbq, kbx, iqs);
++    // STAGE_GRID (TQ2_T): s_grid is a shared-memory copy of the int8 codebook (stage_iq_grid<144>).  The lanes'
++    // codebook reads are random over 4 KB, so from global memory one warp load touches ~21 L1 sectors (Nsight
++    // Compute on Orin: L1 70% busy, LG/MIO throttles); from shared memory it is a few bank conflicts.
++    template<bool STAGE_GRID = false>
++    __device__ static W load(const void* __restrict__ vbq, int kbx, int iqs, const uint32_t* __restrict__ s_grid = nullptr) {
++        if constexpr (STAGE_GRID && TY == 144) return tq_load<TY>(vbq, kbx, iqs, (const uint16_t*) s_grid);
++        else return tq_load<TY>(vbq, kbx, iqs);
+     }
+     __device__ static float apply(const W& r, const block_q8_1* __restrict__ bq8_1, int iqs) { return tq_apply(r, bq8_1, iqs); }
+ };
+@@ -986,6 +992,60 @@ template<> struct Split<146> : SplitTq<146> {};
+ // One row against the n <= NC activations x + off[0..n) (n >= 1, warp-uniform; offsets in q8_1 blocks, 32-bit to
+ // spare registers), the whole warp.  Per activation this is row_dot: the same calls k, lane-strided the same way,
+ // summed in the same order, then the same warp_sum.  Only the weight side moves out of the per-activation loop.
++// TQ2_T rows staged per warp: the warp copies its whole row into shared memory with every lane's 4-byte copies in
++// flight at once (cp.async), then runs row_dot_multi's loop on the copy.  The loop decodes the same bytes in the same
++// order, so the result is bitwise the same; what changes is that the row costs one global-load round trip instead of
++// one per lane step (5 for Gyro-M's gate/up rows, 2 for its down rows).  On Orin the per-step load -> decode -> dp4a
++// chain left the expert kernels waiting on global loads (Nsight Compute: 63% of the gate/up stalls).  Keeping the
++// steps' bytes in registers instead doubled the kernels' registers and halved their occupancy (slower), hence shared
++// memory.  Rows of up to 32 blocks (4,096 values), at most 8 warps per block; anything else takes the plain loop.
++#if defined(__CUDA_ARCH__) && __CUDA_ARCH__ >= 800 && !defined(__HIPCC__)
++#define STRATA_TQ_CP_ASYNC 1
++#endif
++constexpr int kTqStageWarps = 8, kTqStageMaxBlocks = 32;
++constexpr int kTqStageWords = (3 + kTqStageMaxBlocks * (int) sizeof(block_tq2_t) + 3) / 4;
++__shared__ alignas(16) uint32_t g_tq_stage_rows[kTqStageWarps][kTqStageWords];   // one per kernel that stages rows
++template<int NC, bool EXACT_N, bool STAGE_GRID>
++__device__ __forceinline__ bool row_dot_tq2t_staged(const uint8_t* row, const block_q8_1* x, const int (&off)[NC],
++                                                    int n, int nb, int lane, float (&s)[NC], const uint32_t* s_grid) {
++    auto& s_rows = g_tq_stage_rows;
++    const int nthreads = blockDim.x * blockDim.y * blockDim.z;
++    const int wid = (threadIdx.x + blockDim.x * (threadIdx.y + blockDim.y * threadIdx.z)) >> 5;
++    if (nb > kTqStageMaxBlocks || nthreads % 32 != 0 || wid >= kTqStageWarps) return false;   // warp-uniform
++    // aligned 4-byte words covering the row: the first and last may reach up to 3 bytes outside it, but stay inside
++    // the 4-byte-aligned words (and so the pages) that hold its first and last bytes
++    const uintptr_t a = (uintptr_t) row;
++    const int head = (int) (a & 3u);
++    const uint32_t* src = (const uint32_t*) (a - (uintptr_t) head);
++    const int words = (head + nb * (int) sizeof(block_tq2_t) + 3) >> 2;
++    uint32_t* dst = s_rows[wid];
++    for (int i = lane; i < words; i += 32) {
++#if defined(STRATA_TQ_CP_ASYNC)
++        const unsigned sa = (unsigned) __cvta_generic_to_shared(dst + i);
++        asm volatile("cp.async.ca.shared.global [%0], [%1], 4;\n" ::"r"(sa), "l"(src + i) : "memory");
++#else
++        dst[i] = src[i];
++#endif
++    }
++#if defined(STRATA_TQ_CP_ASYNC)
++    asm volatile("cp.async.commit_group;\n" ::: "memory");
++    asm volatile("cp.async.wait_group 0;\n" ::: "memory");
++#endif
++    __syncwarp();
++    const uint8_t* srow = (const uint8_t*) dst + head;   // same address parity as the row: 2-byte aligned blocks
++    using F = Fmt<144>;
++    using S = Split<144>;
++    for (int k = lane; k < nb * F::ipb; k += 32) {
++        const int kbx = k / F::ipb, iqs = F::step * (k % F::ipb);
++        const typename S::W w = S::template load<STAGE_GRID>(srow, kbx, iqs, s_grid);
++#pragma unroll
++        for (int c = 0; c < NC; ++c)
++            if (EXACT_N || c < n) s[c] += S::apply(w, x + off[c] + kbx * (F::qk / 32), iqs);
++    }
++    __syncwarp();   // the warp's next row must not overwrite bytes a lagging lane still reads
++    return true;
++}
++
+ template<int TY, int NC, bool EXACT_N = false, bool STAGE_GRID = false>
+ __device__ __forceinline__ void row_dot_multi(const uint8_t* row, const block_q8_1* x, const int (&off)[NC], int n,
+                                               int nb, int lane, float (&s)[NC], const uint32_t* __restrict__ s_grid = nullptr) {
+@@ -993,6 +1053,14 @@ __device__ __forceinline__ void row_dot_multi(const uint8_t* row, const block_q8
+     using S = Split<TY>;
+ #pragma unroll
+     for (int c = 0; c < NC; ++c) s[c] = 0.0f;
++    if constexpr (TY == 144) {
++        if (row_dot_tq2t_staged<NC, EXACT_N, STAGE_GRID>(row, x, off, n, nb, lane, s, s_grid)) {
++#pragma unroll
++            for (int c = 0; c < NC; ++c)
++                if (EXACT_N || c < n) s[c] = warp_sum(s[c]);
++            return;
++        }
++    }
+     for (int k = lane; k < nb * F::ipb; k += 32) {
+         const int kbx = k / F::ipb, iqs = F::step * (k % F::ipb);
+         const typename S::W w = S::template load<STAGE_GRID>(row, kbx, iqs, s_grid);
+@@ -1007,23 +1075,23 @@ __device__ __forceinline__ void row_dot_multi(const uint8_t* row, const block_q8
+ 
+ // 8-lane sub-warp row dot for K = nb * ipb == 40 (TD == 20, IQ4_NL with n_ff == 640):
+ // 4 rows per warp (32 rows per 256-thread block), 100% active lanes, bitwise identical addition tree to row_dot_multi.
+-template<int TY, int NC, bool EXACT_N = false>
++template<int TY, int NC, bool EXACT_N = false, bool STAGE_GRID = false>
+ __device__ __forceinline__ void row_dot_40_sub8(const uint8_t* row, const block_q8_1* x, const int (&off)[NC], int n,
+-                                                int t, float (&s)[NC]) {
++                                                int t, float (&s)[NC], const uint32_t* __restrict__ s_grid = nullptr) {
+     using F = Fmt<TY>;
+     using S = Split<TY>;
+ #pragma unroll
+     for (int c = 0; c < NC; ++c) s[c] = 0.0f;
+     for (int k = t; k < 40; k += 32) {
+         const int kbx = k / F::ipb, iqs = F::step * (k % F::ipb);
+-        const typename S::W w = S::load(row, kbx, iqs);
++        const typename S::W w = S::template load<STAGE_GRID>(row, kbx, iqs, s_grid);
+ #pragma unroll
+         for (int c = 0; c < NC; ++c)
+             if (EXACT_N || c < n) s[c] += S::apply(w, x + off[c] + kbx * (F::qk / 32), iqs);
+     }
+     {
+         const int k = t + 16, kbx = k / F::ipb, iqs = F::step * (k % F::ipb);
+-        const typename S::W w = S::load(row, kbx, iqs);
++        const typename S::W w = S::template load<STAGE_GRID>(row, kbx, iqs, s_grid);
+ #pragma unroll
+         for (int c = 0; c < NC; ++c) {
+             if (EXACT_N || c < n) {
+@@ -1038,14 +1106,14 @@ __device__ __forceinline__ void row_dot_40_sub8(const uint8_t* row, const block_
+     for (int c = 0; c < NC; ++c) s8[c] = 0.0f;
+     {
+         const int k = t + 8, kbx = k / F::ipb, iqs = F::step * (k % F::ipb);
+-        const typename S::W w = S::load(row, kbx, iqs);
++        const typename S::W w = S::template load<STAGE_GRID>(row, kbx, iqs, s_grid);
+ #pragma unroll
+         for (int c = 0; c < NC; ++c)
+             if (EXACT_N || c < n) s8[c] += S::apply(w, x + off[c] + kbx * (F::qk / 32), iqs);
+     }
+     {
+         const int k = t + 24, kbx = k / F::ipb, iqs = F::step * (k % F::ipb);
+-        const typename S::W w = S::load(row, kbx, iqs);
++        const typename S::W w = S::template load<STAGE_GRID>(row, kbx, iqs, s_grid);
+ #pragma unroll
+         for (int c = 0; c < NC; ++c) {
+             if (EXACT_N || c < n) {
+@@ -1128,6 +1196,12 @@ __device__ __forceinline__ const uint32_t* stage_iq_grid(uint32_t* s_buf, int ti
+         for (int i = tid; i < 1024; i += nthreads) dst[i] = src[i];
+         __syncthreads();
+         return s_buf;
++    } else if constexpr (TY == 144) {   // TQ2_T's int8 codebook, 2048 x 2 bytes
++        uint4* dst = (uint4*) s_buf;
++        const uint4* src = (const uint4*) tq_lut_i8;
++        for (int i = tid; i < 256; i += nthreads) dst[i] = src[i];
++        __syncthreads();
++        return s_buf;
+     } else {
+         return nullptr;
+     }
+@@ -1135,7 +1209,8 @@ __device__ __forceinline__ const uint32_t* stage_iq_grid(uint32_t* s_buf, int ti
+ 
+ template<int TY, bool STAGE_GRID = kStageIqGrid<TY>>
+ struct IqGridWords {
+-    static constexpr int value = !STAGE_GRID ? 4 : (TY == 22 || TY == 29) ? 2048 : (TY == 17) ? 1024 : (TY == 16) ? 512 : 4;
++    static constexpr int value = !STAGE_GRID ? 4 : (TY == 22 || TY == 29) ? 2048 : (TY == 17 || TY == 144) ? 1024
++                               : (TY == 16) ? 512 : 4;
+ };
+ 
+ // mmvq_kernel with the columns taken NC at a time.  After warp_sum every lane holds the same sum, so lane c stores
+@@ -1166,6 +1241,11 @@ __global__ void __launch_bounds__(128) mmvq_multi_kernel(const uint8_t* __restri
+ 
+ // ---------------------------------------------------------------- grouped native experts
+ constexpr int GU_ROWS = 8;     // rows per block (one warp each)
++// TQ2_T: each warp takes 4 rows (32 per block).  A group of one entry - most of a decode window's groups, whose
++// tokens rarely share an expert - then reads its activations once per lane step for all 4 rows instead of once per
++// row: on Orin those reads were most of the gate/up kernel's L1 traffic (Nsight Compute: 6.2 M global sectors).
++// Each row still sums its lane steps in row_dot_multi's order with tq_apply's arithmetic, so the bits are the same.
++template<int TG> inline constexpr int kGuRowsPerWarp = TG == 144 ? 4 : 1;
+ 
+ // Group g is computed by block row g % gridDim.y: rows y, y + gridDim.y, ... < *n_groups.  The callers size the
+ // launch for the most groups a call can have (cap: every entry its own expert), but the count is only known on the
+@@ -1215,16 +1295,65 @@ __global__ void __launch_bounds__(256) native_gu_multi_kernel(const unsigned lon
+     __shared__ alignas(16) uint32_t s_grid_buf[IqGridWords<TG, STAGE_GRID>::value];
+     const uint32_t* s_grid = stage_iq_grid<TG, STAGE_GRID>(s_grid_buf, threadIdx.x, 256);
+     const int warp = threadIdx.x >> 5, lane = threadIdx.x & 31;
+-    const int row = blockIdx.x * GU_ROWS + warp;             // 0 .. 2*n_ff
+-    if (row >= 2 * L.n_ff) return;
+-    const bool is_up = row >= L.n_ff;
+-    const int r = is_up ? row - (int) L.n_ff : row;
+-    const size_t w_off = (is_up ? L.up_off : 0) + (size_t) r * L.gu_row;
++    constexpr int RPW = kGuRowsPerWarp<TG>;
++    const int row0 = blockIdx.x * GU_ROWS * RPW + warp;     // this warp's rows: row0 + j * GU_ROWS, j < RPW
++    if (row0 >= 2 * L.n_ff) return;
+     const int nb = (int) (L.n_embd / Fmt<TG>::qk), xb = (int) (L.n_embd / 32);
+-    float* dst = is_up ? up : gate;
+     for (int g = blockIdx.y; g < ng; g += gridDim.y) {   // the group stride, as native_gu_kernel
+-        const uint8_t* wr = (const uint8_t*) grp_ptr[g] + w_off;
+         const int e0 = grp_start[g], e1 = grp_start[g + 1];
++        if constexpr (TG == 144 && RPW > 1) {
++            if (e1 - e0 == 1) {   // one entry: the activations read once per lane step for the warp's rows
++                using F = Fmt<TG>;
++                using S = Split<TG>;
++                const block_q8_1* xt = xq + (size_t) ent_tok[e0] * xb;
++                const uint8_t* wj[RPW];
++                float acc[RPW];
++                bool vj[RPW];
++#pragma unroll
++                for (int j = 0; j < RPW; ++j) {
++                    const int row = row0 + j * GU_ROWS;
++                    vj[j] = row < 2 * L.n_ff;
++                    const bool up_j = row >= L.n_ff;
++                    const int r = up_j ? row - (int) L.n_ff : row;
++                    wj[j] = (const uint8_t*) grp_ptr[g] + (up_j ? L.up_off : 0) + (size_t) (vj[j] ? r : 0) * L.gu_row;
++                    acc[j] = 0.0f;
++                }
++                for (int k = lane; k < nb * F::ipb; k += 32) {
++                    const int kbx = k / F::ipb, iqs = F::step * (k % F::ipb), l = iqs / 4;
++                    const block_q8_1* b8 = xt + kbx * (F::qk / 32) + l / 2;
++                    const int* q8 = (const int*) b8->qs + 4 * (l & 1);
++                    const int q8v[4] = { q8[0], q8[1], q8[2], q8[3] };
++                    const float dsx = __low2float(b8->ds) * TQ_LUT_I8_SCALE;
++#pragma unroll
++                    for (int j = 0; j < RPW; ++j) {
++                        if (!vj[j]) continue;
++                        const TqLane w = S::template load<STAGE_GRID>(wj[j], kbx, iqs, s_grid);
++                        int sumi = 0;
++#pragma unroll
++                        for (int i = 0; i < 4; ++i) sumi = ggml_cuda_dp4a(w.q[i], q8v[i], sumi);
++                        acc[j] += w.d * dsx * (float) sumi;   // tq_apply's product, in its order
++                    }
++                }
++#pragma unroll
++                for (int j = 0; j < RPW; ++j) {
++                    if (!vj[j]) continue;
++                    const float sum = warp_sum(acc[j]);
++                    const int row = row0 + j * GU_ROWS;
++                    const bool up_j = row >= L.n_ff;
++                    if (lane == 0) (up_j ? up : gate)[(size_t) e0 * L.n_ff + (up_j ? row - (int) L.n_ff : row)] = sum;
++                }
++                continue;
++            }
++        }
++#pragma unroll 1
++        for (int j = 0; j < RPW; ++j) {
++        const int row = row0 + j * GU_ROWS;
++        if (row >= 2 * L.n_ff) break;
++        const bool is_up = row >= L.n_ff;
++        const int r = is_up ? row - (int) L.n_ff : row;
++        const size_t w_off = (is_up ? L.up_off : 0) + (size_t) r * L.gu_row;
++        float* dst = is_up ? up : gate;
++        const uint8_t* wr = (const uint8_t*) grp_ptr[g] + w_off;
+         for (int e = e0; e < e1; e += GRP_NC) {
+             const int n = min(GRP_NC, e1 - e);
+             if (n == 1) {
+@@ -1248,6 +1377,7 @@ __global__ void __launch_bounds__(256) native_gu_multi_kernel(const unsigned lon
+                     if (c < n && lane == c) dst[(size_t) (e + c) * L.n_ff + r] = s[c];
+             }
+         }
++        }
+     }
+ }
+ 
+@@ -1321,8 +1451,13 @@ __global__ void __launch_bounds__(256) native_down_multi_kernel(const unsigned l
+     const int ng = *n_groups;
+     if (blockIdx.y >= ng) return;
+     __shared__ uint32_t s_hq_buf[GRP_NC * 20 * 9];
++    constexpr bool kStageLut = (TD == 144);   // the TQ2_T codebook (the IQ types' down rows keep their reads)
++    __shared__ alignas(16) uint32_t s_grid_buf[IqGridWords<TD, kStageLut>::value];
++    const uint32_t* s_grid = stage_iq_grid<TD, kStageLut>(s_grid_buf, threadIdx.x, 256);
+     const int nb = (int) (L.n_ff / Fmt<TD>::qk), hb = (int) (L.n_ff / 32);
+-    if constexpr (TD == 20) {
++    // TQ2_T's down rows (n_ff 640) are K = 40 lane steps as well: the 8-lane sub-warp rows keep every lane busy
++    // (the 32-lane loop runs its second step on 8 of 32 lanes) with row_dot_multi's addition tree
++    if constexpr (TD == 20 || TD == 144) {
+         if (hb == 20) {
+             const int r = blockIdx.x * 32 + (threadIdx.x >> 3);
+             const int t = threadIdx.x & 7;
+@@ -1343,19 +1478,19 @@ __global__ void __launch_bounds__(256) native_down_multi_kernel(const unsigned l
+                         if (n == 1) {
+                             const int off1[1] = { 0 };
+                             float s1[1];
+-                            row_dot_40_sub8<TD, 1, true>(wr, s_hq, off1, 1, t, s1);
++                            row_dot_40_sub8<TD, 1, true, kStageLut>(wr, s_hq, off1, 1, t, s1, s_grid);
+                             if (t == 0) out[(size_t) ent_dst[e] * L.n_embd + r] = s1[0];
+                         } else if (n == 2) {
+                             const int off2[2] = { 0, 20 };
+                             float s2[2];
+-                            row_dot_40_sub8<TD, 2, true>(wr, s_hq, off2, 2, t, s2);
++                            row_dot_40_sub8<TD, 2, true, kStageLut>(wr, s_hq, off2, 2, t, s2, s_grid);
+                             if (t < 2) out[(size_t) ent_dst[e + t] * L.n_embd + r] = s2[t];
+                         } else {
+                             int off[GRP_NC];
+ #pragma unroll
+                             for (int c = 0; c < GRP_NC; ++c) off[c] = min(c, n - 1) * 20;
+                             float s[GRP_NC];
+-                            row_dot_40_sub8<TD, GRP_NC>(wr, s_hq, off, n, t, s);
++                            row_dot_40_sub8<TD, GRP_NC, false, kStageLut>(wr, s_hq, off, n, t, s, s_grid);
+ #pragma unroll
+                             for (int c = 0; c < GRP_NC; ++c)
+                                 if (c < n && t == c) out[(size_t) ent_dst[e + c] * L.n_embd + r] = s[c];
+@@ -1429,19 +1564,19 @@ __global__ void __launch_bounds__(256) native_down_multi_kernel(const unsigned l
+                     if (n == 1) {
+                         const int off1[1] = { 0 };
+                         float s1[1];
+-                        row_dot_multi<TD, 1, true>(wr, s_hq, off1, 1, nb, lane, s1);
++                        row_dot_multi<TD, 1, true, kStageLut>(wr, s_hq, off1, 1, nb, lane, s1, s_grid);
+                         if (lane == 0) out[(size_t) ent_dst[e] * L.n_embd + r] = s1[0];
+                     } else if (n == 2) {
+                         const int off2[2] = { 0, 20 };
+                         float s2[2];
+-                        row_dot_multi<TD, 2, true>(wr, s_hq, off2, 2, nb, lane, s2);
++                        row_dot_multi<TD, 2, true, kStageLut>(wr, s_hq, off2, 2, nb, lane, s2, s_grid);
+                         if (lane < 2) out[(size_t) ent_dst[e + lane] * L.n_embd + r] = s2[lane];
+                     } else {
+                         int off[GRP_NC];
+ #pragma unroll
+                         for (int c = 0; c < GRP_NC; ++c) off[c] = min(c, n - 1) * 20;
+                         float s[GRP_NC];
+-                        row_dot_multi<TD, GRP_NC>(wr, s_hq, off, n, nb, lane, s);
++                        row_dot_multi<TD, GRP_NC, false, kStageLut>(wr, s_hq, off, n, nb, lane, s, s_grid);
+ #pragma unroll
+                         for (int c = 0; c < GRP_NC; ++c)
+                             if (c < n && lane == c) out[(size_t) ent_dst[e + c] * L.n_embd + r] = s[c];
+@@ -1932,6 +2067,8 @@ void launch_gu(dim3 grid, cudaStream_t s, const unsigned long long* grp_ptr, con
+     if constexpr (!kSplit<TG>) native_gu_kernel<TG><<<grid, 256, 0, s>>>(grp_ptr, grp_start, n_groups, ent_tok, X, L, gate, up);
+     else if (g_old_kernels) native_gu_kernel<TG><<<grid, 256, 0, s>>>(grp_ptr, grp_start, n_groups, ent_tok, X, L, gate, up);
+     else if constexpr (kStageIqGrid<TG>) {
++        if constexpr (kGuRowsPerWarp<TG> > 1)   // the multi kernel's blocks take GU_ROWS x kGuRowsPerWarp rows
++            grid.x = (unsigned) ((2 * L.n_ff + GU_ROWS * kGuRowsPerWarp<TG> - 1) / (GU_ROWS * kGuRowsPerWarp<TG>));
+         if (!g_stage_grid) {
+             native_gu_multi_kernel<TG, false><<<grid, 256, 0, s>>>(grp_ptr, grp_start, n_groups, ent_tok, X, L, gate, up);
+             return;
+@@ -2770,7 +2907,7 @@ void native_expert_grouped(const NativeExpertLayout& L, const unsigned long long
+     check("native_expert_grouped/swiglu");
+     }
+     if (g_exp_phase == 1) return;
+-    const int d_rows = (!g_old_kernels && L.n_ff == 640) ? (L.d_type == 20 ? 32 : (L.d_type == 42 ? 16 : 8)) : 8;
++    const int d_rows = (!g_old_kernels && L.n_ff == 640) ? ((L.d_type == 20 || L.d_type == 144) ? 32 : (L.d_type == 42 ? 16 : 8)) : 8;
+     const dim3 gd((unsigned) ((L.n_embd + d_rows - 1) / d_rows), (unsigned) gy);
+ #if defined(STRATA_HIP_GFX906)
+     if ((em0 == 7 || em0 == 8) && (L.d_type == 20 || L.d_type == 42)) {
+diff --git a/src/kernels/dequant_bf16_test.cpp b/src/kernels/dequant_bf16_test.cpp
+index 80d3d53..145add3 100644
+--- a/src/kernels/dequant_bf16_test.cpp
++++ b/src/kernels/dequant_bf16_test.cpp
+@@ -9,6 +9,7 @@
+ #include "strata/artifact/gguf_reader.hpp"
+ #include "strata/kernels/dequant_bf16.hpp"
+ 
++#include <cuda_fp16.h>
+ #include <cuda_runtime.h>
+ 
+ #include <cmath>
+@@ -72,11 +73,26 @@ int main(int argc, char** argv) {
+             cudaMalloc(&d_h, (size_t) (rows * cols) * 2);
+             cudaMemcpy(d_blocks, host, (size_t) (rows * row_bytes), cudaMemcpyHostToDevice);
+             strata::kernels::dequant_f32(type, d_blocks, 0, rows, cols, d_f, nullptr);
++            // FP16 (the prompt path's dense projections): bit for bit the device FP32 value rounded to nearest, from
++            // row 0 and from row 1 (a slice: row0 > 0)
++            std::vector<uint16_t> g16((size_t) (rows * cols)), g16b((size_t) ((rows - 1) * cols));
++            strata::kernels::dequant_f16(type, d_blocks, 0, rows, cols, d_h, nullptr);
++            cudaMemcpy(g16.data(), d_h, g16.size() * 2, cudaMemcpyDeviceToHost);
++            if (rows > 1) {
++                strata::kernels::dequant_f16(type, d_blocks, 1, rows - 1, cols, d_h, nullptr);
++                cudaMemcpy(g16b.data(), d_h, g16b.size() * 2, cudaMemcpyDeviceToHost);
++            }
+             strata::kernels::dequant_bf16(type, d_blocks, 0, rows, cols, d_h, nullptr);
+             std::vector<float> gf((size_t) (rows * cols));
+             std::vector<uint16_t> gh((size_t) (rows * cols));
+             cudaMemcpy(gf.data(), d_f, gf.size() * 4, cudaMemcpyDeviceToHost);
+             cudaMemcpy(gh.data(), d_h, gh.size() * 2, cudaMemcpyDeviceToHost);
++            int64_t bad_16 = 0;
++            for (size_t i = 0; i < g16.size(); ++i) {
++                const uint16_t want = __half_as_ushort(__float2half_rn(gf[i]));
++                if (g16[i] != want) ++bad_16;
++                if (rows > 1 && i >= (size_t) cols && g16b[i - (size_t) cols] != want) ++bad_16;
++            }
+             cudaFree(d_blocks);
+             cudaFree(d_f);
+             cudaFree(d_h);
+@@ -96,11 +112,12 @@ int main(int argc, char** argv) {
+             }
+             ++checked;
+             done[type] = true;
+-            const bool ok = bad_f == 0 && bad_h == 0;
++            const bool ok = bad_f == 0 && bad_h == 0 && bad_16 == 0;
+             if (!ok) ++fails;
+-            std::printf("type %2d  %-40s %lld x %lld: f32 %s (%lld off, worst rel %.2e), bf16 %s (%lld off)\n", type,
+-                        t.name.c_str(), (long long) rows, (long long) cols, bad_f ? "FAIL" : "ok", (long long) bad_f,
+-                        worst, bad_h ? "FAIL" : "ok", (long long) bad_h);
++            std::printf("type %2d  %-40s %lld x %lld: f32 %s (%lld off, worst rel %.2e), bf16 %s (%lld off), f16 %s "
++                        "(%lld off)\n", type, t.name.c_str(), (long long) rows, (long long) cols, bad_f ? "FAIL" : "ok",
++                        (long long) bad_f, worst, bad_h ? "FAIL" : "ok", (long long) bad_h, bad_16 ? "FAIL" : "ok",
++                        (long long) bad_16);
+         }
+     }
+     std::printf("dequant_bf16_test: %d types checked, %s\n", checked, fails ? "FAILED" : "OK");
+diff --git a/src/kernels/native_expert_parity.cpp b/src/kernels/native_expert_parity.cpp
+index 6c0ca1f..de004ae 100644
+--- a/src/kernels/native_expert_parity.cpp
++++ b/src/kernels/native_expert_parity.cpp
+@@ -403,6 +403,72 @@ int check_blob(const cpu::NativeFmt& f, const std::vector<uint8_t>& blob, int se
+             const bool exact = f.gu_type == 8 && f.d_type == 8;
+             if (!(dq_err < 1e-6) || h_differ || (exact && (differ || emb_differ))) ++failures;
+         }
++        if (const char* bench = std::getenv("STRATA_BENCH_GROUPED")) {
++            // Decode-shaped timing (no check): a verify window of T tokens routes each to 10 experts that rarely
++            // overlap, so 10 T groups of one entry each, every group on its own copy of this layer's blob.  64 copies
++            // rotate between calls so the 4 MB L2 does not hold the next call's weights.  "T:iters" (default 1:200).
++            int T = 1, iters = 200;
++            std::sscanf(bench, "%d:%d", &T, &iters);
++            const int G = 10 * T, copies = 64;
++            std::vector<void*> blobs(copies);
++            for (auto& b : blobs) {
++                cudaMalloc(&b, blob.size());
++                cudaMemcpy(b, blob.data(), blob.size(), cudaMemcpyHostToDevice);
++            }
++            std::vector<float> bx((size_t) T * H);
++            std::mt19937 brng(5);
++            std::normal_distribution<float> bnd(0.f, 1.f);
++            for (auto& v : bx) v = bnd(brng);
++            void *bdx, *bdxq, *bdscr;
++            float* bdout;
++            unsigned long long* bdptr;
++            int32_t *bdstart, *bdn, *bddst, *bdtok;
++            cudaMalloc(&bdx, bx.size() * 4);
++            cudaMalloc(&bdxq, (size_t) T * H / 32 * 36);
++            cudaMalloc(&bdscr, strata::kernels::native_expert_scratch_bytes(G, FF));
++            cudaMalloc((void**) &bdout, (size_t) G * H * 4);
++            cudaMalloc((void**) &bdptr, (size_t) G * 8 * (copies / 1));
++            cudaMalloc((void**) &bdstart, (size_t) (G + 1) * 4);
++            cudaMalloc((void**) &bdn, 4);
++            cudaMalloc((void**) &bddst, (size_t) G * 4);
++            cudaMalloc((void**) &bdtok, (size_t) G * 4);
++            cudaMemcpy(bdx, bx.data(), bx.size() * 4, cudaMemcpyHostToDevice);
++            strata::kernels::quantize_q8_1_rows((const float*) bdx, T, H, bdxq, s);
++            std::vector<int32_t> st(G + 1), dst(G), tok(G);
++            for (int g = 0; g <= G; ++g) st[g] = g;
++            for (int g = 0; g < G; ++g) { dst[g] = g; tok[g] = g / 10; }
++            // one pointer table per rotation step: call i uses table i % copies, group g -> copy (i * G + g) % copies
++            std::vector<unsigned long long> ptrs((size_t) copies * G);
++            for (int i = 0; i < copies; ++i)
++                for (int g = 0; g < G; ++g) ptrs[(size_t) i * G + g] = (unsigned long long) blobs[(size_t) (i * G + g) % copies];
++            cudaMemcpy(bdptr, ptrs.data(), ptrs.size() * 8, cudaMemcpyHostToDevice);
++            cudaMemcpy(bdstart, st.data(), st.size() * 4, cudaMemcpyHostToDevice);
++            cudaMemcpy(bdn, &G, 4, cudaMemcpyHostToDevice);
++            cudaMemcpy(bddst, dst.data(), dst.size() * 4, cudaMemcpyHostToDevice);
++            cudaMemcpy(bdtok, tok.data(), tok.size() * 4, cudaMemcpyHostToDevice);
++            auto call = [&](int i) {
++                strata::kernels::native_expert_grouped(L, bdptr + (size_t) (i % copies) * G, bdstart, bdn, bddst, bdtok,
++                                                       G, G, bdxq, bdscr, bdout, s);
++            };
++            for (int i = 0; i < 20; ++i) call(i);   // warm-up (clocks, instruction caches)
++            cudaEvent_t e0, e1;
++            cudaEventCreate(&e0);
++            cudaEventCreate(&e1);
++            cudaEventRecord(e0, (cudaStream_t) s);
++            for (int i = 0; i < iters; ++i) call(i);
++            cudaEventRecord(e1, (cudaStream_t) s);
++            cudaEventSynchronize(e1);
++            float ms = 0.f;
++            cudaEventElapsedTime(&ms, e0, e1);
++            const double us = 1e3 * ms / iters, gb = (double) G * blob.size() / 1e9;
++            std::printf("          bench grouped T=%d: %d groups x 1 entry, %.1f us per call, %.1f GB/s of expert "
++                        "weights (%d calls)\n", T, G, us, gb / (us * 1e-6), iters);
++            cudaEventDestroy(e0);
++            cudaEventDestroy(e1);
++            for (auto b : blobs) cudaFree(b);
++            cudaFree(bdx); cudaFree(bdxq); cudaFree(bdscr); cudaFree(bdout); cudaFree(bdptr);
++            cudaFree(bdstart); cudaFree(bdn); cudaFree(bddst); cudaFree(bdtok);
++        }
+         cudaFree(dblob); cudaFree(dx); cudaFree(dxq); cudaFree(dscr); cudaFree(dout); cudaFree(dptr);
+         cudaFree(dstart); cudaFree(dn); cudaFree(ddst); cudaFree(dtok);
+     }
+diff --git a/src/program/generate.cpp b/src/program/generate.cpp
+index 26a50f1..332d5e0 100644
+--- a/src/program/generate.cpp
++++ b/src/program/generate.cpp
+@@ -5321,6 +5321,7 @@ int main(int argc, char** argv) {
+             return true;
+         };
+         int64_t pp_total = 0, pp_from = 0, pp_next_check = 0;
++        double pt_draft_ms = 0, pt_mid_ckpt_ms = 0;   // STRATA_PROMPT_TIMING: inside the batched read
+         // #471: the position the prompt pass has read up to (a chunk's or a window's end): what a request cancelled
+         // mid-read reports as read, instead of the whole prompt
+         int64_t pp_reached = 0;
+@@ -5388,11 +5389,13 @@ int main(int argc, char** argv) {
+             return true;
+         };
+         sp.on_chunk = [&](const float* R_rows, int64_t T, int64_t p0, std::string& e) -> bool {
++            const auto pt_d0 = Clock::now();
+             std::vector<int32_t> nxt((size_t) T);
+             for (int64_t t = 0; t < T; ++t) nxt[(size_t) t] = (int32_t) cur[(size_t) (p0 + t + 1)];
+             // E-9: batched through the prompt path when it can (one GPU: a layer split's drafter is on the last stage)
+             const bool batched = !multi_gpu && sp.draft_kv(mtp, R_rows, nxt.data(), T, p0, e);
+             if (!e.empty() || (!batched && !mtp.prefill(R_rows, nxt.data(), T, p0, e))) return false;
++            pt_draft_ms += std::chrono::duration<double, std::milli>(Clock::now() - pt_d0).count();
+             if (std::getenv("STRATA_SNAPSHOT_VERIFY") != nullptr)
+                 std::fprintf(stderr, "strata serve: DRAFT_PREFILL path=%s mode=%d cells=%lld\n",
+                              batched ? "batched" : "token", mtp.kv_state().kv_mode, (long long) T);
+@@ -5419,7 +5422,9 @@ int main(int argc, char** argv) {
+                     for (const ConvCheckpoint& k : parts) complete = complete && !k.gdn.empty();
+                     saved = !complete || checkpoint_at(done, &parts);   // an incomplete set: no checkpoint here
+                 } else {
++                    const auto pt_c0 = Clock::now();
+                     saved = checkpoint_at(done);
++                    pt_mid_ckpt_ms += std::chrono::duration<double, std::milli>(Clock::now() - pt_c0).count();
+                 }
+                 if (!saved) { e = "saving a conversation checkpoint failed" + ckpt_why; return false; }
+                 pp_next_check = done + o.prompt_cache_every;
+@@ -6427,6 +6432,25 @@ int main(int argc, char** argv) {
+             }
+             cur = ids;
+             const Clock::time_point r0 = Clock::now();
++            // STRATA_PROMPT_TIMING=1: where a request's prompt time went (host time between the steps, no device
++            // syncs added), one stderr line per request after its prompt line
++            static const bool pt_on = std::getenv("STRATA_PROMPT_TIMING") != nullptr;
++            std::string pt_txt;
++            Clock::time_point pt_last = r0;
++            pt_draft_ms = 0;
++            pt_mid_ckpt_ms = 0;
++            auto pt = [&](const char* what, long long tokens = -1) {
++                if (!pt_on) return;
++                const auto now = Clock::now();
++                char b[96];
++                if (tokens >= 0)
++                    std::snprintf(b, sizeof(b), " %s(%lld)=%.1f", what, tokens,
++                                  std::chrono::duration<double, std::milli>(now - pt_last).count());
++                else
++                    std::snprintf(b, sizeof(b), " %s=%.1f", what, std::chrono::duration<double, std::milli>(now - pt_last).count());
++                pt_txt += b;
++                pt_last = now;
++            };
+             // ---- where this request starts reading: the live session, or a checkpoint, whose tokens AND pictures are
+             // exactly the start of this prompt - at most n - 1 of them, the last token is always the first window
+             auto starts_with = [&](const std::vector<int32_t>& pre, const std::vector<ImgKey>& pre_imgs) -> bool {
+@@ -6505,10 +6529,12 @@ int main(int argc, char** argv) {
+             }
+             // Preserve the outgoing branch before any checkpoint rewind, reset,
+             // or incoming restore overwrites the positional state it requires.
++            pt("match");
+             if ((!from_live || incoming || slot_source >= 0) && !park_current(incoming ? incoming->bytes() : 0)) {
+                 std::printf("ERR %s\n", err.c_str());
+                 return 1;
+             }
++            pt("park");
+             if (slot_source >= 0) {
+                 const auto t0 = Clock::now();
+                 if (!copy_from_slot(slot_source, slot_ck, err)) {
+@@ -6605,6 +6631,7 @@ int main(int argc, char** argv) {
+                              std::chrono::duration<double, std::milli>(Clock::now() - t0).count(),
+                              conversations.size(), conversations.bytes());
+             }
++            pt("conv_restore");
+             if (want_cvec != cvec_cached) {
+                 live_ok = false;
+                 checks.clear();
+@@ -6663,6 +6690,7 @@ int main(int argc, char** argv) {
+             // KV streaming: the drafter's ring may hold cells past `resume` from a longer turn; the main layers'
+             // host copies and slots are always current (every writer writes both), so they need nothing
+             if (resume > 0 && reread_to <= 0) mtp.kv_restore(resume);
++            pt(resume == 0 ? "session_zero" : from_live ? "live_restore" : "ckpt_restore");
+             tr("request", n, geni ? 1 : 0);
+             mtp.set_prompt_len(n);
+             const int64_t read_from = reread_to > 0 ? 0 : resume;
+@@ -6975,6 +7003,7 @@ int main(int argc, char** argv) {
+             const int hist_n = std::min(req_sp.penalty_last_n, kPenaltyWindowCap);
+             ver.set_history(hist_n > 0 ? d_hist : nullptr, hist_n);
+             bool cancelled = false;
++            pt("setup");
+             tr("prompt start", n - 1);
+             // The prompt is read in two parts when it has a turn boundary past `resume`: up to the last <|im_start|>
+             // (the conversation so far), a checkpoint there, then the new turn's header.  The next request of the same
+@@ -7018,6 +7047,7 @@ int main(int argc, char** argv) {
+                     std::printf("ERR lending the prompt path its slots failed: %s\n", err.c_str());
+                     return 1;
+                 }
++                pt(win ? "refill_before" : "lend");
+                 const auto tsp = Clock::now();
+                 const bool sp_ok = win ? read_windows(at, to, err) : read_part(at, to, err);
+                 if (trace) {
+@@ -7042,16 +7072,19 @@ int main(int argc, char** argv) {
+                     cancelled = true;   // stopped while reading the prompt: refill the lent slots below, then DONE cancel
+                     break;
+                 }
++                pt(win ? "read_windows" : "read_batched", to - at);
+                 at = to;
+                 if ((to == turn_at || to == root_at) && !checkpoint_at(to)) {
+                     std::printf("ERR saving a conversation checkpoint failed%s\n", ckpt_why.c_str());
+                     return 1;
+                 }
++                if (to == turn_at || to == root_at) pt("ckpt_save");
+             }
+             if (!refill(err)) {
+                 std::printf("ERR refilling a lent slot failed: %s\n", err.c_str());
+                 return 1;
+             }
++            pt("refill");
+             tr("prompt done (slots refilled)");
+             if (il_parts > 0)
+                 std::fprintf(stderr, "strata batch: the prompt was read in %lld parts, the slots decoding %.0f ms between "
+@@ -7412,6 +7445,8 @@ int main(int argc, char** argv) {
+                          prompt_ms > 0 ? 1000.0 * read_n / prompt_ms : 0.0, (long long) produced_n, decode_ms,
+                          decode_ms > 0 ? 1000.0 * produced_n / decode_ms : 0.0, (long long) draft_accepted,
+                          (long long) draft_offered, checks.size(), cancelled ? " (cancelled)" : "");
++            if (pt_on) std::fprintf(stderr, "strata serve: prompt timing ms:%s (batched reads include draft=%.1f "
++                                    "mid_ckpt=%.1f)\n", pt_txt.c_str(), pt_draft_ms, pt_mid_ckpt_ms);
+             // the VRAM share of the experts the pool looked up while decoding; experts it sent over PCIe for the GPU
+             // to read (--pcie-frac) are in neither count - #588: so that share is said beside it (raising --pcie-frac
+             // raises the hit rate while the PCIe reads may make the decode slower)

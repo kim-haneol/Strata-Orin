@@ -1,0 +1,21 @@
+{
+  "upstream_commit": "434e136f73a7da2bfd11cde3bb0aa0acaf1328c6",
+  "upstream_tree": "449935788b2938fbf1af5a99e8bcc6865fd084a6",
+  "arm64_base_tag": "orin-arm64-base",
+  "historical_arm64_commit": "bb98d09538fd4188feb806443da21870903057f9",
+  "arm64_tree": "d0e8fb38226b84841036fba16a585b4e6d576284",
+  "final_code_tag": "orin-f16cache-code",
+  "historical_final_commit": "9acaf8eacb4d56af6e9f4369e0573ce92b1f3de3",
+  "final_code_tree": "24603390b080e9011aa02fc779b818a79ea8f9db",
+  "complete_tree_equality_checked": true,
+  "deployed_staged_patch_comparison": {
+    "method": "Compare the deployed f16cache worktree staged binary diff with the historical ARM64-to-final Git diff",
+    "byte_identical": true,
+    "sha256": "42d27f83f6ce8d68cb5ddf0d765d21dab8e9c77d2bb8f4c7182c658d0e76e99c"
+  },
+  "ggml_base": "93a24e52cc12687213c0432af41c7fe2ab1a0eda",
+  "ggml_patch": "patches/agention-llama-tq-mmq-shared-lut.patch",
+  "ggml_patch_sha256": "ec0de873e8484d26d5c9ffa6af3da6896c5336f06feb41ec9d218ea49b3c0114",
+  "ggml_apply_check_exit_code": 0,
+  "fresh_gpu_build_or_inference": false
+}

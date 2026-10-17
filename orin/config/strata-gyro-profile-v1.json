@@ -1,0 +1,49 @@
+{
+  "protocol": "orin-strata-gyro-profile-v1",
+  "purpose": "Locate where GPU time goes in the adopted serving setup: decode verify/draft windows and owned 8,192-token prefill. Nsight Systems with CUDA graph nodes traced individually; tracing perturbs timing, so use the captures for proportions and kernel identity, not throughput claims.",
+  "runtime_directory": "${RUNTIME}",
+  "prompt_source": "${TEST_HOME}/.local/share/jetson-orin/strata-gyro-prefill-chunk-own-20261007-v2/prompts",
+  "session": "gyro-profile-20261007",
+  "nsys": {
+    "binary": "/usr/local/cuda/bin/nsys",
+    "trace": "cuda,nvtx,osrt",
+    "cuda_graph_trace": "node"
+  },
+  "max_context": 32768,
+  "prefill_chunk": 8192,
+  "kv": "int8",
+  "verifier_capacity": 4,
+  "mtp_max_t": 4,
+  "spec_min_p": 0.5,
+  "expert_cache": 24576,
+  "pool_workers": 2,
+  "eos_ids": [
+    2147483647
+  ],
+  "extra_args": [
+    "--no-prefill-borrow"
+  ],
+  "sampling": {
+    "temperature": 0
+  },
+  "warmup": {
+    "input_tokens": 2048,
+    "max_new": 32
+  },
+  "captures": [
+    {
+      "name": "decode2k",
+      "input_tokens": 2048,
+      "max_new": 256
+    },
+    {
+      "name": "prefill25k",
+      "input_tokens": 25000,
+      "max_new": 8
+    }
+  ],
+  "power_mode": "MAXN",
+  "limitations": [
+    "Single prompt per capture; tracing overhead from node-level graph tracing; decode2k includes its 2K prefill, split by the recorded first-token time."
+  ]
+}
