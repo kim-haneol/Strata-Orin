@@ -1,0 +1,8 @@
+rep1 build-sm87-grbench bench gr multi T=1: 108.8 us per call (down + up), 121.3 GB/s of weights (300 calls)
+rep1 build-sm87-grbench bench gr multi T=2: 131.3 us per call (down + up), 100.5 GB/s of weights (300 calls)
+rep1 build-sm87-grbench bench gr multi T=3: 151.5 us per call (down + up), 87.1 GB/s of weights (300 calls)
+rep1 build-sm87-grbench bench gr multi T=4: 181.1 us per call (down + up), 72.8 GB/s of weights (300 calls)
+rep2 build-sm87-grbench bench gr multi T=1: 110.3 us per call (down + up), 119.6 GB/s of weights (300 calls)
+rep2 build-sm87-grbench bench gr multi T=2: 126.5 us per call (down + up), 104.2 GB/s of weights (300 calls)
+rep2 build-sm87-grbench bench gr multi T=3: 150.8 us per call (down + up), 87.5 GB/s of weights (300 calls)
+rep2 build-sm87-grbench bench gr multi T=4: 182.1 us per call (down + up), 72.4 GB/s of weights (300 calls)

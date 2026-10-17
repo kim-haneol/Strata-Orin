@@ -1,0 +1,35 @@
+{
+  "tool": "compare_web_captures",
+  "original": {
+    "object_nodes": 1125,
+    "keyword_counts": {
+      "$ref": 198,
+      "$defs": 1,
+      "definitions": 0,
+      "anyOf": 80,
+      "oneOf": 12,
+      "allOf": 0,
+      "required": 127,
+      "additionalProperties": 69,
+      "default": 10,
+      "description": 81,
+      "type": 648
+    }
+  },
+  "wire": {
+    "object_nodes": 2718,
+    "keyword_counts": {
+      "$ref": 0,
+      "$defs": 0,
+      "definitions": 0,
+      "anyOf": 48,
+      "oneOf": 52,
+      "allOf": 0,
+      "required": 406,
+      "additionalProperties": 221,
+      "default": 16,
+      "description": 207,
+      "type": 2150
+    }
+  }
+}

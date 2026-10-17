@@ -1,0 +1,16 @@
+[
+  {
+    "case": "without_mcp",
+    "complete_tokens": 799,
+    "complete_rendered_chars": 2318,
+    "tools_removed_tokens": 799,
+    "tools_removed_rendered_chars": 2318
+  },
+  {
+    "case": "with_rea",
+    "complete_tokens": 177428,
+    "complete_rendered_chars": 600020,
+    "tools_removed_tokens": 882,
+    "tools_removed_rendered_chars": 2779
+  }
+]

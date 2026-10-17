@@ -1,0 +1,664 @@
+{
+  "decode2k": {
+    "request": {
+      "input_tokens": 2048,
+      "max_new": 256,
+      "ttft_seconds": 5.295653748005861,
+      "elapsed_seconds": 20.072881753003458,
+      "stream_decode_tps": 17.25628107746325
+    },
+    "prefill": {
+      "wall_seconds": 5.295657984,
+      "kernels": 12034,
+      "kernel_sum_seconds": 5.225363455,
+      "gpu_busy_union_seconds": 5.223400224,
+      "categories": {
+        "routed_experts": {
+          "seconds": 2.904573984,
+          "share": 0.5558606609882221
+        },
+        "dense_projections": {
+          "seconds": 1.094216415,
+          "share": 0.2094048432081745
+        },
+        "other": {
+          "seconds": 0.422045408,
+          "share": 0.08076862243834099
+        },
+        "gdn": {
+          "seconds": 0.31226592,
+          "share": 0.0597596555128049
+        },
+        "hyper_connection": {
+          "seconds": 0.302025376,
+          "share": 0.05779987910907912
+        },
+        "attention": {
+          "seconds": 0.1862656,
+          "share": 0.03564643906669646
+        },
+        "routing": {
+          "seconds": 0.003970752,
+          "share": 0.0007598996766819161
+        }
+      },
+      "top_kernels": [
+        {
+          "name": "mul_mat_q",
+          "seconds": 2.683762112,
+          "share": 0.5136029551077419,
+          "launches": 2542,
+          "avg_us": 1055.7679433516917
+        },
+        {
+          "name": "dequant_kernel",
+          "seconds": 0.458570912,
+          "share": 0.08775866328708803,
+          "launches": 301,
+          "avg_us": 1523.4914019933556
+        },
+        {
+          "name": "copy16_group_kernel",
+          "seconds": 0.282611008,
+          "share": 0.05408446903910151,
+          "launches": 1269,
+          "avg_us": 222.70371000788023
+        },
+        {
+          "name": "ampere_s16816gemm_fp16_256x128_ldg8_stages_64x3_tn",
+          "seconds": 0.27523776,
+          "share": 0.05267341925022132,
+          "launches": 85,
+          "avg_us": 3238.091294117647
+        },
+        {
+          "name": "gdn_rec_cols_pipe_kernel",
+          "seconds": 0.223286816,
+          "share": 0.042731346426504224,
+          "launches": 36,
+          "avg_us": 6202.411555555556
+        },
+        {
+          "name": "prompt_attn_i8_kernel",
+          "seconds": 0.172297312,
+          "share": 0.03297326845946642,
+          "launches": 12,
+          "avg_us": 14358.109333333334
+        },
+        {
+          "name": "gr_write_norm_rs_kernel",
+          "seconds": 0.166299424,
+          "share": 0.031825427155860876,
+          "launches": 94,
+          "avg_us": 1769.1428085106384
+        },
+        {
+          "name": "Kernel2",
+          "seconds": 0.141571264,
+          "share": 0.027093094139611387,
+          "launches": 144,
+          "avg_us": 983.1337777777777
+        },
+        {
+          "name": "gr_mix_r_kernel",
+          "seconds": 0.115044736,
+          "share": 0.022016599800329103,
+          "launches": 97,
+          "avg_us": 1186.028206185567
+        },
+        {
+          "name": "ampere_s16816gemm_bf16_128x128_ldg8_stages_32x5_tn",
+          "seconds": 0.084686016,
+          "share": 0.016206722600121987,
+          "launches": 170,
+          "avg_us": 498.1530352941176
+        },
+        {
+          "name": "quantize_mmq_q8_1",
+          "seconds": 0.078452128,
+          "share": 0.015013716974066447,
+          "launches": 1321,
+          "avg_us": 59.388439061317186
+        },
+        {
+          "name": "hadamard_rows_kernel",
+          "seconds": 0.074746656,
+          "share": 0.01430458505780628,
+          "launches": 1413,
+          "avg_us": 52.89926114649681
+        },
+        {
+          "name": "moe_combine_kernel",
+          "seconds": 0.065114016,
+          "share": 0.012461145824735745,
+          "launches": 48,
+          "avg_us": 1356.542
+        },
+        {
+          "name": "ampere_s16816gemm_bf16_128x256_ldg8_stages_64x3_tn",
+          "seconds": 0.051400256,
+          "share": 0.009836685322016514,
+          "launches": 97,
+          "avg_us": 529.8995463917526
+        },
+        {
+          "name": "swiglu_kernel",
+          "seconds": 0.04997664,
+          "share": 0.00956424188104634,
+          "launches": 1269,
+          "avg_us": 39.382695035461
+        },
+        {
+          "name": "ampere_s16816gemm_fp16_128x128_ldg8_stages_32x5_tn",
+          "seconds": 0.046621952,
+          "share": 0.008922240988880649,
+          "launches": 168,
+          "avg_us": 277.51161904761904
+        },
+        {
+          "name": "gdn_conv_tiled_kernel",
+          "seconds": 0.036660928,
+          "share": 0.007015957514863433,
+          "launches": 36,
+          "avg_us": 1018.3591111111111
+        },
+        {
+          "name": "gdn_out_norm_kernel",
+          "seconds": 0.030982048,
+          "share": 0.005929166127258415,
+          "launches": 36,
+          "avg_us": 860.6124444444445
+        },
+        {
+          "name": "native_small_mmvq_kernel",
+          "seconds": 0.028493568,
+          "share": 0.005452935139417972,
+          "launches": 302,
+          "avg_us": 94.34956291390728
+        },
+        {
+          "name": "gdn_l2_kernel",
+          "seconds": 0.018404096,
+          "share": 0.0035220700260361125,
+          "launches": 36,
+          "avg_us": 511.22488888888887
+        },
+        {
+          "name": "rms_rows_kernel",
+          "seconds": 0.0167672,
+          "share": 0.003208810285523,
+          "launches": 39,
+          "avg_us": 429.92820512820515
+        },
+        {
+          "name": "gate_attn_kernel",
+          "seconds": 0.014306112,
+          "share": 0.002737821421074718,
+          "launches": 12,
+          "avg_us": 1192.176
+        },
+        {
+          "name": "native_gu_multi_kernel",
+          "seconds": 0.011507872,
+          "share": 0.0022023103462761903,
+          "launches": 48,
+          "avg_us": 239.74733333333333
+        },
+        {
+          "name": "split_q_kernel",
+          "seconds": 0.009763776,
+          "share": 0.0018685352864129142,
+          "launches": 12,
+          "avg_us": 813.648
+        },
+        {
+          "name": "native_down_multi_kernel",
+          "seconds": 0.009691296,
+          "share": 0.0018546644809418335,
+          "launches": 48,
+          "avg_us": 201.902
+        }
+      ]
+    },
+    "decode": {
+      "wall_seconds": 14.777228032,
+      "kernels": 245326,
+      "kernel_sum_seconds": 13.212311267,
+      "gpu_busy_union_seconds": 12.869106677,
+      "categories": {
+        "routed_experts": {
+          "seconds": 4.996054336,
+          "share": 0.37813628781805175
+        },
+        "dense_projections": {
+          "seconds": 4.309782588,
+          "share": 0.32619444856437924
+        },
+        "hyper_connection": {
+          "seconds": 1.866949986,
+          "share": 0.14130381492472296
+        },
+        "draft_head": {
+          "seconds": 0.566166206,
+          "share": 0.04285141294045173
+        },
+        "attention": {
+          "seconds": 0.509778048,
+          "share": 0.038583563291704884
+        },
+        "gdn": {
+          "seconds": 0.477621051,
+          "share": 0.036149697153513176
+        },
+        "other": {
+          "seconds": 0.430041708,
+          "share": 0.03254856015041838
+        },
+        "routing": {
+          "seconds": 0.055917344,
+          "share": 0.004232215156757857
+        }
+      },
+      "top_kernels": [
+        {
+          "name": "native_mmvq_multi_kernel",
+          "seconds": 2.904524192,
+          "share": 0.21983467792304776,
+          "launches": 27802,
+          "avg_us": 104.47177152722826
+        },
+        {
+          "name": "native_gu_multi_kernel",
+          "seconds": 2.681246848,
+          "share": 0.20293548901598096,
+          "launches": 5616,
+          "avg_us": 477.42999430199427
+        },
+        {
+          "name": "native_down_multi_kernel",
+          "seconds": 2.283891264,
+          "share": 0.17286084303087892,
+          "launches": 5616,
+          "avg_us": 406.6757948717949
+        },
+        {
+          "name": "native_small_mmvq_kernel",
+          "seconds": 1.52884918,
+          "share": 0.11571398441229291,
+          "launches": 10931,
+          "avg_us": 139.86361540572682
+        },
+        {
+          "name": "gr_up_multi_kernel",
+          "seconds": 1.096649629,
+          "share": 0.08300210363186564,
+          "launches": 11885,
+          "avg_us": 92.2717399242743
+        },
+        {
+          "name": "gr_down_staged_kernel",
+          "seconds": 0.659159852,
+          "share": 0.04988982159740394,
+          "launches": 11885,
+          "avg_us": 55.46149364745477
+        },
+        {
+          "name": "attn_chunk_kernel",
+          "seconds": 0.386888032,
+          "share": 0.029282388537599686,
+          "launches": 1672,
+          "avg_us": 231.39236363636365
+        },
+        {
+          "name": "bf16_f32_mmvf_multi_kernel",
+          "seconds": 0.221740288,
+          "share": 0.016782853773195168,
+          "launches": 10800,
+          "avg_us": 20.531508148148145
+        },
+        {
+          "name": "gdn_step_commit_kernel",
+          "seconds": 0.179628254,
+          "share": 0.01359552090243682,
+          "launches": 4228,
+          "avg_us": 42.48539593188269
+        },
+        {
+          "name": "bf16_f32_mmvf_kernel",
+          "seconds": 0.170247004,
+          "share": 0.01288548237772909,
+          "launches": 5236,
+          "avg_us": 32.51470664629488
+        },
+        {
+          "name": "gdn_step_norm_multi_kernel",
+          "seconds": 0.155530048,
+          "share": 0.011771600354925244,
+          "launches": 4212,
+          "avg_us": 36.925462488129156
+        },
+        {
+          "name": "gr_norm_split_kernel",
+          "seconds": 0.111140505,
+          "share": 0.008411889695453388,
+          "launches": 11885,
+          "avg_us": 9.35132562053008
+        },
+        {
+          "name": "gdn_ab_multi_kernel",
+          "seconds": 0.089987104,
+          "share": 0.006810852558761474,
+          "launches": 4212,
+          "avg_us": 21.36445963912631
+        },
+        {
+          "name": "route",
+          "seconds": 0.055917344,
+          "share": 0.004232215156757857,
+          "launches": 5884,
+          "avg_us": 9.503287559483343
+        },
+        {
+          "name": "block_topk_reg_kernel",
+          "seconds": 0.054089632,
+          "share": 0.004093881146677045,
+          "launches": 1404,
+          "avg_us": 38.525378917378916
+        },
+        {
+          "name": "attn_merge_kernel",
+          "seconds": 0.0536928,
+          "share": 0.004063846129186112,
+          "launches": 1672,
+          "avg_us": 32.11291866028708
+        },
+        {
+          "name": "native_quantize_q8_1_kernel",
+          "seconds": 0.05058813,
+          "share": 0.003828863018566061,
+          "launches": 19292,
+          "avg_us": 2.6222335683184737
+        },
+        {
+          "name": "hadamard_rows_kernel",
+          "seconds": 0.050201149,
+          "share": 0.003799573593560873,
+          "launches": 11232,
+          "avg_us": 4.469475516381766
+        },
+        {
+          "name": "resident_plan_kernel",
+          "seconds": 0.044070528,
+          "share": 0.003335565376065099,
+          "launches": 5616,
+          "avg_us": 7.847316239316239
+        },
+        {
+          "name": "sampler_greedy_kernel",
+          "seconds": 0.039538111,
+          "share": 0.0029925204001780654,
+          "launches": 385,
+          "avg_us": 102.6963922077922
+        },
+        {
+          "name": "combine",
+          "seconds": 0.031822752,
+          "share": 0.0024085681420087904,
+          "launches": 5884,
+          "avg_us": 5.408353501019715
+        },
+        {
+          "name": "quantize_q8_1_kernel",
+          "seconds": 0.030695328,
+          "share": 0.002323236819031566,
+          "launches": 11232,
+          "avg_us": 2.732846153846154
+        },
+        {
+          "name": "swiglu_entries_kernel",
+          "seconds": 0.02989072,
+          "share": 0.002262338465689737,
+          "launches": 5616,
+          "avg_us": 5.322421652421653
+        },
+        {
+          "name": "norm",
+          "seconds": 0.027288127,
+          "share": 0.002065356049259659,
+          "launches": 5823,
+          "avg_us": 4.686266014082088
+        },
+        {
+          "name": "gdn_conv_l2_multi_kernel",
+          "seconds": 0.027031294,
+          "share": 0.002045917133932143,
+          "launches": 4212,
+          "avg_us": 6.417686134852802
+        }
+      ]
+    }
+  },
+  "prefill25k": {
+    "request": {
+      "input_tokens": 25000,
+      "max_new": 8,
+      "ttft_seconds": 47.79939059399476,
+      "elapsed_seconds": 48.10010100499494,
+      "stream_decode_tps": 23.278209679264364
+    },
+    "prefill": {
+      "wall_seconds": 47.799394048,
+      "kernels": 62143,
+      "kernel_sum_seconds": 47.443434782,
+      "gpu_busy_union_seconds": 47.441088191,
+      "categories": {
+        "routed_experts": {
+          "seconds": 21.539440032,
+          "share": 0.4540025428380671
+        },
+        "dense_projections": {
+          "seconds": 9.340887903,
+          "share": 0.19688473117346733
+        },
+        "attention": {
+          "seconds": 5.274829984,
+          "share": 0.11118145235979554
+        },
+        "gdn": {
+          "seconds": 4.769678976,
+          "share": 0.1005340148308489
+        },
+        "hyper_connection": {
+          "seconds": 3.569124863,
+          "share": 0.0752290570739647
+        },
+        "other": {
+          "seconds": 2.913756672,
+          "share": 0.061415382031013425
+        },
+        "routing": {
+          "seconds": 0.035716352,
+          "share": 0.0007528196928429548
+        }
+      },
+      "top_kernels": [
+        {
+          "name": "mul_mat_q",
+          "seconds": 18.910435328,
+          "share": 0.3985890864540567,
+          "launches": 10350,
+          "avg_us": 1827.095200772947
+        },
+        {
+          "name": "prompt_attn_i8_kernel",
+          "seconds": 4.049985664,
+          "share": 0.08536451213132995,
+          "launches": 48,
+          "avg_us": 84374.70133333333
+        },
+        {
+          "name": "gdn_rec_cols_pipe_kernel",
+          "seconds": 2.738363648,
+          "share": 0.05771849488939053,
+          "launches": 144,
+          "avg_us": 19016.414222222225
+        },
+        {
+          "name": "ampere_s16816gemm_fp16_256x128_ldg8_stages_64x3_tn",
+          "seconds": 2.288712256,
+          "share": 0.04824086338850693,
+          "launches": 147,
+          "avg_us": 15569.4711292517
+        },
+        {
+          "name": "ampere_s16816gemm_bf16_128x128_ldg8_stages_32x5_tn",
+          "seconds": 2.159335328,
+          "share": 0.045513891182668964,
+          "launches": 1278,
+          "avg_us": 1689.6207574334899
+        },
+        {
+          "name": "gr_write_norm_rs_kernel",
+          "seconds": 2.000758144,
+          "share": 0.042171443808682374,
+          "launches": 376,
+          "avg_us": 5321.165276595744
+        },
+        {
+          "name": "Kernel2",
+          "seconds": 1.837144096,
+          "share": 0.03872283076555433,
+          "launches": 948,
+          "avg_us": 1937.9157130801686
+        },
+        {
+          "name": "dequant_kernel",
+          "seconds": 1.803121568,
+          "share": 0.03800571304091378,
+          "launches": 1204,
+          "avg_us": 1497.6092757475083
+        },
+        {
+          "name": "gr_mix_r_kernel",
+          "seconds": 1.415345536,
+          "share": 0.029832273790956234,
+          "launches": 391,
+          "avg_us": 3619.8095549872123
+        },
+        {
+          "name": "gdn_out_norm_kernel",
+          "seconds": 1.295975232,
+          "share": 0.027316218523277997,
+          "launches": 144,
+          "avg_us": 8999.828
+        },
+        {
+          "name": "quantize_mmq_q8_1",
+          "seconds": 1.170439584,
+          "share": 0.024670211787534063,
+          "launches": 5381,
+          "avg_us": 217.51339602304404
+        },
+        {
+          "name": "ampere_s16816gemm_fp16_128x256_ldg8_stages_64x3_tn",
+          "seconds": 0.971649184,
+          "share": 0.02048016102680329,
+          "launches": 108,
+          "avg_us": 8996.751703703703
+        },
+        {
+          "name": "hadamard_rows_kernel",
+          "seconds": 0.923168576,
+          "share": 0.019458299767753102,
+          "launches": 5449,
+          "avg_us": 169.41981574600845
+        },
+        {
+          "name": "copy16_group_kernel",
+          "seconds": 0.897787776,
+          "share": 0.01892333006927694,
+          "launches": 4021,
+          "avg_us": 223.27475155433973
+        },
+        {
+          "name": "moe_combine_kernel",
+          "seconds": 0.7949104,
+          "share": 0.0167549083166632,
+          "launches": 192,
+          "avg_us": 4140.158333333334
+        },
+        {
+          "name": "block_topk_reg_kernel",
+          "seconds": 0.663766624,
+          "share": 0.013990694962326642,
+          "launches": 1188,
+          "avg_us": 558.7261144781145
+        },
+        {
+          "name": "swiglu_kernel",
+          "seconds": 0.57711184,
+          "share": 0.012164208655039364,
+          "launches": 5161,
+          "avg_us": 111.82170897112962
+        },
+        {
+          "name": "block_scores_tc_kernel",
+          "seconds": 0.493961408,
+          "share": 0.010411586139783635,
+          "launches": 1176,
+          "avg_us": 420.0352108843537
+        },
+        {
+          "name": "gdn_conv_tiled_kernel",
+          "seconds": 0.438516704,
+          "share": 0.00924293753213612,
+          "launches": 144,
+          "avg_us": 3045.254888888889
+        },
+        {
+          "name": "copy16_kernel",
+          "seconds": 0.314111232,
+          "share": 0.006620752343149774,
+          "launches": 17909,
+          "avg_us": 17.53929487966944
+        },
+        {
+          "name": "gdn_l2_kernel",
+          "seconds": 0.288590656,
+          "share": 0.006082836483615875,
+          "launches": 144,
+          "avg_us": 2004.1017777777777
+        },
+        {
+          "name": "rms_rows_kernel",
+          "seconds": 0.221489984,
+          "share": 0.004668506507122311,
+          "launches": 165,
+          "avg_us": 1342.3635393939394
+        },
+        {
+          "name": "ampere_s16816gemm_fp16_128x128_ldg8_stages_32x5_tn",
+          "seconds": 0.210579744,
+          "share": 0.004438543393150232,
+          "launches": 361,
+          "avg_us": 583.3233905817175
+        },
+        {
+          "name": "gate_attn_kernel",
+          "seconds": 0.202669472,
+          "share": 0.004271812800469763,
+          "launches": 48,
+          "avg_us": 4222.280666666667
+        },
+        {
+          "name": "split_q_kernel",
+          "seconds": 0.145036576,
+          "share": 0.0030570420684428766,
+          "launches": 48,
+          "avg_us": 3021.5953333333337
+        }
+      ]
+    },
+    "decode": null
+  }
+}

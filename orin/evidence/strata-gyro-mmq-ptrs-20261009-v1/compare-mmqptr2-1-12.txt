@@ -1,0 +1,11 @@
+12 requests in common
+work/hermes-capture-20261008/replay-q1a.json: 0 requests differ from work/hermes-capture-20261008/replay-q0a.json in output
+work/hermes-capture-20261008/replay-q1b.json: 0 requests differ from work/hermes-capture-20261008/replay-q0a.json in output
+work/hermes-capture-20261008/replay-q0b.json: 0 requests differ from work/hermes-capture-20261008/replay-q0a.json in output
+work/hermes-capture-20261008/replay-qref.json: 0 requests differ from work/hermes-capture-20261008/replay-q0a.json in output
+replay | decode tok/s (all) | decode tok/s (>=300-token requests) | prompt s | wall s
+work/hermes-capture-20261008/replay-q0a.json | 28.68 (6782 tok) | 28.99 (5987 tok, 5 req) | 29.6 | 267.4
+work/hermes-capture-20261008/replay-q1a.json | 28.67 (6782 tok) | 28.99 (5987 tok, 5 req) | 30.9 | 268.6
+work/hermes-capture-20261008/replay-q1b.json | 28.72 (6782 tok) | 29.03 (5987 tok, 5 req) | 30.8 | 268.3
+work/hermes-capture-20261008/replay-q0b.json | 28.67 (6782 tok) | 28.98 (5987 tok, 5 req) | 29.7 | 267.8
+work/hermes-capture-20261008/replay-qref.json | 28.74 (6782 tok) | 29.05 (5987 tok, 5 req) | 29.8 | 267.1

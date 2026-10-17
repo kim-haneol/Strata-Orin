@@ -1,0 +1,45 @@
+{
+  "inspection_date": "2026-10-17",
+  "measurement": "sum generated tokens / sum server decode seconds; excludes prefill, tools and user idle time",
+  "omp_actual_use": {
+    "completed_responses": 20,
+    "generated_tokens": 12515,
+    "decode_seconds": 492.672,
+    "aggregate_decode_tokens_per_second": 25.402296050922317,
+    "per_response_rate_range": [
+      22.4,
+      31.3
+    ],
+    "prompt_token_range": [
+      7981,
+      41855
+    ]
+  },
+  "recent_service_conversation": {
+    "completed_responses": 64,
+    "generated_tokens": 20636,
+    "decode_seconds": 827.551,
+    "aggregate_decode_tokens_per_second": 24.9362274953447,
+    "per_response_rate_range": [
+      20.5,
+      35.3
+    ],
+    "prompt_token_range": [
+      28007,
+      78120
+    ]
+  },
+  "recent_client_attribution": "unconfirmed; do not label these 64 requests as Hermes",
+  "exclusions": [
+    "initial OMP greeting",
+    "controlled deployment probes",
+    "two cancelled prefill requests in recent conversation interval"
+  ],
+  "source_log_sha256": {
+    "server-engine-abliterated-vision.log": "069f32d78bebfb729c8214e09e5c4d6aff71c17cd8dcd75d890872081bb42a02",
+    "server-engine-reencode-20261015.log": "eed42e6c9954dc4c7cf41c347ceefb8edc04f72f775d04df880310584d907757"
+  },
+  "private_omp_session_sha256": "89c7bee0dc9773942e7d1b8235c1ee01a15c458c4a8956cdadd11ddf6180f866",
+  "private_conversation_content_published": false,
+  "new_inference_performed": false
+}

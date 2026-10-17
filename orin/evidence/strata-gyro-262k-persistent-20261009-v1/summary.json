@@ -1,0 +1,313 @@
+{
+  "status": "completed",
+  "health": {
+    "status": "ok",
+    "max_context": 262144,
+    "model": "qwen38-flash-next-gyro-m",
+    "images": false,
+    "api_key": false,
+    "loaded": true,
+    "service": "strata"
+  },
+  "tests": [
+    {
+      "name": "short-korean",
+      "passed": true,
+      "elapsed_seconds": 1.1172029589652084,
+      "usage": {
+        "prompt_tokens": 32,
+        "completion_tokens": 5,
+        "total_tokens": 37,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 32,
+        "prompt_ms": 898.7,
+        "prompt_per_token_ms": 28.084,
+        "prompt_per_second": 35.6,
+        "predicted_n": 5,
+        "predicted_ms": 202.4,
+        "predicted_per_token_ms": 40.48,
+        "predicted_per_second": 24.7,
+        "draft_n": 3,
+        "draft_n_accepted": 3
+      },
+      "content": "42입니다."
+    },
+    {
+      "name": "recall-64000",
+      "passed": true,
+      "elapsed_seconds": 114.33082041400485,
+      "expected_prompt_tokens": 64000,
+      "actual_prompt_tokens": 64000,
+      "usage": {
+        "prompt_tokens": 64000,
+        "completion_tokens": 47,
+        "total_tokens": 64047,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 64000,
+        "prompt_ms": 112625.2,
+        "prompt_per_token_ms": 1.76,
+        "prompt_per_second": 568.3,
+        "predicted_n": 47,
+        "predicted_ms": 1448.9,
+        "predicted_per_token_ms": 30.828,
+        "predicted_per_second": 32.4,
+        "draft_n": 36,
+        "draft_n_accepted": 35
+      },
+      "content": "{\n  \"BEGIN\": \"Cedar-4827\",\n  \"MIDDLE\": \"Quartz-6193\",\n  \"END\": \"Maple-7351\"\n}"
+    },
+    {
+      "name": "recall-128000",
+      "passed": true,
+      "elapsed_seconds": 234.9882929509622,
+      "expected_prompt_tokens": 128000,
+      "actual_prompt_tokens": 128000,
+      "usage": {
+        "prompt_tokens": 128000,
+        "completion_tokens": 47,
+        "total_tokens": 128047,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 128000,
+        "prompt_ms": 233023.7,
+        "prompt_per_token_ms": 1.82,
+        "prompt_per_second": 549.3,
+        "predicted_n": 47,
+        "predicted_ms": 1474.7,
+        "predicted_per_token_ms": 31.377,
+        "predicted_per_second": 31.9,
+        "draft_n": 36,
+        "draft_n_accepted": 35
+      },
+      "content": "{\n  \"BEGIN\": \"Cedar-4827\",\n  \"MIDDLE\": \"Quartz-6193\",\n  \"END\": \"Maple-7351\"\n}"
+    },
+    {
+      "name": "recall-253952",
+      "passed": true,
+      "elapsed_seconds": 496.715691008023,
+      "expected_prompt_tokens": 253952,
+      "actual_prompt_tokens": 253952,
+      "usage": {
+        "prompt_tokens": 253952,
+        "completion_tokens": 47,
+        "total_tokens": 253999,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 253952,
+        "prompt_ms": 494247.6,
+        "prompt_per_token_ms": 1.946,
+        "prompt_per_second": 513.8,
+        "predicted_n": 47,
+        "predicted_ms": 1525.5,
+        "predicted_per_token_ms": 32.457,
+        "predicted_per_second": 30.8,
+        "draft_n": 36,
+        "draft_n_accepted": 35
+      },
+      "content": "{\n  \"BEGIN\": \"Cedar-4827\",\n  \"MIDDLE\": \"Quartz-6193\",\n  \"END\": \"Maple-7351\"\n}"
+    },
+    {
+      "name": "tool-call",
+      "passed": true,
+      "elapsed_seconds": 2.505942409974523,
+      "usage": {
+        "prompt_tokens": 278,
+        "completion_tokens": 29,
+        "total_tokens": 307,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 278,
+        "prompt_ms": 1651.9,
+        "prompt_per_token_ms": 5.942,
+        "prompt_per_second": 168.3,
+        "predicted_n": 29,
+        "predicted_ms": 835.1,
+        "predicted_per_token_ms": 28.797,
+        "predicted_per_second": 34.7,
+        "draft_n": 23,
+        "draft_n_accepted": 21
+      },
+      "tool_calls": [
+        {
+          "id": "call_6f06dca10dd0456d82124336",
+          "type": "function",
+          "function": {
+            "name": "lookup_test_value",
+            "arguments": "{\"key\":\"ORIN_CHECK\"}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "tool-result",
+      "passed": true,
+      "elapsed_seconds": 1.6439433519844897,
+      "usage": {
+        "prompt_tokens": 350,
+        "completion_tokens": 16,
+        "total_tokens": 366,
+        "prompt_tokens_details": {
+          "cached_tokens": 306
+        }
+      },
+      "timings": {
+        "cache_n": 306,
+        "prompt_n": 44,
+        "prompt_ms": 1044.4,
+        "prompt_per_token_ms": 23.736,
+        "prompt_per_second": 42.1,
+        "predicted_n": 16,
+        "predicted_ms": 580.2,
+        "predicted_per_token_ms": 36.263,
+        "predicted_per_second": 27.6,
+        "draft_n": 15,
+        "draft_n_accepted": 13
+      },
+      "content": "The tool returned the exact value ORIN_CHECK=5391."
+    },
+    {
+      "name": "conversation-A",
+      "passed": true,
+      "elapsed_seconds": 9.574506554985419,
+      "usage": {
+        "prompt_tokens": 4933,
+        "completion_tokens": 5,
+        "total_tokens": 4938,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 4933,
+        "prompt_ms": 9246.3,
+        "prompt_per_token_ms": 1.874,
+        "prompt_per_second": 533.5,
+        "predicted_n": 5,
+        "predicted_ms": 273.3,
+        "predicted_per_token_ms": 54.66,
+        "predicted_per_second": 18.3,
+        "draft_n": 6,
+        "draft_n_accepted": 4
+      },
+      "content": "7319"
+    },
+    {
+      "name": "conversation-B",
+      "passed": true,
+      "elapsed_seconds": 9.530270286020823,
+      "usage": {
+        "prompt_tokens": 4933,
+        "completion_tokens": 5,
+        "total_tokens": 4938,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 4933,
+        "prompt_ms": 9311.8,
+        "prompt_per_token_ms": 1.888,
+        "prompt_per_second": 529.8,
+        "predicted_n": 5,
+        "predicted_ms": 163.3,
+        "predicted_per_token_ms": 32.66,
+        "predicted_per_second": 30.6,
+        "draft_n": 3,
+        "draft_n_accepted": 3
+      },
+      "content": "8642"
+    },
+    {
+      "name": "conversation-A-resume",
+      "passed": true,
+      "elapsed_seconds": 1.1715680949855596,
+      "usage": {
+        "prompt_tokens": 4962,
+        "completion_tokens": 5,
+        "total_tokens": 4967,
+        "prompt_tokens_details": {
+          "cached_tokens": 4939
+        }
+      },
+      "timings": {
+        "cache_n": 4939,
+        "prompt_n": 23,
+        "prompt_ms": 913.9,
+        "prompt_per_token_ms": 39.735,
+        "prompt_per_second": 25.2,
+        "predicted_n": 5,
+        "predicted_ms": 199.1,
+        "predicted_per_token_ms": 39.82,
+        "predicted_per_second": 25.1,
+        "draft_n": 5,
+        "draft_n_accepted": 5
+      },
+      "content": "7319"
+    },
+    {
+      "name": "conversation-B-resume",
+      "passed": true,
+      "elapsed_seconds": 1.1700560239842162,
+      "usage": {
+        "prompt_tokens": 4962,
+        "completion_tokens": 5,
+        "total_tokens": 4967,
+        "prompt_tokens_details": {
+          "cached_tokens": 4937
+        }
+      },
+      "timings": {
+        "cache_n": 4937,
+        "prompt_n": 25,
+        "prompt_ms": 916.6,
+        "prompt_per_token_ms": 36.664,
+        "prompt_per_second": 27.3,
+        "predicted_n": 5,
+        "predicted_ms": 199.6,
+        "predicted_per_token_ms": 39.92,
+        "predicted_per_second": 25.1,
+        "draft_n": 5,
+        "draft_n_accepted": 5
+      },
+      "content": "8642"
+    },
+    {
+      "name": "stream-english",
+      "passed": true,
+      "usage": {
+        "prompt_tokens": 26,
+        "completion_tokens": 43,
+        "total_tokens": 69,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "content": "A prefix cache speeds up repeated prompts by storing the intermediate computational results (the KV cache) of the shared initial text. This allows the model to skip re-processing the identical prefix, reducing computation time and latency.",
+      "sse_done": true
+    }
+  ]
+}

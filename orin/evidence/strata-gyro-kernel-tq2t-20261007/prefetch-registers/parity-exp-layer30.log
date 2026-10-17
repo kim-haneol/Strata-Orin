@@ -1,0 +1,5 @@
+          width invariance (1 vs 3 tokens): gate/up 0, down 0 rows differ
+          gpu decode-once vs per-entry kernels: bitwise equal
+          GPU dequant vs ggml to_float: rel 0.00e+00, 0 of 4915200 values differ in any bit; fp16 of it: 0 differ; embedding rows: 0 of 640 differ
+layer 30  tq2_t   /tq2_t   blob  1305600  cpu rel 1.12e-02  gpu rel 1.82e-02  cpu-gpu 1.71e-02  ok
+native_expert_parity: 0 failures

@@ -1,0 +1,72 @@
+[
+ {
+  "kernel": "mul_mat_q",
+  "launches": 100,
+  "ms": 4279.3,
+  "avg_us": 42793.0,
+  "avg_blocks": 347804
+ },
+ {
+  "kernel": "dequant_q8_0_f16_pairs",
+  "launches": 301,
+  "ms": 110.3,
+  "avg_us": 366.6,
+  "avg_blocks": 19051
+ },
+ {
+  "kernel": "ampere_s16816gemm_fp16_128x128_ldg8_stages_32x5_tn",
+  "launches": 145,
+  "ms": 31.6,
+  "avg_us": 217.9,
+  "avg_blocks": 55
+ },
+ {
+  "kernel": "prompt_attn_i8_kernel",
+  "launches": 12,
+  "ms": 18.4,
+  "avg_us": 1531.3,
+  "avg_blocks": 198
+ },
+ {
+  "kernel": "gdn_rec_cols_pipe_kernel",
+  "launches": 36,
+  "ms": 12.0,
+  "avg_us": 334.6,
+  "avg_blocks": 192
+ },
+ {
+  "kernel": "ampere_s16816gemm_bf16_128x64_ldg8_stages_64x3_tn",
+  "launches": 97,
+  "ms": 10.0,
+  "avg_us": 103.0,
+  "avg_blocks": 160
+ },
+ {
+  "kernel": "Kernel2",
+  "launches": 204,
+  "ms": 9.7,
+  "avg_us": 47.8,
+  "avg_blocks": 66
+ },
+ {
+  "kernel": "gr_write_norm_rs_kernel",
+  "launches": 94,
+  "ms": 9.2,
+  "avg_us": 97.5,
+  "avg_blocks": 396
+ },
+ {
+  "kernel": "ampere_s16816gemm_bf16_128x128_ldg8_stages_32x5_tn",
+  "launches": 97,
+  "ms": 6.6,
+  "avg_us": 68.2,
+  "avg_blocks": 15
+ },
+ {
+  "kernel": "gr_mix_r_kernel",
+  "launches": 97,
+  "ms": 5.9,
+  "avg_us": 60.5,
+  "avg_blocks": 990
+ }
+]

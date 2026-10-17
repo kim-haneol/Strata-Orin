@@ -1,0 +1,183 @@
+{
+  "label": "old",
+  "health": {
+    "status": "ok",
+    "max_context": 262144,
+    "model": "qwen38-flash-next-gyro-m",
+    "images": true,
+    "api_key": false,
+    "loaded": true,
+    "service": "strata"
+  },
+  "tests": [
+    {
+      "index": 0,
+      "warmup": true,
+      "elapsed_seconds": 11.378857961972244,
+      "response": {
+        "id": "chatcmpl-0a62700f649f4f679d6c68de",
+        "object": "chat.completion",
+        "created": 1792046738,
+        "model": "qwen38-flash-next-gyro-m",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46"
+            },
+            "finish_reason": "length"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 3414,
+          "completion_tokens": 128,
+          "total_tokens": 3542,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 3414,
+          "prompt_ms": 7781.3,
+          "prompt_per_token_ms": 2.279,
+          "prompt_per_second": 438.7,
+          "predicted_n": 128,
+          "predicted_ms": 3538.7,
+          "predicted_per_token_ms": 27.646,
+          "predicted_per_second": 36.2,
+          "draft_n": 96,
+          "draft_n_accepted": 96
+        }
+      }
+    },
+    {
+      "index": 1,
+      "warmup": false,
+      "elapsed_seconds": 10.79229105496779,
+      "response": {
+        "id": "chatcmpl-2c6fef8bab2f4efc996ad026",
+        "object": "chat.completion",
+        "created": 1792046750,
+        "model": "qwen38-flash-next-gyro-m",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46"
+            },
+            "finish_reason": "length"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 3414,
+          "completion_tokens": 128,
+          "total_tokens": 3542,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 3414,
+          "prompt_ms": 7194.7,
+          "prompt_per_token_ms": 2.107,
+          "prompt_per_second": 474.5,
+          "predicted_n": 128,
+          "predicted_ms": 3538.4,
+          "predicted_per_token_ms": 27.644,
+          "predicted_per_second": 36.2,
+          "draft_n": 96,
+          "draft_n_accepted": 96
+        }
+      }
+    },
+    {
+      "index": 2,
+      "warmup": false,
+      "elapsed_seconds": 10.84025226009544,
+      "response": {
+        "id": "chatcmpl-6e80dedb725f47d987b461d4",
+        "object": "chat.completion",
+        "created": 1792046761,
+        "model": "qwen38-flash-next-gyro-m",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46"
+            },
+            "finish_reason": "length"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 3414,
+          "completion_tokens": 128,
+          "total_tokens": 3542,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 3414,
+          "prompt_ms": 7246.5,
+          "prompt_per_token_ms": 2.123,
+          "prompt_per_second": 471.1,
+          "predicted_n": 128,
+          "predicted_ms": 3534.0,
+          "predicted_per_token_ms": 27.609,
+          "predicted_per_second": 36.2,
+          "draft_n": 96,
+          "draft_n_accepted": 96
+        }
+      }
+    },
+    {
+      "index": 3,
+      "warmup": false,
+      "elapsed_seconds": 10.817933426005766,
+      "response": {
+        "id": "chatcmpl-6b062a4b91924e67baaf193c",
+        "object": "chat.completion",
+        "created": 1792046771,
+        "model": "qwen38-flash-next-gyro-m",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46"
+            },
+            "finish_reason": "length"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 3414,
+          "completion_tokens": 128,
+          "total_tokens": 3542,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 3414,
+          "prompt_ms": 7222.5,
+          "prompt_per_token_ms": 2.116,
+          "prompt_per_second": 472.7,
+          "predicted_n": 128,
+          "predicted_ms": 3535.4,
+          "predicted_per_token_ms": 27.62,
+          "predicted_per_second": 36.2,
+          "draft_n": 96,
+          "draft_n_accepted": 96
+        }
+      }
+    }
+  ],
+  "status": "completed"
+}

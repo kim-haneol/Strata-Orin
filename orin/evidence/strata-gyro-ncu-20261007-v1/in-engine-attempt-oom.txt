@@ -1,0 +1,8 @@
+SERIES_BEGIN ${TEST_HOME}/.local/share/jetson-orin/strata-gyro-ncu-decode-early-20261007-v1
+NvMapMemHandleAlloc failed: error 12
+NvMapMemAllocInternalTagged failed: error 12
+Failed ioctlCmd: 1075858947
+NvMapMemHandleAlloc failed: error 12
+Oct 07 13:48:27 jetson-orin kernel: tegrastats invoked oom-killer: gfp_mask=0x402cc2(GFP_KERNEL_ACCOUNT|__GFP_HIGHMEM|__GFP_NOWARN), order=0, oom_score_adj=0
+Oct 07 13:48:29 jetson-orin kernel: oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=orin-strata-gyro-ncu-series-20261007-v1.service,mems_allowed=0,global_oom,task_memcg=/system.slice/orin-strata-gyro-ncu-series-20261007-v1.service,task=strata,pid=204828,uid=0
+Oct 07 13:48:29 jetson-orin kernel: Out of memory: Killed process 204828 (strata) total-vm:195937712kB, anon-rss:61493116kB, file-rss:857220kB, shmem-rss:0kB, UID:0 pgtables:73892kB oom_score_adj:0

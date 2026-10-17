@@ -1,0 +1,43 @@
+{
+  "samples": 454,
+  "first_utc": "2026-10-09T06:50:06Z",
+  "last_utc": "2026-10-09T07:05:27Z",
+  "scope": "validation recording, including startup tail and API tests",
+  "memory_used_bytes": {
+    "min": 46252621824,
+    "max": 61460467712,
+    "first": 46303555584,
+    "last": 60723847168
+  },
+  "memory_total_bytes": 65932546048,
+  "memory_pressure_states": [
+    "normal",
+    "warning"
+  ],
+  "swap_used_bytes": {
+    "min": 451469312,
+    "max": 451469312,
+    "first": 451469312,
+    "last": 451469312
+  },
+  "gpu_utilization_percent": {
+    "min": 0.0,
+    "max": 100.0,
+    "first": 8.7,
+    "last": 0.0
+  },
+  "gpu_frequency_mhz": {
+    "min": 306.0,
+    "max": 1300.5,
+    "first": 306.0,
+    "last": 306.0
+  },
+  "gpu_temperature_c": {
+    "min": 37.562,
+    "max": 63.687,
+    "first": 37.75,
+    "last": 57.031
+  },
+  "gpu_power_watts": null,
+  "gpu_process_memory_bytes": null
+}

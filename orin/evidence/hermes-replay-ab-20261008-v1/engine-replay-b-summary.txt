@@ -1,0 +1,113 @@
+strata verify: window up to 8 tokens, 65.0 MiB of device buffers (100% VRAM resident: zero-doorbell graph)
+strata serve: prompt 4452 tokens = 0 reused + 4452 read in 10582 ms (420.7 tok/s), 3438 generated in 118178 ms (29.1 tok/s), drafts accepted 2354 of 2942, 2 checkpoints
+strata serve: suffix drafts: 33 windows, 87 of 123 drafts accepted
+strata serve: prompt 434 tokens = 0 reused + 434 read in 2673 ms (162.4 tok/s), 13 generated in 479 ms (27.1 tok/s), drafts accepted 9 of 11, 1 checkpoints
+strata serve: prompt 6165 tokens = 4447 reused + 1718 read in 5070 ms (338.8 tok/s), 124 generated in 4278 ms (29.0 tok/s), drafts accepted 83 of 103, 3 checkpoints
+strata serve: prompt 6264 tokens = 6160 reused + 104 read in 1651 ms (63.0 tok/s), 52 generated in 1859 ms (28.0 tok/s), drafts accepted 36 of 47, 4 checkpoints
+strata serve: suffix drafts: 1 windows, 1 of 3 drafts accepted
+strata serve: prompt 6417 tokens = 6259 reused + 158 read in 1976 ms (80.0 tok/s), 76 generated in 3147 ms (24.2 tok/s), drafts accepted 45 of 71, 5 checkpoints
+strata serve: prompt 6739 tokens = 6412 reused + 327 read in 2580 ms (126.8 tok/s), 202 generated in 8407 ms (24.0 tok/s), drafts accepted 117 of 181, 6 checkpoints
+strata serve: suffix drafts: 4 windows, 12 of 12 drafts accepted
+strata serve: prompt 7117 tokens = 6734 reused + 383 read in 2882 ms (132.9 tok/s), 103 generated in 4519 ms (22.8 tok/s), drafts accepted 57 of 96, 6 checkpoints
+strata serve: suffix drafts: 5 windows, 15 of 15 drafts accepted
+strata serve: prompt 7436 tokens = 7112 reused + 324 read in 2660 ms (121.8 tok/s), 805 generated in 30109 ms (26.7 tok/s), drafts accepted 505 of 662, 6 checkpoints
+strata serve: suffix drafts: 8 windows, 18 of 24 drafts accepted
+strata serve: prompt 7758 tokens = 7431 reused + 327 read in 2695 ms (121.3 tok/s), 1094 generated in 38550 ms (28.4 tok/s), drafts accepted 732 of 908, 6 checkpoints
+strata serve: suffix drafts: 16 windows, 33 of 56 drafts accepted
+strata serve: prompt 8235 tokens = 7753 reused + 482 read in 3129 ms (154.1 tok/s), 348 generated in 13741 ms (25.3 tok/s), drafts accepted 209 of 281, 6 checkpoints
+strata serve: suffix drafts: 3 windows, 5 of 13 drafts accepted
+strata serve: prompt 8339 tokens = 8230 reused + 109 read in 1820 ms (59.9 tok/s), 302 generated in 12372 ms (24.4 tok/s), drafts accepted 179 of 271, 6 checkpoints
+strata serve: suffix drafts: 14 windows, 37 of 50 drafts accepted
+strata serve: prompt 8532 tokens = 8334 reused + 198 read in 2245 ms (88.2 tok/s), 225 generated in 8236 ms (27.3 tok/s), drafts accepted 148 of 191, 6 checkpoints
+strata serve: suffix drafts: 5 windows, 16 of 23 drafts accepted
+strata serve: prompt 8721 tokens = 8527 reused + 194 read in 2220 ms (87.4 tok/s), 436 generated in 17349 ms (25.1 tok/s), drafts accepted 256 of 345, 6 checkpoints
+strata serve: suffix drafts: 2 windows, 4 of 6 drafts accepted
+strata serve: prompt 9176 tokens = 8716 reused + 460 read in 3005 ms (153.1 tok/s), 463 generated in 18811 ms (24.6 tok/s), drafts accepted 268 of 380, 6 checkpoints
+strata serve: suffix drafts: 2 windows, 1 of 6 drafts accepted
+strata serve: prompt 10396 tokens = 9171 reused + 1225 read in 4705 ms (260.4 tok/s), 1117 generated in 41495 ms (26.9 tok/s), drafts accepted 719 of 952, 6 checkpoints
+strata serve: suffix drafts: 6 windows, 7 of 20 drafts accepted
+strata serve: prompt 4445 tokens = 4346 reused + 99 read in 1861 ms (53.2 tok/s), 52 generated in 1729 ms (30.1 tok/s), drafts accepted 36 of 43, 2 checkpoints
+strata serve: prompt 427 tokens = 0 reused + 427 read in 2639 ms (161.8 tok/s), 18 generated in 664 ms (27.1 tok/s), drafts accepted 11 of 15, 1 checkpoints
+strata serve: prompt 4546 tokens = 4440 reused + 106 read in 1557 ms (68.1 tok/s), 79 generated in 2606 ms (30.3 tok/s), drafts accepted 57 of 64, 3 checkpoints
+strata serve: suffix drafts: 1 windows, 1 of 3 drafts accepted
+strata serve: prompt 6222 tokens = 4541 reused + 1681 read in 5176 ms (324.7 tok/s), 101 generated in 3687 ms (27.4 tok/s), drafts accepted 66 of 88, 4 checkpoints
+strata serve: suffix drafts: 1 windows, 6 of 7 drafts accepted
+strata serve: prompt 6835 tokens = 6217 reused + 618 read in 3506 ms (176.3 tok/s), 151 generated in 5467 ms (27.6 tok/s), drafts accepted 102 of 142, 5 checkpoints
+strata serve: suffix drafts: 5 windows, 18 of 27 drafts accepted
+strata serve: prompt 7902 tokens = 6830 reused + 1072 read in 4269 ms (251.1 tok/s), 109 generated in 3886 ms (28.0 tok/s), drafts accepted 75 of 95, 6 checkpoints
+strata serve: suffix drafts: 3 windows, 4 of 13 drafts accepted
+strata serve: prompt 11394 tokens = 7897 reused + 3497 read in 8087 ms (432.4 tok/s), 100 generated in 3517 ms (28.4 tok/s), drafts accepted 70 of 87, 6 checkpoints
+strata serve: suffix drafts: 1 windows, 1 of 7 drafts accepted
+strata serve: prompt 12161 tokens = 11389 reused + 772 read in 3951 ms (195.4 tok/s), 76 generated in 2995 ms (25.4 tok/s), drafts accepted 47 of 68, 6 checkpoints
+strata serve: prompt 12314 tokens = 12156 reused + 158 read in 2151 ms (73.5 tok/s), 102 generated in 4127 ms (24.7 tok/s), drafts accepted 64 of 98, 6 checkpoints
+strata serve: suffix drafts: 1 windows, 3 of 3 drafts accepted
+strata serve: prompt 12541 tokens = 12309 reused + 232 read in 2399 ms (96.7 tok/s), 282 generated in 11113 ms (25.4 tok/s), drafts accepted 185 of 281, 6 checkpoints
+strata serve: suffix drafts: 13 windows, 44 of 63 drafts accepted
+strata serve: prompt 13044 tokens = 12536 reused + 508 read in 3267 ms (155.5 tok/s), 190 generated in 7280 ms (26.1 tok/s), drafts accepted 125 of 176, 6 checkpoints
+strata serve: suffix drafts: 6 windows, 11 of 34 drafts accepted
+strata serve: prompt 15216 tokens = 13039 reused + 2177 read in 6285 ms (346.4 tok/s), 218 generated in 8536 ms (25.5 tok/s), drafts accepted 143 of 221, 6 checkpoints
+strata serve: suffix drafts: 16 windows, 54 of 80 drafts accepted
+strata serve: prompt 16189 tokens = 15211 reused + 978 read in 4363 ms (224.2 tok/s), 127 generated in 4601 ms (27.6 tok/s), drafts accepted 87 of 114, 6 checkpoints
+strata serve: suffix drafts: 3 windows, 17 of 21 drafts accepted
+strata serve: prompt 16281 tokens = 16184 reused + 97 read in 1863 ms (52.1 tok/s), 218 generated in 7532 ms (28.9 tok/s), drafts accepted 152 of 191, 6 checkpoints
+strata serve: suffix drafts: 8 windows, 44 of 56 drafts accepted
+strata serve: prompt 20818 tokens = 16276 reused + 4542 read in 9771 ms (464.8 tok/s), 356 generated in 14262 ms (25.0 tok/s), drafts accepted 218 of 308, 6 checkpoints
+strata serve: suffix drafts: 9 windows, 48 of 59 drafts accepted
+strata serve: prompt 23007 tokens = 20813 reused + 2194 read in 6314 ms (347.5 tok/s), 244 generated in 8133 ms (30.0 tok/s), drafts accepted 178 of 215, 6 checkpoints
+strata serve: suffix drafts: 12 windows, 62 of 80 drafts accepted
+strata serve: prompt 23198 tokens = 23002 reused + 196 read in 2314 ms (84.7 tok/s), 141 generated in 5156 ms (27.3 tok/s), drafts accepted 100 of 129, 6 checkpoints
+strata serve: suffix drafts: 7 windows, 32 of 45 drafts accepted
+strata serve: prompt 28236 tokens = 23193 reused + 5043 read in 10676 ms (472.3 tok/s), 219 generated in 7846 ms (27.9 tok/s), drafts accepted 152 of 200, 6 checkpoints
+strata serve: suffix drafts: 9 windows, 40 of 59 drafts accepted
+strata serve: prompt 33497 tokens = 28231 reused + 5266 read in 11127 ms (473.3 tok/s), 115 generated in 4461 ms (25.8 tok/s), drafts accepted 74 of 94, 6 checkpoints
+strata serve: suffix drafts: 3 windows, 12 of 17 drafts accepted
+strata serve: prompt 34363 tokens = 33492 reused + 871 read in 4268 ms (204.1 tok/s), 141 generated in 5099 ms (27.7 tok/s), drafts accepted 99 of 127, 6 checkpoints
+strata serve: suffix drafts: 5 windows, 29 of 35 drafts accepted
+strata serve: prompt 35582 tokens = 34358 reused + 1224 read in 4826 ms (253.6 tok/s), 212 generated in 7594 ms (27.9 tok/s), drafts accepted 148 of 184, 6 checkpoints
+strata serve: suffix drafts: 9 windows, 48 of 55 drafts accepted
+strata serve: prompt 35808 tokens = 35577 reused + 231 read in 2529 ms (91.3 tok/s), 226 generated in 7953 ms (28.4 tok/s), drafts accepted 155 of 182, 6 checkpoints
+strata serve: suffix drafts: 5 windows, 29 of 31 drafts accepted
+strata serve: prompt 36160 tokens = 35803 reused + 357 read in 2970 ms (120.2 tok/s), 346 generated in 12748 ms (27.1 tok/s), drafts accepted 231 of 276, 6 checkpoints
+strata serve: suffix drafts: 10 windows, 56 of 62 drafts accepted
+strata serve: prompt 37602 tokens = 36155 reused + 1447 read in 5314 ms (272.3 tok/s), 209 generated in 6974 ms (30.0 tok/s), drafts accepted 152 of 177, 6 checkpoints
+strata serve: suffix drafts: 5 windows, 29 of 35 drafts accepted
+strata serve: prompt 39965 tokens = 37597 reused + 2368 read in 6757 ms (350.5 tok/s), 203 generated in 7281 ms (27.9 tok/s), drafts accepted 140 of 182, 6 checkpoints
+strata serve: suffix drafts: 9 windows, 34 of 55 drafts accepted
+strata serve: prompt 42273 tokens = 39960 reused + 2313 read in 6720 ms (344.2 tok/s), 395 generated in 16183 ms (24.4 tok/s), drafts accepted 234 of 313, 6 checkpoints
+strata serve: suffix drafts: 2 windows, 7 of 10 drafts accepted
+strata serve: prompt 42768 tokens = 42268 reused + 500 read in 3357 ms (149.0 tok/s), 240 generated in 9486 ms (25.3 tok/s), drafts accepted 151 of 208, 6 checkpoints
+strata serve: suffix drafts: 6 windows, 29 of 42 drafts accepted
+strata serve: prompt 44857 tokens = 42763 reused + 2094 read in 6416 ms (326.4 tok/s), 380 generated in 14698 ms (25.9 tok/s), drafts accepted 252 of 340, 6 checkpoints
+strata serve: suffix drafts: 12 windows, 49 of 74 drafts accepted
+strata serve: prompt 45279 tokens = 44852 reused + 427 read in 3313 ms (128.9 tok/s), 106 generated in 4712 ms (22.5 tok/s), drafts accepted 59 of 91, 6 checkpoints
+strata serve: suffix drafts: 1 windows, 3 of 7 drafts accepted
+strata serve: prompt 45503 tokens = 45274 reused + 229 read in 2620 ms (87.4 tok/s), 334 generated in 12426 ms (26.9 tok/s), drafts accepted 227 of 290, 6 checkpoints
+strata serve: suffix drafts: 12 windows, 58 of 72 drafts accepted
+strata serve: prompt 46690 tokens = 45498 reused + 1192 read in 5015 ms (237.7 tok/s), 2641 generated in 112482 ms (23.5 tok/s), drafts accepted 1502 of 2120, 6 checkpoints
+strata serve: suffix drafts: 20 windows, 35 of 72 drafts accepted
+strata serve: prompt 433 tokens = 0 reused + 433 read in 3226 ms (134.2 tok/s), 14 generated in 602 ms (23.2 tok/s), drafts accepted 9 of 11, 1 checkpoints
+strata serve: prompt 4451 tokens = 4346 reused + 105 read in 1665 ms (63.1 tok/s), 48 generated in 1621 ms (29.6 tok/s), drafts accepted 33 of 41, 2 checkpoints
+strata serve: prompt 4550 tokens = 4446 reused + 104 read in 1521 ms (68.4 tok/s), 91 generated in 3597 ms (25.3 tok/s), drafts accepted 59 of 84, 3 checkpoints
+strata serve: prompt 4802 tokens = 4545 reused + 257 read in 2029 ms (126.7 tok/s), 203 generated in 6571 ms (30.9 tok/s), drafts accepted 147 of 180, 4 checkpoints
+strata serve: suffix drafts: 7 windows, 44 of 49 drafts accepted
+strata serve: prompt 8549 tokens = 4797 reused + 3752 read in 7980 ms (470.2 tok/s), 277 generated in 10225 ms (27.1 tok/s), drafts accepted 185 of 255, 5 checkpoints
+strata serve: suffix drafts: 5 windows, 26 of 31 drafts accepted
+strata serve: prompt 13584 tokens = 8544 reused + 5040 read in 10131 ms (497.5 tok/s), 333 generated in 12293 ms (27.1 tok/s), drafts accepted 225 of 300, 6 checkpoints
+strata serve: suffix drafts: 7 windows, 45 of 49 drafts accepted
+strata serve: prompt 20110 tokens = 13579 reused + 6531 read in 12492 ms (522.8 tok/s), 214 generated in 7866 ms (27.2 tok/s), drafts accepted 143 of 192, 6 checkpoints
+strata serve: suffix drafts: 10 windows, 47 of 54 drafts accepted
+strata serve: prompt 23765 tokens = 20105 reused + 3660 read in 8232 ms (444.6 tok/s), 124 generated in 4443 ms (27.9 tok/s), drafts accepted 83 of 102, 6 checkpoints
+strata serve: prompt 23895 tokens = 23760 reused + 135 read in 1843 ms (73.3 tok/s), 180 generated in 7093 ms (25.4 tok/s), drafts accepted 114 of 155, 6 checkpoints
+strata serve: suffix drafts: 5 windows, 23 of 30 drafts accepted
+strata serve: prompt 25416 tokens = 23890 reused + 1526 read in 5069 ms (301.0 tok/s), 525 generated in 19261 ms (27.3 tok/s), drafts accepted 351 of 457, 6 checkpoints
+strata serve: suffix drafts: 17 windows, 100 of 107 drafts accepted
+strata serve: prompt 28040 tokens = 25411 reused + 2629 read in 6685 ms (393.3 tok/s), 315 generated in 11793 ms (26.7 tok/s), drafts accepted 205 of 258, 6 checkpoints
+strata serve: suffix drafts: 7 windows, 37 of 45 drafts accepted
+strata serve: prompt 28221 tokens = 28035 reused + 186 read in 1998 ms (93.1 tok/s), 230 generated in 8387 ms (27.4 tok/s), drafts accepted 156 of 203, 6 checkpoints
+strata serve: suffix drafts: 8 windows, 39 of 48 drafts accepted
+strata serve: prompt 28989 tokens = 28216 reused + 773 read in 3748 ms (206.3 tok/s), 494 generated in 19845 ms (24.9 tok/s), drafts accepted 296 of 394, 6 checkpoints
+strata serve: suffix drafts: 5 windows, 22 of 30 drafts accepted
+strata serve: prompt 29180 tokens = 28984 reused + 196 read in 2081 ms (94.2 tok/s), 630 generated in 26428 ms (23.8 tok/s), drafts accepted 357 of 489, 6 checkpoints
+strata serve: suffix drafts: 3 windows, 16 of 21 drafts accepted
+strata serve: prompt 29871 tokens = 29175 reused + 696 read in 3544 ms (196.4 tok/s), 837 generated in 36317 ms (23.0 tok/s), drafts accepted 474 of 716, 6 checkpoints
+strata serve: suffix drafts: 8 windows, 37 of 40 drafts accepted

@@ -1,0 +1,2 @@
+8de2bec33e6a866311c70ec35ca58eec8048c9645b49ee94ef5bce523055174f  ${RUNTIME}/mtp/rt-enko/draft_vocab.bin
+b1e1d3a7a9e4bf862dcd5923ce661fb59bbd07907e594df5cf86a62ac235cb91  ${RUNTIME}/mtp/rt/draft_vocab.bin

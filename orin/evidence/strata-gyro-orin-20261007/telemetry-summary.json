@@ -1,0 +1,167 @@
+{
+  "kernel-validation-v2": {
+    "samples": 195,
+    "pressure_states": [
+      "normal"
+    ],
+    "gpu.device_utilization_percent": {
+      "available": 195,
+      "unavailable": 0,
+      "min": 0.0,
+      "max": 25.0,
+      "median": 0.0
+    },
+    "gpu.frequency_mhz": {
+      "available": 195,
+      "unavailable": 0,
+      "min": 306.0,
+      "max": 1300.5,
+      "median": 306.0
+    },
+    "gpu.temperature_c": {
+      "available": 11,
+      "unavailable": 184,
+      "min": 39.812,
+      "max": 41.125,
+      "median": 40.312
+    },
+    "gpu.power_watts": {
+      "available": 0,
+      "unavailable": 195,
+      "min": null,
+      "max": null,
+      "median": null
+    },
+    "memory.free_bytes": {
+      "available": 195,
+      "unavailable": 0,
+      "min": 370229248,
+      "max": 941174784,
+      "median": 454602752
+    },
+    "memory.swap_used_bytes": {
+      "available": 195,
+      "unavailable": 0,
+      "min": 319815680,
+      "max": 319815680,
+      "median": 319815680
+    },
+    "cpu.utilization_percent": {
+      "available": 195,
+      "unavailable": 0,
+      "min": 8.56671929359436,
+      "max": 14.391446113586426,
+      "median": 11.138612031936646
+    }
+  },
+  "smoke-none-v2": {
+    "samples": 415,
+    "pressure_states": [
+      "normal"
+    ],
+    "gpu.device_utilization_percent": {
+      "available": 415,
+      "unavailable": 0,
+      "min": 0.0,
+      "max": 99.9,
+      "median": 0.0
+    },
+    "gpu.frequency_mhz": {
+      "available": 415,
+      "unavailable": 0,
+      "min": 306.0,
+      "max": 1300.5,
+      "median": 306.0
+    },
+    "gpu.temperature_c": {
+      "available": 237,
+      "unavailable": 178,
+      "min": 39.343,
+      "max": 46.343,
+      "median": 40.968
+    },
+    "gpu.power_watts": {
+      "available": 0,
+      "unavailable": 415,
+      "min": null,
+      "max": null,
+      "median": null
+    },
+    "memory.free_bytes": {
+      "available": 415,
+      "unavailable": 0,
+      "min": 359272448,
+      "max": 33383460864,
+      "median": 620290048
+    },
+    "memory.swap_used_bytes": {
+      "available": 415,
+      "unavailable": 0,
+      "min": 319815680,
+      "max": 767819776,
+      "median": 481296384
+    },
+    "cpu.utilization_percent": {
+      "available": 415,
+      "unavailable": 0,
+      "min": 0.24251937866210938,
+      "max": 25.472474098205566,
+      "median": 8.949095010757446
+    }
+  },
+  "smoke-mtp-v1": {
+    "samples": 95,
+    "pressure_states": [
+      "normal"
+    ],
+    "gpu.device_utilization_percent": {
+      "available": 95,
+      "unavailable": 0,
+      "min": 0.0,
+      "max": 99.9,
+      "median": 8.5
+    },
+    "gpu.frequency_mhz": {
+      "available": 95,
+      "unavailable": 0,
+      "min": 306.0,
+      "max": 1300.5,
+      "median": 306.0
+    },
+    "gpu.temperature_c": {
+      "available": 80,
+      "unavailable": 15,
+      "min": 40.718,
+      "max": 47.812,
+      "median": 41.062
+    },
+    "gpu.power_watts": {
+      "available": 0,
+      "unavailable": 95,
+      "min": null,
+      "max": null,
+      "median": null
+    },
+    "memory.free_bytes": {
+      "available": 95,
+      "unavailable": 0,
+      "min": 373133312,
+      "max": 34533785600,
+      "median": 485609472
+    },
+    "memory.swap_used_bytes": {
+      "available": 95,
+      "unavailable": 0,
+      "min": 344457216,
+      "max": 565182464,
+      "median": 420216832
+    },
+    "cpu.utilization_percent": {
+      "available": 95,
+      "unavailable": 0,
+      "min": 0.24271607398986816,
+      "max": 16.17405414581299,
+      "median": 7.723575830459595
+    }
+  }
+}

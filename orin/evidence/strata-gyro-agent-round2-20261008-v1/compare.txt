@@ -1,0 +1,11 @@
+61 requests in common
+work/hermes-capture-20261008/replay-nat0.json: 0 requests differ from work/hermes-capture-20261008/replay-dqpark.json in output
+work/hermes-capture-20261008/replay-nat1.json: 54 requests differ from work/hermes-capture-20261008/replay-dqpark.json in output (first: ['0001-v1_chat_completions.json', '0005-v1_chat_completions.json', '0006-v1_chat_completions.json'])
+work/hermes-capture-20261008/replay-rec.json: 0 requests differ from work/hermes-capture-20261008/replay-dqpark.json in output
+work/hermes-capture-20261008/replay-enko.json: 0 requests differ from work/hermes-capture-20261008/replay-dqpark.json in output
+replay | decode tok/s (all) | decode tok/s (>=300-token requests) | prompt s | wall s
+work/hermes-capture-20261008/replay-dqpark.json | 26.31 (21644 tok) | 26.06 (15589 tok, 20 req) | 222.9 | 1056.3
+work/hermes-capture-20261008/replay-nat0.json | 26.19 (21644 tok) | 25.92 (15589 tok, 20 req) | 220.0 | 1057.6
+work/hermes-capture-20261008/replay-nat1.json | 25.66 (19104 tok) | 25.38 (11486 tok, 20 req) | 231.5 | 986.9
+work/hermes-capture-20261008/replay-rec.json | 26.19 (21644 tok) | 25.94 (15589 tok, 20 req) | 219.9 | 1057.8
+work/hermes-capture-20261008/replay-enko.json | 27.09 (21644 tok) | 26.82 (15589 tok, 20 req) | 220.0 | 1030.6

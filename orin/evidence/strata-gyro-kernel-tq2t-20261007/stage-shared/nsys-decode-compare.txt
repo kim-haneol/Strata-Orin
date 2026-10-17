@@ -1,0 +1,11 @@
+stream decode tok/s (traced): base 17.256, candidate 18.783
+selected kernels, decode phase: base 4965.1 ms, candidate 4662.9 ms (0.939x)
+kernel | grid | base n, avg us | candidate n, avg us | ratio
+native_down_multi_kernel | (320,10) | 1296, 201.9 | 1296, 185.7 | 0.919
+native_down_multi_kernel | (320,20) | 1392, 327.3 | 1392, 307.1 | 0.938
+native_down_multi_kernel | (320,30) | 1008, 452.4 | 1008, 419.6 | 0.928
+native_down_multi_kernel | (320,40) | 1920, 578.4 | 1920, 536.4 | 0.927
+native_gu_multi_kernel | (160,10) | 1296, 239.8 | 1296, 225.2 | 0.939
+native_gu_multi_kernel | (160,20) | 1392, 387.2 | 1392, 366.4 | 0.946
+native_gu_multi_kernel | (160,30) | 1008, 530.0 | 1008, 502.4 | 0.948
+native_gu_multi_kernel | (160,40) | 1920, 675.6 | 1920, 642.5 | 0.951

@@ -1,0 +1,68 @@
+{
+  "matched": 170,
+  "all_schemas_identical": false,
+  "original_schema_bytes": 365646,
+  "wire_schema_bytes": 483373,
+  "largest": [
+    {
+      "name": "compare_web_captures",
+      "original_bytes": 57175,
+      "wire_bytes": 152420,
+      "schema_identical": false
+    },
+    {
+      "name": "project_managed_application_graph",
+      "original_bytes": 6280,
+      "wire_bytes": 25528,
+      "schema_identical": false
+    },
+    {
+      "name": "evaluate_reconstruction_coverage",
+      "original_bytes": 19679,
+      "wire_bytes": 20025,
+      "schema_identical": false
+    },
+    {
+      "name": "capture_browser_scenario",
+      "original_bytes": 13494,
+      "wire_bytes": 18881,
+      "schema_identical": false
+    },
+    {
+      "name": "compare_application_versions",
+      "original_bytes": 5918,
+      "wire_bytes": 17957,
+      "schema_identical": false
+    },
+    {
+      "name": "build_reconstruction_obligation_ledger",
+      "original_bytes": 16647,
+      "wire_bytes": 16479,
+      "schema_identical": false
+    },
+    {
+      "name": "compare_source_to_bundle",
+      "original_bytes": 13354,
+      "wire_bytes": 12496,
+      "schema_identical": false
+    },
+    {
+      "name": "compare_process_captures",
+      "original_bytes": 8730,
+      "wire_bytes": 12239,
+      "schema_identical": false
+    },
+    {
+      "name": "correlate_static_and_runtime",
+      "original_bytes": 7003,
+      "wire_bytes": 10396,
+      "schema_identical": false
+    },
+    {
+      "name": "trace_application_feature",
+      "original_bytes": 6714,
+      "wire_bytes": 10119,
+      "schema_identical": false
+    }
+  ]
+}

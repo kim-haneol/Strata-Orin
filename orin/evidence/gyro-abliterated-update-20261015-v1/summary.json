@@ -1,0 +1,61 @@
+{
+  "status": "remote_update_verified",
+  "target_sha256": "9f31a8d1f449f67cfd3b7eb6d500f4ae37d95be6e3f83b8d4a1572646b99874e",
+  "revision": "aca61b2202b6e0a91a761236b65c151a68f88c16",
+  "source_sha256": "9a43d2978584c02d9512bfe7bacf5fdebb2b05f8a26fcc04a89ed6138f0e7b28",
+  "model_bytes": 91965774560,
+  "changed_tensor_payload_bytes": 32086425600,
+  "reconstruction_proves_other_tensor_bytes_identical": true,
+  "context": 262144,
+  "kv": "int8",
+  "vision": true,
+  "source_preserved": "${HF_CACHE}/hub/models--agentionai--Qwen3.8-Flash-Next-Gyro-abliterated-Huihui-GGUF/snapshots/bc755182a9171dd3ef082e8cd42d10e7ed6b23fb/Qwen3.8-Flash-Next-Gyro-M-abliterated-TQ2_0.gguf",
+  "context_api_checks": 11,
+  "image_checks": 6,
+  "stage_wall_seconds": 3254.9888548851013,
+  "text_diagnostic": {
+    "old": {
+      "median_http_seconds": 10.817933426005766,
+      "median_prefill_seconds": 7.2225,
+      "median_decode_tok_s": 36.2,
+      "input_tokens": [
+        3414,
+        3414,
+        3414
+      ],
+      "output_tokens": [
+        128,
+        128,
+        128
+      ],
+      "cached_tokens": [
+        0,
+        0,
+        0
+      ]
+    },
+    "new": {
+      "median_http_seconds": 11.115352004999295,
+      "median_prefill_seconds": 7.5,
+      "median_decode_tok_s": 36.0,
+      "input_tokens": [
+        3414,
+        3414,
+        3414
+      ],
+      "output_tokens": [
+        128,
+        128,
+        128
+      ],
+      "cached_tokens": [
+        0,
+        0,
+        0
+      ]
+    },
+    "matched_token_counts": true,
+    "outputs_identical": true
+  },
+  "scope": "Synthetic recall, OCR/shapes, tool/cache/SSE and one text diagnostic; not broad coding quality, concurrent 262K users or 8192 generated tokens"
+}

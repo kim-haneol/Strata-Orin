@@ -1,0 +1,15 @@
+61 requests in common
+work/hermes-capture-20261008/replay-pol-base.json: 0 requests differ from work/hermes-capture-20261008/replay-enko.json in output
+work/hermes-capture-20261008/replay-pol-p04.json: 0 requests differ from work/hermes-capture-20261008/replay-enko.json in output
+work/hermes-capture-20261008/replay-pol-p06.json: 0 requests differ from work/hermes-capture-20261008/replay-enko.json in output
+work/hermes-capture-20261008/replay-pol-c5.json: 0 requests differ from work/hermes-capture-20261008/replay-enko.json in output
+work/hermes-capture-20261008/replay-pol-c3.json: 0 requests differ from work/hermes-capture-20261008/replay-enko.json in output
+work/hermes-capture-20261008/replay-pol-base-2.json: 0 requests differ from work/hermes-capture-20261008/replay-enko.json in output
+replay | decode tok/s (all) | decode tok/s (>=300-token requests) | prompt s | wall s
+work/hermes-capture-20261008/replay-enko.json | 27.09 (21644 tok) | 26.82 (15589 tok, 20 req) | 220.0 | 1030.6
+work/hermes-capture-20261008/replay-pol-base.json | 27.00 (21644 tok) | 26.79 (15589 tok, 20 req) | 220.4 | 1033.6
+work/hermes-capture-20261008/replay-pol-p04.json | 26.86 (21644 tok) | 26.63 (15589 tok, 20 req) | 220.4 | 1038.0
+work/hermes-capture-20261008/replay-pol-p06.json | 27.04 (21644 tok) | 26.71 (15589 tok, 20 req) | 220.4 | 1031.4
+work/hermes-capture-20261008/replay-pol-c5.json | 27.09 (21644 tok) | 26.70 (15589 tok, 20 req) | 220.2 | 1030.2
+work/hermes-capture-20261008/replay-pol-c3.json | 26.27 (21644 tok) | 25.86 (15589 tok, 20 req) | 219.8 | 1055.3
+work/hermes-capture-20261008/replay-pol-base-2.json | 27.07 (21644 tok) | 26.81 (15589 tok, 20 req) | 219.1 | 1029.8

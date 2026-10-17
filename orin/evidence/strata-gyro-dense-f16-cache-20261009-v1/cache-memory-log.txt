@@ -1,0 +1,23 @@
+strata serve: 16306 MiB of VRAM free with everything loaded
+strata prefill: dense FP16 cache 50 weights, 972 MiB, 15138 MiB free
+strata prefill: dense FP16 cache 100 weights, 1897 MiB, 14205 MiB free
+strata prefill: dense FP16 cache 150 weights, 2822 MiB, 13269 MiB free
+strata prefill: dense FP16 cache 200 weights, 3747 MiB, 12348 MiB free
+strata prefill: dense FP16 cache 250 weights, 4672 MiB, 11407 MiB free
+strata prefill: dense FP16 cache 300 weights, 5597 MiB, 10567 MiB free
+strata serve: 16467 MiB of VRAM free with everything loaded
+strata serve: 16520 MiB of VRAM free with everything loaded
+strata prefill: dense FP16 cache 50 weights, 972 MiB, 15429 MiB free
+strata prefill: dense FP16 cache 100 weights, 1897 MiB, 14568 MiB free
+strata prefill: dense FP16 cache 150 weights, 2822 MiB, 13552 MiB free
+strata prefill: dense FP16 cache 200 weights, 3747 MiB, 12539 MiB free
+strata prefill: dense FP16 cache 250 weights, 4672 MiB, 11680 MiB free
+strata prefill: dense FP16 cache 300 weights, 5597 MiB, 10668 MiB free
+strata serve: 16432 MiB of VRAM free with everything loaded
+strata serve: 16562 MiB of VRAM free with everything loaded
+strata prefill: dense FP16 cache 50 weights, 972 MiB, 15413 MiB free
+strata prefill: dense FP16 cache 100 weights, 1897 MiB, 14480 MiB free
+strata prefill: dense FP16 cache 150 weights, 2822 MiB, 13549 MiB free
+strata prefill: dense FP16 cache 200 weights, 3747 MiB, 12521 MiB free
+strata prefill: dense FP16 cache 250 weights, 4672 MiB, 11594 MiB free
+strata prefill: dense FP16 cache 300 weights, 5597 MiB, 10637 MiB free

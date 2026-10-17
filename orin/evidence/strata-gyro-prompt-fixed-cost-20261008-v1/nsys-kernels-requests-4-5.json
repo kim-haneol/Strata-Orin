@@ -1,0 +1,206 @@
+{
+ "pfnsys": [
+  {
+   "kernel": "dequant_kernel",
+   "launches": 602,
+   "ms": 936.7
+  },
+  {
+   "kernel": "mul_mat_q",
+   "launches": 2846,
+   "ms": 926.7
+  },
+  {
+   "kernel": "copy16_kernel",
+   "launches": 21936,
+   "ms": 402.4
+  },
+  {
+   "kernel": "ampere_s16816gemm_fp16_128x128_ldg8_stages_32x5_tn",
+   "launches": 218,
+   "ms": 62.1
+  },
+  {
+   "kernel": "prompt_attn_i8_kernel",
+   "launches": 24,
+   "ms": 45.4
+  },
+  {
+   "kernel": "gdn_rec_cols_pipe_kernel",
+   "launches": 72,
+   "ms": 30.2
+  },
+  {
+   "kernel": "Kernel2",
+   "launches": 408,
+   "ms": 25.4
+  },
+  {
+   "kernel": "gr_write_norm_rs_kernel",
+   "launches": 188,
+   "ms": 22.3
+  },
+  {
+   "kernel": "gr_mix_r_kernel",
+   "launches": 194,
+   "ms": 15.2
+  },
+  {
+   "kernel": "ampere_s16816gemm_bf16_128x128_ldg8_stages_32x5_tn",
+   "launches": 194,
+   "ms": 15.1
+  },
+  {
+   "kernel": "ampere_s16816gemm_fp16_256x64_ldg8_stages_64x3_tn",
+   "launches": 48,
+   "ms": 14.8
+  },
+  {
+   "kernel": "hadamard_rows_kernel",
+   "launches": 1515,
+   "ms": 14.1
+  },
+  {
+   "kernel": "swiglu_kernel",
+   "launches": 1419,
+   "ms": 11.8
+  },
+  {
+   "kernel": "quantize_mmq_q8_1",
+   "launches": 1523,
+   "ms": 11.2
+  },
+  {
+   "kernel": "ampere_s16816gemm_bf16_128x64_ldg8_stages_64x3_tn",
+   "launches": 97,
+   "ms": 10.2
+  },
+  {
+   "kernel": "ampere_s16816gemm_bf16_128x128_ldg8_stages_64x3_tn",
+   "launches": 97,
+   "ms": 9.6
+  },
+  {
+   "kernel": "moe_combine_kernel",
+   "launches": 96,
+   "ms": 8.9
+  },
+  {
+   "kernel": "block_topk_reg_kernel",
+   "launches": 24,
+   "ms": 7.0
+  },
+  {
+   "kernel": "gdn_conv_tiled_kernel",
+   "launches": 72,
+   "ms": 5.5
+  },
+  {
+   "kernel": "gdn_out_norm_kernel",
+   "launches": 72,
+   "ms": 4.3
+  }
+ ],
+ "dqnsys": [
+  {
+   "kernel": "mul_mat_q",
+   "launches": 2846,
+   "ms": 933.2
+  },
+  {
+   "kernel": "copy16_kernel",
+   "launches": 21936,
+   "ms": 403.0
+  },
+  {
+   "kernel": "dequant_q8_0_f16_pairs",
+   "launches": 602,
+   "ms": 221.1
+  },
+  {
+   "kernel": "ampere_s16816gemm_fp16_128x128_ldg8_stages_32x5_tn",
+   "launches": 218,
+   "ms": 61.8
+  },
+  {
+   "kernel": "prompt_attn_i8_kernel",
+   "launches": 24,
+   "ms": 45.4
+  },
+  {
+   "kernel": "gdn_rec_cols_pipe_kernel",
+   "launches": 72,
+   "ms": 30.3
+  },
+  {
+   "kernel": "Kernel2",
+   "launches": 408,
+   "ms": 25.7
+  },
+  {
+   "kernel": "gr_write_norm_rs_kernel",
+   "launches": 188,
+   "ms": 22.1
+  },
+  {
+   "kernel": "gr_mix_r_kernel",
+   "launches": 194,
+   "ms": 15.2
+  },
+  {
+   "kernel": "ampere_s16816gemm_bf16_128x128_ldg8_stages_32x5_tn",
+   "launches": 194,
+   "ms": 15.0
+  },
+  {
+   "kernel": "ampere_s16816gemm_fp16_256x64_ldg8_stages_64x3_tn",
+   "launches": 48,
+   "ms": 14.8
+  },
+  {
+   "kernel": "hadamard_rows_kernel",
+   "launches": 1515,
+   "ms": 14.2
+  },
+  {
+   "kernel": "swiglu_kernel",
+   "launches": 1419,
+   "ms": 11.8
+  },
+  {
+   "kernel": "quantize_mmq_q8_1",
+   "launches": 1523,
+   "ms": 11.4
+  },
+  {
+   "kernel": "ampere_s16816gemm_bf16_128x64_ldg8_stages_64x3_tn",
+   "launches": 97,
+   "ms": 10.3
+  },
+  {
+   "kernel": "ampere_s16816gemm_bf16_128x128_ldg8_stages_64x3_tn",
+   "launches": 97,
+   "ms": 9.3
+  },
+  {
+   "kernel": "moe_combine_kernel",
+   "launches": 96,
+   "ms": 8.9
+  },
+  {
+   "kernel": "block_topk_reg_kernel",
+   "launches": 24,
+   "ms": 7.0
+  },
+  {
+   "kernel": "gdn_conv_tiled_kernel",
+   "launches": 72,
+   "ms": 5.5
+  },
+  {
+   "kernel": "gdn_out_norm_kernel",
+   "launches": 72,
+   "ms": 4.4
+  }
+ ]
+}

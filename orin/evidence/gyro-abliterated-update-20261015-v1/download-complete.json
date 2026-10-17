@@ -1,0 +1,20 @@
+{
+  "manifest_sha256": "da5545625fdfec84077ca5c26639a5b43fdd78876c5272c5c91ce8e86dc956d4",
+  "status": "completed",
+  "download_bytes_received": 32086425600,
+  "progress_step": 710,
+  "started_unix": 1792043405.5693753,
+  "phase": "completed",
+  "vision_path": "${HF_CACHE}/hub/models--agentionai--Qwen3.8-Flash-Next-Gyro-abliterated-Huihui-GGUF/snapshots/aca61b2202b6e0a91a761236b65c151a68f88c16/mmproj-F16.gguf",
+  "last_range_mib_s": 1.4647719840958178,
+  "phase_progress": {
+    "phase": "target_sha256",
+    "done": 90194313216,
+    "total": 91965774560
+  },
+  "source_verified_sha256": "9a43d2978584c02d9512bfe7bacf5fdebb2b05f8a26fcc04a89ed6138f0e7b28",
+  "model_path": "${HF_CACHE}/hub/models--agentionai--Qwen3.8-Flash-Next-Gyro-abliterated-Huihui-GGUF/snapshots/aca61b2202b6e0a91a761236b65c151a68f88c16/Qwen3.8-Flash-Next-Gyro-M-abliterated-TQ2_0.gguf",
+  "completed_unix": 1792046660.5582302,
+  "target_verified_sha256": "9f31a8d1f449f67cfd3b7eb6d500f4ae37d95be6e3f83b8d4a1572646b99874e",
+  "vision_verified_sha256": "f456cd796fdbdef0cadb22710b54e0071b6cdf22c07963365baa898267aec517"
+}

@@ -1,0 +1,90 @@
+{
+ "node_trace_graphs": [
+  {
+   "graph": 2,
+   "launches": 39,
+   "kernels_per_launch": 1858.0,
+   "busy_ms_per_launch": 102.95
+  },
+  {
+   "graph": 11,
+   "launches": 6,
+   "kernels_per_launch": 1732.0,
+   "busy_ms_per_launch": 59.961
+  },
+  {
+   "graph": 26,
+   "launches": 3,
+   "kernels_per_launch": 1774.0,
+   "busy_ms_per_launch": 73.897
+  },
+  {
+   "graph": 32,
+   "launches": 2,
+   "kernels_per_launch": 1816.0,
+   "busy_ms_per_launch": 89.883
+  },
+  {
+   "graph": 23,
+   "launches": 35,
+   "kernels_per_launch": 93.0,
+   "busy_ms_per_launch": 3.722
+  },
+  {
+   "graph": 17,
+   "launches": 42,
+   "kernels_per_launch": 59.0,
+   "busy_ms_per_launch": 2.555
+  },
+  {
+   "graph": 5,
+   "launches": 50,
+   "kernels_per_launch": 158.0,
+   "busy_ms_per_launch": 2.053
+  },
+  {
+   "graph": 20,
+   "launches": 38,
+   "kernels_per_launch": 59.0,
+   "busy_ms_per_launch": 2.537
+  },
+  {
+   "graph": 14,
+   "launches": 6,
+   "kernels_per_launch": 82.0,
+   "busy_ms_per_launch": 3.631
+  },
+  {
+   "graph": 29,
+   "launches": 3,
+   "kernels_per_launch": 85.0,
+   "busy_ms_per_launch": 3.629
+  },
+  {
+   "graph": 35,
+   "launches": 2,
+   "kernels_per_launch": 90.0,
+   "busy_ms_per_launch": 3.71
+  },
+  {
+   "graph": 8,
+   "launches": 2,
+   "kernels_per_launch": 28.0,
+   "busy_ms_per_launch": 0.644
+  }
+ ],
+ "graph_trace_launch_call_us": {
+  "1": 996.5,
+  "4": 143.3,
+  "7": 46.3,
+  "10": 893.8,
+  "13": 95.0,
+  "16": 74.5,
+  "19": 70.3,
+  "22": 99.1,
+  "25": 1104.9,
+  "28": 107.0,
+  "31": 1077.4,
+  "34": 101.1
+ }
+}

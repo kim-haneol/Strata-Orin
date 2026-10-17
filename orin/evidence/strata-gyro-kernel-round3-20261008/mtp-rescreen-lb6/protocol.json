@@ -1,0 +1,143 @@
+{
+  "protocol": "orin-strata-gyro-mtp-rescreen-lb6-v1",
+  "runtime_directory": "${RUNTIME}",
+  "workload": "Korean explanation of inference latency with varied reference notes",
+  "input_lengths": [
+    2048
+  ],
+  "output_tokens": 512,
+  "concurrency": 1,
+  "warmup_requests_per_length_and_mode": 1,
+  "measured_requests_per_length_and_mode": 3,
+  "mode_order": [
+    "base",
+    "p04",
+    "p03",
+    "cap5",
+    "cap5p04",
+    "cap6",
+    "cap6p04",
+    "cap6p06"
+  ],
+  "max_context": 32768,
+  "prefill_chunk": 8192,
+  "kv": "int8",
+  "verifier_capacity": 4,
+  "mtp_max_t": {
+    "base": 4,
+    "p04": 4,
+    "p03": 4,
+    "cap5": 5,
+    "cap5p04": 5,
+    "cap6": 6,
+    "cap6p04": 6,
+    "cap6p06": 6
+  },
+  "spec_min_p": 0.5,
+  "expert_cache": 24576,
+  "pool_workers": 2,
+  "prompt_cache": 0,
+  "prompt_cache_every": 0,
+  "conversation_cache_mib": 0,
+  "short_read": 0,
+  "suffix_draft": 0,
+  "sampling": {
+    "temperature": 0
+  },
+  "eos_ids": [
+    2147483647
+  ],
+  "power_mode": "MAXN",
+  "input_scope": "Synthetic exact Qwen token lengths. 25K approximates the earlier gpchan size estimate; it is not a replay of the gpchan system prompt/tools.",
+  "eos_scope": "Unreachable EOS id forces exactly 512 tokens, including any natural end-of-turn followed by continuation. Record natural EOS positions; not an answer-quality evaluation.",
+  "timers": {
+    "internal_prompt_ms": "DONE.prompt_ms: engine r0 to prompt completion after expert-cache refill, including reset, target prefill and draft KV prefill. Last input token is processed by first verify window.",
+    "internal_prefill_tps": "(input_tokens - 1) / (DONE.prompt_ms / 1000), after verifying zero reused tokens and final PP position=input_tokens-1.",
+    "last_pp_ms": "Cumulative engine r0-to-last-prefill-chunk timer; includes target and draft prefill. Excludes subsequent cache refill; not a pure target kernel timer.",
+    "internal_decode_ms": "DONE.decode_ms: first verify window (last prompt token and first output), subsequent verify/draft windows, completion bookkeeping.",
+    "internal_decode_tps": "512 / (DONE.decode_ms / 1000).",
+    "ttft_seconds": "IPC client time immediately before GEN serialization/write to first received token; excludes model startup, includes prefill/first generation/IPC.",
+    "stream_decode_tps": "511 / (last_token_received - first_token_received); tokens accepted together arrive in bursts.",
+    "elapsed_seconds": "IPC client time immediately before GEN serialization/write to DONE receipt; excludes model startup."
+  },
+  "limitations": [
+    "Screening on one 2,048-token Korean explanation prompt; acceptance and the best MTP policy are content-dependent. Validate winners on varied prompts (chat, code, tool/JSON) before adopting.",
+    "Three measurements share one engine load per mode; single mode order. Sub-percent differences need alternating engine starts.",
+    "Existing dynamic CPU/GPU governors (EMC already at 3,199 MHz via bwmgr); NVMe APST off and 2 s I/O timeout active.",
+    "GPU power is unavailable in ASTOP; tegrastats VDD_GPU_SOC is a board rail including SoC."
+  ],
+  "comparison": [
+    "base",
+    "p04",
+    "p03",
+    "cap5",
+    "cap5p04",
+    "cap6",
+    "cap6p04",
+    "cap6p06"
+  ],
+  "mode_args": {
+    "base": [
+      "--no-prefill-borrow"
+    ],
+    "p04": [
+      "--no-prefill-borrow",
+      "--spec-min-p",
+      "0.4"
+    ],
+    "p03": [
+      "--no-prefill-borrow",
+      "--spec-min-p",
+      "0.3"
+    ],
+    "cap5": [
+      "--no-prefill-borrow",
+      "--spec",
+      "5"
+    ],
+    "cap5p04": [
+      "--no-prefill-borrow",
+      "--spec",
+      "5",
+      "--spec-min-p",
+      "0.4"
+    ],
+    "cap6": [
+      "--no-prefill-borrow",
+      "--spec",
+      "6"
+    ],
+    "cap6p04": [
+      "--no-prefill-borrow",
+      "--spec",
+      "6",
+      "--spec-min-p",
+      "0.4"
+    ],
+    "cap6p06": [
+      "--no-prefill-borrow",
+      "--spec",
+      "6",
+      "--spec-min-p",
+      "0.6"
+    ]
+  },
+  "hypothesis": "The expert-kernel rounds cut the marginal verify cost per extra window token (most of it was routed experts), so a more aggressive MTP policy than the earlier screen's best (cap 4, confidence 0.5) may now pay off. Re-screen cap 4/5/6 and confidence 0.3-0.6 on the lb6 build (build-sm87-lb6; the combined build was slower).",
+  "decision_metrics": [
+    "internal and stream decode tok/s relative to base",
+    "decode timing per window: verify, draft, tokens/window",
+    "acceptance",
+    "output identity with base (expected for bitwise-identical kernels; MTP policy should not change greedy target output but window shapes may)"
+  ],
+  "chunk_scope": "All modes use --no-prefill-borrow --prefill 8192. Later --spec / --spec-min-p in mode_args override the protocol values (last flag wins in the engine parser).",
+  "mode_build": {
+    "base": "build-sm87-lb6",
+    "p04": "build-sm87-lb6",
+    "p03": "build-sm87-lb6",
+    "cap5": "build-sm87-lb6",
+    "cap5p04": "build-sm87-lb6",
+    "cap6": "build-sm87-lb6",
+    "cap6p04": "build-sm87-lb6",
+    "cap6p06": "build-sm87-lb6"
+  }
+}

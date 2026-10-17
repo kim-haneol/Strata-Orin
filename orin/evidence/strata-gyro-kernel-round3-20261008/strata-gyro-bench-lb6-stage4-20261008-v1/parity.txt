@@ -1,0 +1,24 @@
+build-sm87-sub8 parity L10:           width invariance (1 vs 3 tokens): gate/up 0, down 0 rows differ
+build-sm87-sub8 parity L10:           gpu decode-once vs per-entry kernels: bitwise equal
+build-sm87-sub8 parity L10: layer 10  tq2_t   /tq2_t   blob  1305600  cpu rel 1.13e-02  gpu rel 1.87e-02  cpu-gpu 1.77e-02  ok
+build-sm87-sub8 parity L10: native_expert_parity: 0 failures
+build-sm87-sub8 parity L30:           width invariance (1 vs 3 tokens): gate/up 0, down 0 rows differ
+build-sm87-sub8 parity L30:           gpu decode-once vs per-entry kernels: bitwise equal
+build-sm87-sub8 parity L30: layer 30  tq2_t   /tq2_t   blob  1305600  cpu rel 1.12e-02  gpu rel 1.82e-02  cpu-gpu 1.71e-02  ok
+build-sm87-sub8 parity L30: native_expert_parity: 0 failures
+build-sm87-lb6 parity L10:           width invariance (1 vs 3 tokens): gate/up 0, down 0 rows differ
+build-sm87-lb6 parity L10:           gpu decode-once vs per-entry kernels: bitwise equal
+build-sm87-lb6 parity L10: layer 10  tq2_t   /tq2_t   blob  1305600  cpu rel 1.13e-02  gpu rel 1.87e-02  cpu-gpu 1.77e-02  ok
+build-sm87-lb6 parity L10: native_expert_parity: 0 failures
+build-sm87-lb6 parity L30:           width invariance (1 vs 3 tokens): gate/up 0, down 0 rows differ
+build-sm87-lb6 parity L30:           gpu decode-once vs per-entry kernels: bitwise equal
+build-sm87-lb6 parity L30: layer 30  tq2_t   /tq2_t   blob  1305600  cpu rel 1.12e-02  gpu rel 1.82e-02  cpu-gpu 1.71e-02  ok
+build-sm87-lb6 parity L30: native_expert_parity: 0 failures
+build-sm87-stage4 parity L10:           width invariance (1 vs 3 tokens): gate/up 0, down 0 rows differ
+build-sm87-stage4 parity L10:           gpu decode-once vs per-entry kernels: bitwise equal
+build-sm87-stage4 parity L10: layer 10  tq2_t   /tq2_t   blob  1305600  cpu rel 1.13e-02  gpu rel 1.87e-02  cpu-gpu 1.77e-02  ok
+build-sm87-stage4 parity L10: native_expert_parity: 0 failures
+build-sm87-stage4 parity L30:           width invariance (1 vs 3 tokens): gate/up 0, down 0 rows differ
+build-sm87-stage4 parity L30:           gpu decode-once vs per-entry kernels: bitwise equal
+build-sm87-stage4 parity L30: layer 30  tq2_t   /tq2_t   blob  1305600  cpu rel 1.12e-02  gpu rel 1.82e-02  cpu-gpu 1.71e-02  ok
+build-sm87-stage4 parity L30: native_expert_parity: 0 failures

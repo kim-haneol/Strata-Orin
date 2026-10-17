@@ -1,0 +1,44 @@
+{
+  "context": 262144,
+  "kv": "int8",
+  "candidate_config_sha256": "a76a4752fbe8a6a8cc55401c378f02c224c13f0231fe218eeb3a20078b84aba5",
+  "files": {
+    "bench-text.json": "5c188582a9dd09c549645b931f09fc6290901791b2ed6fba0f0a349faca98ae1",
+    "bench-vision-no-engine-flag.json": "9dd70552efd13902eb13105ffa8b51785a28b60e5e5ac46f5207a1954d467985",
+    "bench-vision.json": "9dd70552efd13902eb13105ffa8b51785a28b60e5e5ac46f5207a1954d467985",
+    "encoder-a.sve": "3b5d9aeca4a48d95b5297d8488c1559c19b03df7a009d59e9abf97bcf9c735c7",
+    "encoder-b.sve": "ba80e2a1eca2a9003d7917003f0f4ddae4411d757409d77f341635251555b5f2",
+    "encoder-large.sve": "2017bcdfec1ee19d15876cec401d61ac22aaa2dab9863936bd3aa8d2a919eccb",
+    "encoder-result.json": "a917850ed923bba190d70187b47232d74daa912b0a9c2c96780f13a8c8e1e601",
+    "encoder-stderr.log": "2126b44b993ba25f77258dc6e2bba1b5ff95c3f8c5ddad2de4620f1422853ab3",
+    "image-a.png": "2f7cb5c8a87c57579c5fe787b6a40a6f21bc31ccb8ca2581eac8ea99b0b55a07",
+    "image-b.png": "ae666d4d8b909500120f604883b7be05ae95419305305d13a1496a529c6ce42f",
+    "image-large.png": "1b1b9744883a2454a0bdf93d25b2bc59b09a321e7b017eda8d49ddb77adaa9b7",
+    "protocol.json": "d1e4dd191b131a1f2ac5632f65c862617b29cfa46ec002b5581f433555b5a04e",
+    "request-bench-0.json": "a9b90cacd44f07c86efba55e58f730cababee4f54a96e60febb22dd73966f053",
+    "request-bench-1.json": "3b0a583680fb84ff1fd06bc12d8d1348de91bc721a0665e07efa6aa461fb67c2",
+    "request-bench-2.json": "303a6bc74244c237c84ed507d3de013f3ba319a81913e8e8438f51e006be09f7",
+    "request-bench-3.json": "46e99bd2d346a4854a735e4090f8d2a3e86fb5b54194b9a3bf3bf6d72fc5dcb3",
+    "request-image-a.json": "005d735345d81ab5bedf145d1e4ec05a839dc3587d6ad0dfed32814d6e877630",
+    "request-image-b.json": "f7b02a6c157e615857d1a57d3499dd97b6395c09cf66b974e9b6e463d7fe10a5",
+    "request-image-large.json": "f4065042a1d081b5160b3a084e785b3659782600cc8fbf6368e2901a8349392a",
+    "request-long-image.json": "390163edb17ad367f7cdce595b7e6a520b7b42fd67379817f432be2432b82e2d"
+  },
+  "image_expectations": {
+    "a": [
+      "ORIN7319",
+      "red",
+      "square",
+      "blue",
+      "circle"
+    ],
+    "b": [
+      "NCM4826",
+      "green",
+      "triangle",
+      "yellow",
+      "rectangle"
+    ]
+  },
+  "scope": "Synthetic OCR/shapes, image cache, two images, dispersed recall with an image; not broad vision quality"
+}

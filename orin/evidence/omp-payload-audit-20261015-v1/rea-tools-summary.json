@@ -1,0 +1,1202 @@
+{
+  "status": "completed",
+  "scope": "initialize and tools/list only; no tools/call",
+  "server_info": {
+    "name": "rea",
+    "version": "6.4.0"
+  },
+  "tools_count": 170,
+  "instructions_chars": 304,
+  "tools": [
+    {
+      "name": "compare_web_captures",
+      "tool_bytes": 69778,
+      "description_chars": 885,
+      "input_schema_bytes": 57175,
+      "schema_sha256": "37505d0161ed7a146d52c6893fcb856fb5cfc0a652874da94fc7182a4d275b33"
+    },
+    {
+      "name": "analyze_javascript_application",
+      "tool_bytes": 44807,
+      "description_chars": 535,
+      "input_schema_bytes": 2489,
+      "schema_sha256": "37ee87e81d20bd06d30c6d567d646b7bfe9e13fd5a9a59f51f1166a9a0b2691a"
+    },
+    {
+      "name": "capture_browser_scenario",
+      "tool_bytes": 43165,
+      "description_chars": 744,
+      "input_schema_bytes": 13494,
+      "schema_sha256": "98451f36acd70515f2989eab87483975fca251e5c206188a01bf9a6ce9649bf4"
+    },
+    {
+      "name": "compare_application_versions",
+      "tool_bytes": 35239,
+      "description_chars": 419,
+      "input_schema_bytes": 5918,
+      "schema_sha256": "66506a5395f80808f5639dbbf83b4a90ed3a2ed3c1af034a5c8d7946cee45746"
+    },
+    {
+      "name": "reconcile_javascript_runtime",
+      "tool_bytes": 34269,
+      "description_chars": 508,
+      "input_schema_bytes": 5970,
+      "schema_sha256": "6418ad0bf47599e8d4c555cad7109cd466f2449f814b113c571725622ad29e52"
+    },
+    {
+      "name": "build_reconstruction_obligation_ledger",
+      "tool_bytes": 31669,
+      "description_chars": 495,
+      "input_schema_bytes": 16647,
+      "schema_sha256": "c798c63d07739a8ffd9ed1927849b6447a416df3fcc7257ce94ec4eca40ca95c"
+    },
+    {
+      "name": "inspect_web_page",
+      "tool_bytes": 31559,
+      "description_chars": 376,
+      "input_schema_bytes": 4777,
+      "schema_sha256": "a090bc191a69d7bc15d84bee92254b7473a3a99c326b9de821f98734193c8f79"
+    },
+    {
+      "name": "trace_application_feature",
+      "tool_bytes": 30608,
+      "description_chars": 340,
+      "input_schema_bytes": 6714,
+      "schema_sha256": "c0a3a5563ce01302a4df5fb1bfc33835f55809dcfe0e93dae84fbf51b6ee66ee"
+    },
+    {
+      "name": "trace_javascript_semantics",
+      "tool_bytes": 29451,
+      "description_chars": 265,
+      "input_schema_bytes": 9078,
+      "schema_sha256": "84892aaecff598cb5086223511388da21b9a1ee10928301d0a2ee1ca3eea9887"
+    },
+    {
+      "name": "capture_process_scenario",
+      "tool_bytes": 28826,
+      "description_chars": 1128,
+      "input_schema_bytes": 6343,
+      "schema_sha256": "146349b82617df0a820c64ed3854b24d1309413ec54c0c177ca9a0979e53004d"
+    },
+    {
+      "name": "project_managed_application_graph",
+      "tool_bytes": 27315,
+      "description_chars": 333,
+      "input_schema_bytes": 6280,
+      "schema_sha256": "3932e342b360cbbeeccb338861459b56b3b7f59abe3e96eb2ed09c0a3e6ece81"
+    },
+    {
+      "name": "inspect_binary_layout",
+      "tool_bytes": 25741,
+      "description_chars": 1177,
+      "input_schema_bytes": 1126,
+      "schema_sha256": "c50697892ef131bfcf0ff641d4ed2c727ec700e469a5835ad1682f0295ec4790"
+    },
+    {
+      "name": "compare_source_to_bundle",
+      "tool_bytes": 24245,
+      "description_chars": 454,
+      "input_schema_bytes": 13354,
+      "schema_sha256": "e40e2d01b46a2af897984566ef84f364ae7a233fbaad9586dd432434229955ff"
+    },
+    {
+      "name": "inspect_analysis_view",
+      "tool_bytes": 23269,
+      "description_chars": 977,
+      "input_schema_bytes": 8609,
+      "schema_sha256": "f87ad8462541b1307cfa2b773540553ca4d58a734e13b109bb76716ae07198a0"
+    },
+    {
+      "name": "annotate_native_function",
+      "tool_bytes": 23131,
+      "description_chars": 504,
+      "input_schema_bytes": 918,
+      "schema_sha256": "1ea713a82ec4adf27e3170a8255804bed833123e531f3eb123873329737fe191"
+    },
+    {
+      "name": "evaluate_reconstruction_coverage",
+      "tool_bytes": 22478,
+      "description_chars": 272,
+      "input_schema_bytes": 19679,
+      "schema_sha256": "f9ab1a30f6238748b976ff9f92182e2dd5a6afa987c133c3d58d1933d263d928"
+    },
+    {
+      "name": "analyze_function",
+      "tool_bytes": 21607,
+      "description_chars": 463,
+      "input_schema_bytes": 346,
+      "schema_sha256": "77c99aa152794354c5474fd252216761a2d189f8f60b335e33e6b0085c1702bd"
+    },
+    {
+      "name": "compare_managed_members",
+      "tool_bytes": 20950,
+      "description_chars": 518,
+      "input_schema_bytes": 5074,
+      "schema_sha256": "d1895d0ba3bc3317ee376d2c91b9e1fd15da2dac1f46235687bed46d36bb1121"
+    },
+    {
+      "name": "compare_javascript_export_shapes",
+      "tool_bytes": 20698,
+      "description_chars": 782,
+      "input_schema_bytes": 6178,
+      "schema_sha256": "f4666c20615d21d5b92ae29414f79528c4cf8ee43d27a03ec5028638a3366958"
+    },
+    {
+      "name": "binary_session",
+      "tool_bytes": 19250,
+      "description_chars": 150,
+      "input_schema_bytes": 859,
+      "schema_sha256": "dbdafc76f02d492cfc71786084845313368939bb3c74c6571a6cadbe214e5929"
+    },
+    {
+      "name": "inspect_native_dispatch_metadata",
+      "tool_bytes": 19186,
+      "description_chars": 554,
+      "input_schema_bytes": 341,
+      "schema_sha256": "85a390294a0365eada4fdbd5606d57ba5b532cf0775d543a4ee7a5c39f7aa2c1"
+    },
+    {
+      "name": "trace_web_source_location",
+      "tool_bytes": 18949,
+      "description_chars": 942,
+      "input_schema_bytes": 1489,
+      "schema_sha256": "921c31261972268ac27bea444848c7f35d7ab46729803a6b3fda0f225171171c"
+    },
+    {
+      "name": "verify_managed_native_boundaries",
+      "tool_bytes": 18597,
+      "description_chars": 300,
+      "input_schema_bytes": 5170,
+      "schema_sha256": "a83505f2b3c9261d9f1dca9cbcb8cff16b496ebe5005087a064fc7ffbc9351ef"
+    },
+    {
+      "name": "capture_electron_scenario",
+      "tool_bytes": 18461,
+      "description_chars": 885,
+      "input_schema_bytes": 3152,
+      "schema_sha256": "bedb63e14249d3546d7404aa0f9efc6128e6b45c57d02b8e974e84f5d00a7f95"
+    },
+    {
+      "name": "compare_process_captures",
+      "tool_bytes": 18085,
+      "description_chars": 406,
+      "input_schema_bytes": 8730,
+      "schema_sha256": "304a2aebe8829badf9950b061ce3c3920fd24d4b1f535f4acf250f68b7aab2d4"
+    },
+    {
+      "name": "trace_web_module_imports",
+      "tool_bytes": 17473,
+      "description_chars": 858,
+      "input_schema_bytes": 1462,
+      "schema_sha256": "b8ec780dea5ec93ff1bcf3e8aac9b1e22cf34d84068dd6070b52cdb89e49e13d"
+    },
+    {
+      "name": "import_managed_reconstruction",
+      "tool_bytes": 16813,
+      "description_chars": 367,
+      "input_schema_bytes": 6968,
+      "schema_sha256": "ab2dfc8fa6cecbc4200f98a5093bf9fad63145add38fe7a59e24b3548aabb5bd"
+    },
+    {
+      "name": "inspect_managed_members",
+      "tool_bytes": 16628,
+      "description_chars": 375,
+      "input_schema_bytes": 464,
+      "schema_sha256": "47e7a43a9438a883eb643d8ae7891a4d47f23fd29b6e83855a1eb73b27c86001"
+    },
+    {
+      "name": "analyze_swift_types",
+      "tool_bytes": 16521,
+      "description_chars": 651,
+      "input_schema_bytes": 959,
+      "schema_sha256": "08ed7ccd83fec68b8c7e0df9447ca8bf536486779fc8ce929475b69a5fc2693d"
+    },
+    {
+      "name": "analyze_web_bundle",
+      "tool_bytes": 16521,
+      "description_chars": 311,
+      "input_schema_bytes": 2283,
+      "schema_sha256": "e7b9564183f6030fe45e314383050ae0dafc63f871a95cfdfa378a2a62a82cb5"
+    },
+    {
+      "name": "trace_call_path",
+      "tool_bytes": 16374,
+      "description_chars": 399,
+      "input_schema_bytes": 792,
+      "schema_sha256": "13535156ea3fea198eaffabde816b7280ca24f2d349fa1740c04c9cc2266548d"
+    },
+    {
+      "name": "batch_decompile",
+      "tool_bytes": 16072,
+      "description_chars": 330,
+      "input_schema_bytes": 399,
+      "schema_sha256": "37c132e7e5dfabacddbdec2041acade802849e27b3a1815b903703d507c28258"
+    },
+    {
+      "name": "inspect_electron_page",
+      "tool_bytes": 15743,
+      "description_chars": 400,
+      "input_schema_bytes": 2214,
+      "schema_sha256": "d61c5a9aa0dde06ba43a3e35326d9d6c227cc77ded69e65b84a2b60aca0de394"
+    },
+    {
+      "name": "observe_native_calls",
+      "tool_bytes": 15584,
+      "description_chars": 672,
+      "input_schema_bytes": 3721,
+      "schema_sha256": "d5bcbbb0983e8221669c6f5f2bfd9a592b8597800846bd4c71f358bc0bea8761"
+    },
+    {
+      "name": "correlate_static_and_runtime",
+      "tool_bytes": 15455,
+      "description_chars": 337,
+      "input_schema_bytes": 7003,
+      "schema_sha256": "c412587837b27b0faa15f68096301bb91f7486546ccc55469738b92eb893823b"
+    },
+    {
+      "name": "inspect_native_load_image",
+      "tool_bytes": 15447,
+      "description_chars": 542,
+      "input_schema_bytes": 135,
+      "schema_sha256": "c0cd46452db6c33ae1672c165c78e593f6bc472932b6b0370130b9d1d3e57fe5"
+    },
+    {
+      "name": "get_call_graph",
+      "tool_bytes": 15159,
+      "description_chars": 352,
+      "input_schema_bytes": 630,
+      "schema_sha256": "eb41493c99bfce4e4c78d600603fe2b87c5d187dc187990ede423b1be658489d"
+    },
+    {
+      "name": "project_apple_application_graph",
+      "tool_bytes": 15119,
+      "description_chars": 473,
+      "input_schema_bytes": 4979,
+      "schema_sha256": "aa78fa6e7c990500359e82fe9797cb05adbc5c65948def3277ab8db2dfedb665"
+    },
+    {
+      "name": "observe_web_execution",
+      "tool_bytes": 14859,
+      "description_chars": 549,
+      "input_schema_bytes": 867,
+      "schema_sha256": "c27a298fbd4c3bd062007ef27ad69941fa88688c64193963ff091f30320947ad"
+    },
+    {
+      "name": "inspect_managed_artifact",
+      "tool_bytes": 14753,
+      "description_chars": 365,
+      "input_schema_bytes": 489,
+      "schema_sha256": "5c36d5192779ddb76de989a10366710482296b512bfddf0c2f9bcf67aa718cc5"
+    },
+    {
+      "name": "compare_functions",
+      "tool_bytes": 14729,
+      "description_chars": 269,
+      "input_schema_bytes": 5074,
+      "schema_sha256": "d1895d0ba3bc3317ee376d2c91b9e1fd15da2dac1f46235687bed46d36bb1121"
+    },
+    {
+      "name": "get_evidence_bundle",
+      "tool_bytes": 14662,
+      "description_chars": 564,
+      "input_schema_bytes": 901,
+      "schema_sha256": "0e8b7c25f7bdf7cb9595677677ac6d03eca2acad6da7f049f1660afe839cb939"
+    },
+    {
+      "name": "build_call_path",
+      "tool_bytes": 14525,
+      "description_chars": 223,
+      "input_schema_bytes": 5436,
+      "schema_sha256": "d44dd3c49ee00374b7aaf7ee72e7dab8ddac1f7a1d358244d6d3e18706a7d75d"
+    },
+    {
+      "name": "inspect_macho",
+      "tool_bytes": 13986,
+      "description_chars": 173,
+      "input_schema_bytes": 135,
+      "schema_sha256": "c0cd46452db6c33ae1672c165c78e593f6bc472932b6b0370130b9d1d3e57fe5"
+    },
+    {
+      "name": "export_web_scripts",
+      "tool_bytes": 13747,
+      "description_chars": 709,
+      "input_schema_bytes": 970,
+      "schema_sha256": "707a75fe5dce4ca05bd5d642a3e5471ca7e3ee11a4dbd0f0001c90ba01946c2b"
+    },
+    {
+      "name": "inspect_recorded_crash",
+      "tool_bytes": 13653,
+      "description_chars": 879,
+      "input_schema_bytes": 791,
+      "schema_sha256": "aba6c7e3a52b07c6eb964f7b9e85ef9ea1c8c195fa8efbe8506a0749553c07f6"
+    },
+    {
+      "name": "project_android_application_graph",
+      "tool_bytes": 13111,
+      "description_chars": 281,
+      "input_schema_bytes": 4979,
+      "schema_sha256": "aa78fa6e7c990500359e82fe9797cb05adbc5c65948def3277ab8db2dfedb665"
+    },
+    {
+      "name": "inspect_managed_native_boundaries",
+      "tool_bytes": 12550,
+      "description_chars": 284,
+      "input_schema_bytes": 464,
+      "schema_sha256": "47e7a43a9438a883eb643d8ae7891a4d47f23fd29b6e83855a1eb73b27c86001"
+    },
+    {
+      "name": "compare_artifacts",
+      "tool_bytes": 12536,
+      "description_chars": 316,
+      "input_schema_bytes": 5074,
+      "schema_sha256": "d1895d0ba3bc3317ee376d2c91b9e1fd15da2dac1f46235687bed46d36bb1121"
+    },
+    {
+      "name": "inspect_web_network_capture",
+      "tool_bytes": 12324,
+      "description_chars": 828,
+      "input_schema_bytes": 1813,
+      "schema_sha256": "c50113fc68d3dd66ec2e92f48ff03d5b5f90e32c20060b351acdca3f9035bde1"
+    },
+    {
+      "name": "find_changed_behavior",
+      "tool_bytes": 12225,
+      "description_chars": 245,
+      "input_schema_bytes": 5033,
+      "schema_sha256": "bc3e5f580254e4c8a05f9a6d182b18b7626c804d40000ced1cef4dd614450e5c"
+    },
+    {
+      "name": "inspect_native_api",
+      "tool_bytes": 11690,
+      "description_chars": 312,
+      "input_schema_bytes": 346,
+      "schema_sha256": "77c99aa152794354c5474fd252216761a2d189f8f60b335e33e6b0085c1702bd"
+    },
+    {
+      "name": "trace_dylib_resolution",
+      "tool_bytes": 11635,
+      "description_chars": 692,
+      "input_schema_bytes": 701,
+      "schema_sha256": "80f68650f28a3f70c68fea6ae35eafc0dce59fc9073e5d318c17ae27df72701e"
+    },
+    {
+      "name": "inspect_artifact",
+      "tool_bytes": 11597,
+      "description_chars": 542,
+      "input_schema_bytes": 277,
+      "schema_sha256": "28ceb5f87159627c08b6af1e38bb270e66599638513bbc03d908f866bddfb251"
+    },
+    {
+      "name": "observe_javascript_runtime",
+      "tool_bytes": 11397,
+      "description_chars": 694,
+      "input_schema_bytes": 838,
+      "schema_sha256": "434d902571f461b3f3547d6590868a449ea71b2f77c2e5f00d77d6ff9ed7426a"
+    },
+    {
+      "name": "inspect_web_event_listeners",
+      "tool_bytes": 11392,
+      "description_chars": 419,
+      "input_schema_bytes": 834,
+      "schema_sha256": "0c952dad4e8dd76ed40287ceee0e575c4830915765f7fd52763c807a89ba65c3"
+    },
+    {
+      "name": "extract_firmware",
+      "tool_bytes": 11249,
+      "description_chars": 530,
+      "input_schema_bytes": 2424,
+      "schema_sha256": "8f76a0f18c5193f1e03381bc0c5cf6624a8b28e8e08abf6778d9cfac56ec61dd"
+    },
+    {
+      "name": "observe_web_session",
+      "tool_bytes": 11196,
+      "description_chars": 273,
+      "input_schema_bytes": 873,
+      "schema_sha256": "6da14dbdf248c285e4be11cbde0804b223ebfca3b8d4deb477f075acfa4721d2"
+    },
+    {
+      "name": "recover_javascript_sources",
+      "tool_bytes": 11092,
+      "description_chars": 596,
+      "input_schema_bytes": 1511,
+      "schema_sha256": "95e1217cf20f55bc146535ec808c0da750c3bebde7d5aa742be916aea3f59244"
+    },
+    {
+      "name": "inspect_pe_resources",
+      "tool_bytes": 10992,
+      "description_chars": 642,
+      "input_schema_bytes": 1087,
+      "schema_sha256": "17a1603e16336bb1233c6135e6d5010fcaa545267310482a8f081ac9439456d1"
+    },
+    {
+      "name": "trace_native_ui_action",
+      "tool_bytes": 10950,
+      "description_chars": 425,
+      "input_schema_bytes": 1062,
+      "schema_sha256": "26407449fbe75044bb1accc2b9ea1f837bef5677ae00107e05767a7540303f30"
+    },
+    {
+      "name": "discover_webmcp_tools",
+      "tool_bytes": 10936,
+      "description_chars": 230,
+      "input_schema_bytes": 869,
+      "schema_sha256": "c66390dfdb8988806182b0084969eea84ab689f9e6a50ded023f7f5662bf9368"
+    },
+    {
+      "name": "capture_native_ui_scenario",
+      "tool_bytes": 10883,
+      "description_chars": 330,
+      "input_schema_bytes": 2638,
+      "schema_sha256": "1d991725f65f38c7475c09475b5885d9d903283fdc37731b9285ae10dc4e8761"
+    },
+    {
+      "name": "decode_interface_builder",
+      "tool_bytes": 10878,
+      "description_chars": 312,
+      "input_schema_bytes": 690,
+      "schema_sha256": "52989c758270839696819c52e0b000e9e7d5a0d705da90f9e28bce9fddeb1760"
+    },
+    {
+      "name": "inspect_native_data_type",
+      "tool_bytes": 10818,
+      "description_chars": 279,
+      "input_schema_bytes": 456,
+      "schema_sha256": "99e6df95fc769ab64eb0b82567a3a480dd62a75bbb26564c49cb422aa54a0ca2"
+    },
+    {
+      "name": "verify_reconstruction",
+      "tool_bytes": 10639,
+      "description_chars": 275,
+      "input_schema_bytes": 2402,
+      "schema_sha256": "483b9b046ee567102dabaf047b1cace173d153a8dc9b05683b8dd7795d15b667"
+    },
+    {
+      "name": "trace_native_values",
+      "tool_bytes": 10391,
+      "description_chars": 402,
+      "input_schema_bytes": 1498,
+      "schema_sha256": "308c1e4d9491df0a91eb56f09e907c37d5d3d80ee2ffb1777dd9b331d2ac43f3"
+    },
+    {
+      "name": "procedure_references",
+      "tool_bytes": 10179,
+      "description_chars": 304,
+      "input_schema_bytes": 868,
+      "schema_sha256": "7f11eb0e78468ccda421cc7670d47188000dd94c7300a78eb8855f96623c5caa"
+    },
+    {
+      "name": "capture_web_screenshot",
+      "tool_bytes": 10110,
+      "description_chars": 175,
+      "input_schema_bytes": 718,
+      "schema_sha256": "dc36d12845864b457c11c3f5f6bb5ec23f4425372ba9e151106f441ceb549637"
+    },
+    {
+      "name": "extract_artifact",
+      "tool_bytes": 9893,
+      "description_chars": 397,
+      "input_schema_bytes": 277,
+      "schema_sha256": "28ceb5f87159627c08b6af1e38bb270e66599638513bbc03d908f866bddfb251"
+    },
+    {
+      "name": "compare_web_screenshots",
+      "tool_bytes": 9611,
+      "description_chars": 165,
+      "input_schema_bytes": 1457,
+      "schema_sha256": "299796b18d81ce2a06ec6d9a33a66cbdfd45e30408319deb04ff18b93378db80"
+    },
+    {
+      "name": "inspect_native_instruction",
+      "tool_bytes": 9404,
+      "description_chars": 283,
+      "input_schema_bytes": 399,
+      "schema_sha256": "666ac8b4a42412fc5690863852e8402405cc837fd65d356a7525696de6ff9e1e"
+    },
+    {
+      "name": "observe_native_ui",
+      "tool_bytes": 9086,
+      "description_chars": 231,
+      "input_schema_bytes": 958,
+      "schema_sha256": "8bee14454516fc6ef9ec086f041d59bdca2d9e32f76f3033d4b1b944d0d8f79f"
+    },
+    {
+      "name": "trace_feature",
+      "tool_bytes": 8954,
+      "description_chars": 252,
+      "input_schema_bytes": 520,
+      "schema_sha256": "034f18c7a1319bbc7c6267b0b06c5f199e3bb07d1d8fb47788cc8d3163406f91"
+    },
+    {
+      "name": "inspect_evm_interface",
+      "tool_bytes": 8721,
+      "description_chars": 637,
+      "input_schema_bytes": 718,
+      "schema_sha256": "96c40e2faacc091ea45a3c7940700304293d655bb2a2e9dfe6c7b70b4170a7c7"
+    },
+    {
+      "name": "compare_bundles",
+      "tool_bytes": 8688,
+      "description_chars": 291,
+      "input_schema_bytes": 1054,
+      "schema_sha256": "9a5756ec21b174d64ee9ad2fbdf4bb171431d0fffc526c55f74ca10b6daa02e5"
+    },
+    {
+      "name": "update_unknown",
+      "tool_bytes": 8548,
+      "description_chars": 166,
+      "input_schema_bytes": 3951,
+      "schema_sha256": "7c2cdf22cff42fa3593cadcb20318a377f5ad4691e8bd5b6b190ff670117f31c"
+    },
+    {
+      "name": "procedure_info",
+      "tool_bytes": 8541,
+      "description_chars": 491,
+      "input_schema_bytes": 649,
+      "schema_sha256": "c843a5927878df68ff52c22970305fbddc54c9e35857bb61317e85dbece9111d"
+    },
+    {
+      "name": "decode_android_resources",
+      "tool_bytes": 8452,
+      "description_chars": 451,
+      "input_schema_bytes": 1154,
+      "schema_sha256": "94c6fdc1841866d21edb1f7e5177e581fb73814580094d630c13471ff4920fbf"
+    },
+    {
+      "name": "start_adb_activity",
+      "tool_bytes": 8448,
+      "description_chars": 248,
+      "input_schema_bytes": 2169,
+      "schema_sha256": "c9ee648fae9e9a55886ce93ddebcbda5d7c74ee4909bd157d49905af9b6019c7"
+    },
+    {
+      "name": "resolve_containing_procedure",
+      "tool_bytes": 8367,
+      "description_chars": 250,
+      "input_schema_bytes": 735,
+      "schema_sha256": "d99d7867fc8a60a978c881428cc434794161a265056777b433c31bc82963d16f"
+    },
+    {
+      "name": "inspect_asset_catalog",
+      "tool_bytes": 8202,
+      "description_chars": 206,
+      "input_schema_bytes": 398,
+      "schema_sha256": "cc7583e23d952c647b665745130e60aed3e15607baa178b7bd4ee5e84a9c4856"
+    },
+    {
+      "name": "pull_adb_package",
+      "tool_bytes": 8183,
+      "description_chars": 361,
+      "input_schema_bytes": 1161,
+      "schema_sha256": "b9c22bcae1c2c949cfa98bc53aabcf3d9721a607ec43f72aaef22e6bdb2b715b"
+    },
+    {
+      "name": "inspect_keyed_archive",
+      "tool_bytes": 8100,
+      "description_chars": 321,
+      "input_schema_bytes": 637,
+      "schema_sha256": "7274d71523a6b651c6e78cffb5c8dfede9944d042a7729b13fccaa79af29892e"
+    },
+    {
+      "name": "inspect_android_method",
+      "tool_bytes": 8073,
+      "description_chars": 239,
+      "input_schema_bytes": 1091,
+      "schema_sha256": "f411aaa52924c94196d03153012283f9b1ecaea79a868488c08e314e8f7760cb"
+    },
+    {
+      "name": "search_strings",
+      "tool_bytes": 7897,
+      "description_chars": 662,
+      "input_schema_bytes": 1020,
+      "schema_sha256": "2a57c4f74dd0d669d73c03289e0f72872b2ef12d985eadbb823ba04abc714407"
+    },
+    {
+      "name": "list_segments",
+      "tool_bytes": 7851,
+      "description_chars": 206,
+      "input_schema_bytes": 443,
+      "schema_sha256": "0a9f741bbf7f606cdd823830e2aef3f2be0a8f7937eeff6c6229862fe899037d"
+    },
+    {
+      "name": "read_function_instructions",
+      "tool_bytes": 7849,
+      "description_chars": 205,
+      "input_schema_bytes": 529,
+      "schema_sha256": "c3cc9d68af8034c40fd279527f2a512da696788fa2da4e53725e2f947920f1d7"
+    },
+    {
+      "name": "resolve_native_call_targets",
+      "tool_bytes": 7834,
+      "description_chars": 207,
+      "input_schema_bytes": 399,
+      "schema_sha256": "666ac8b4a42412fc5690863852e8402405cc837fd65d356a7525696de6ff9e1e"
+    },
+    {
+      "name": "list_javascript_runtime_targets",
+      "tool_bytes": 7601,
+      "description_chars": 269,
+      "input_schema_bytes": 316,
+      "schema_sha256": "a18957a492a0098cf6db6b7fb8eaf04553de78f1c0cd44d9f45037b467f2c2d9"
+    },
+    {
+      "name": "push_adb_file",
+      "tool_bytes": 7540,
+      "description_chars": 279,
+      "input_schema_bytes": 1276,
+      "schema_sha256": "8d9cee9b4fb503e0c1a5c9a0367213349581445ac178de56f3a433eab066a713"
+    },
+    {
+      "name": "inspect_adb_package",
+      "tool_bytes": 7521,
+      "description_chars": 273,
+      "input_schema_bytes": 740,
+      "schema_sha256": "fb0f324b08555ea8a7275f03eec458f6d620874feb09407349ebffa0f5376167"
+    },
+    {
+      "name": "trace_android_references",
+      "tool_bytes": 7509,
+      "description_chars": 238,
+      "input_schema_bytes": 952,
+      "schema_sha256": "3bab3d600c6eb0f06e09e4b5d1fb2b58f61f51d71f06973667af7baa9fcb67a4"
+    },
+    {
+      "name": "record_unknown",
+      "tool_bytes": 7499,
+      "description_chars": 165,
+      "input_schema_bytes": 2903,
+      "schema_sha256": "e84b5e0a6a00ecec28ad74de706beb87c4e425b3e0bbfd2065c1b41f8bf8ae5d"
+    },
+    {
+      "name": "read_adb_logcat",
+      "tool_bytes": 7469,
+      "description_chars": 199,
+      "input_schema_bytes": 1304,
+      "schema_sha256": "d1523690231915ed8966613ea7cc1401d8130a1701761547572b900af062c7a2"
+    },
+    {
+      "name": "list_jeb_units",
+      "tool_bytes": 7434,
+      "description_chars": 229,
+      "input_schema_bytes": 1278,
+      "schema_sha256": "36a015c37788cc621530d5f86c6bfdbbabd4313fb02acd8c3590ccf54cdfd1a2"
+    },
+    {
+      "name": "list_adb_directory",
+      "tool_bytes": 7344,
+      "description_chars": 199,
+      "input_schema_bytes": 749,
+      "schema_sha256": "f4c65aecc1cc9da5a5f26337347085f9e1912ff99602281fb18babb13323db28"
+    },
+    {
+      "name": "inspect_android_package",
+      "tool_bytes": 7336,
+      "description_chars": 255,
+      "input_schema_bytes": 415,
+      "schema_sha256": "2f11cdb26a4406c70209ab8e0691ffa62192c06943a4b46fb4bcbb99b2ccc73e"
+    },
+    {
+      "name": "inspect_android_class",
+      "tool_bytes": 7272,
+      "description_chars": 270,
+      "input_schema_bytes": 648,
+      "schema_sha256": "525c782f1ed792eb06b2d7bc216834d0ac0fd3d3bc6f6e6651b82c8629915516"
+    },
+    {
+      "name": "list_strings",
+      "tool_bytes": 7209,
+      "description_chars": 304,
+      "input_schema_bytes": 694,
+      "schema_sha256": "22bc5d871f0d401347251bf0149a49e0d15ac1703cb5d4f97b2a6f85576a875e"
+    },
+    {
+      "name": "list_architectures",
+      "tool_bytes": 7209,
+      "description_chars": 115,
+      "input_schema_bytes": 135,
+      "schema_sha256": "c0cd46452db6c33ae1672c165c78e593f6bc472932b6b0370130b9d1d3e57fe5"
+    },
+    {
+      "name": "inspect_signature",
+      "tool_bytes": 7160,
+      "description_chars": 155,
+      "input_schema_bytes": 135,
+      "schema_sha256": "c0cd46452db6c33ae1672c165c78e593f6bc472932b6b0370130b9d1d3e57fe5"
+    },
+    {
+      "name": "inspect_plist",
+      "tool_bytes": 7159,
+      "description_chars": 132,
+      "input_schema_bytes": 364,
+      "schema_sha256": "2716ce5e018c32f0468d9b93d5b1bb9bb7e21000d6545bb43e937b79452975b9"
+    },
+    {
+      "name": "pull_adb_file",
+      "tool_bytes": 7055,
+      "description_chars": 233,
+      "input_schema_bytes": 1095,
+      "schema_sha256": "5fa655a3f8082ca7079e32efe127728eceaecaee7efea2b030aa4ca06a30d9f1"
+    },
+    {
+      "name": "list_adb_packages",
+      "tool_bytes": 7049,
+      "description_chars": 186,
+      "input_schema_bytes": 810,
+      "schema_sha256": "3b5edfd15aadb64196e7d12d460aa4a7af85feb021fea2e223d3a8272e9e3cd5"
+    },
+    {
+      "name": "install_adb_package",
+      "tool_bytes": 7046,
+      "description_chars": 270,
+      "input_schema_bytes": 1060,
+      "schema_sha256": "b76bdab1d455a992da3742c7dbc37b0d4977d46e4181496c83215300cf2f1fa0"
+    },
+    {
+      "name": "inspect_firmware_regions",
+      "tool_bytes": 7027,
+      "description_chars": 379,
+      "input_schema_bytes": 476,
+      "schema_sha256": "c6a29ba420304332f77eed7b80914c638362d4d6a35377b6a20bcf60c6e23bc1"
+    },
+    {
+      "name": "resolve_adb_packages",
+      "tool_bytes": 7006,
+      "description_chars": 243,
+      "input_schema_bytes": 772,
+      "schema_sha256": "ea5b5f78416a9f12bf0a5c4609ae118ec4f1b42c21d188a460b03159e98ae24d"
+    },
+    {
+      "name": "inspect_adb_display",
+      "tool_bytes": 6940,
+      "description_chars": 163,
+      "input_schema_bytes": 450,
+      "schema_sha256": "dba36395cacaaa4dec133640aa23970c2ffd8f07286f72f255f990718ec07a7b"
+    },
+    {
+      "name": "address_to_file_offset",
+      "tool_bytes": 6920,
+      "description_chars": 435,
+      "input_schema_bytes": 735,
+      "schema_sha256": "d99d7867fc8a60a978c881428cc434794161a265056777b433c31bc82963d16f"
+    },
+    {
+      "name": "capture_adb_screen",
+      "tool_bytes": 6904,
+      "description_chars": 215,
+      "input_schema_bytes": 788,
+      "schema_sha256": "b826a7ac00782a0f620ce6287d81ea7d65a349aff07d6ecd4e0dc1d02cbde978"
+    },
+    {
+      "name": "start_adb_app",
+      "tool_bytes": 6900,
+      "description_chars": 359,
+      "input_schema_bytes": 788,
+      "schema_sha256": "86c3bdacede06c5f0c5c4286669c08c1b19a625b95c78c4e53c4050293733914"
+    },
+    {
+      "name": "demangle_swift",
+      "tool_bytes": 6888,
+      "description_chars": 139,
+      "input_schema_bytes": 468,
+      "schema_sha256": "0f92e2e164a9823ac058a9cd82e49770aa101cfab1ae3f61ae1e176558171db5"
+    },
+    {
+      "name": "collect_adb_bugreport",
+      "tool_bytes": 6862,
+      "description_chars": 271,
+      "input_schema_bytes": 822,
+      "schema_sha256": "e3619fa7827f1c93cd9bbf40d5932140060c3173dd618a29d7f121737aed2de5"
+    },
+    {
+      "name": "list_adb_processes",
+      "tool_bytes": 6860,
+      "description_chars": 152,
+      "input_schema_bytes": 450,
+      "schema_sha256": "dba36395cacaaa4dec133640aa23970c2ffd8f07286f72f255f990718ec07a7b"
+    },
+    {
+      "name": "list_names",
+      "tool_bytes": 6852,
+      "description_chars": 176,
+      "input_schema_bytes": 694,
+      "schema_sha256": "22bc5d871f0d401347251bf0149a49e0d15ac1703cb5d4f97b2a6f85576a875e"
+    },
+    {
+      "name": "decompile_jeb_item",
+      "tool_bytes": 6846,
+      "description_chars": 280,
+      "input_schema_bytes": 989,
+      "schema_sha256": "ecef8a6c6ebed955261df4eecd845a26f3ffc4a03017a0a71fe643920056ccdd"
+    },
+    {
+      "name": "read_adb_setting",
+      "tool_bytes": 6813,
+      "description_chars": 184,
+      "input_schema_bytes": 903,
+      "schema_sha256": "d67eab216631f0c06aa8723c3d417d2e69f895c9cb37df1b96b3f1ee2c6c715f"
+    },
+    {
+      "name": "list_browser_targets",
+      "tool_bytes": 6811,
+      "description_chars": 205,
+      "input_schema_bytes": 482,
+      "schema_sha256": "9456386f9497a363b816adcd2246fd9d0af5e9dfe2da61d4ea5d741e6cd70357"
+    },
+    {
+      "name": "open_jeb_project",
+      "tool_bytes": 6808,
+      "description_chars": 278,
+      "input_schema_bytes": 495,
+      "schema_sha256": "151b1f27b1858a4605bcc91679cf52709efa4caa50f081d5124fa1512300a553"
+    },
+    {
+      "name": "list_adb_devices",
+      "tool_bytes": 6725,
+      "description_chars": 302,
+      "input_schema_bytes": 135,
+      "schema_sha256": "c0cd46452db6c33ae1672c165c78e593f6bc472932b6b0370130b9d1d3e57fe5"
+    },
+    {
+      "name": "search_android_classes",
+      "tool_bytes": 6724,
+      "description_chars": 185,
+      "input_schema_bytes": 663,
+      "schema_sha256": "6bfdd94a5b3c1f888dde4a943e25caef3c3dab51906eb3036f34513dff3fa377"
+    },
+    {
+      "name": "list_procedures",
+      "tool_bytes": 6626,
+      "description_chars": 191,
+      "input_schema_bytes": 443,
+      "schema_sha256": "0a9f741bbf7f606cdd823830e2aef3f2be0a8f7937eeff6c6229862fe899037d"
+    },
+    {
+      "name": "inspect_adb_device",
+      "tool_bytes": 6597,
+      "description_chars": 267,
+      "input_schema_bytes": 450,
+      "schema_sha256": "dba36395cacaaa4dec133640aa23970c2ffd8f07286f72f255f990718ec07a7b"
+    },
+    {
+      "name": "list_electron_targets",
+      "tool_bytes": 6590,
+      "description_chars": 220,
+      "input_schema_bytes": 366,
+      "schema_sha256": "65c14d0c8527c2f9e4df0ee350994c3481ad84a78da95608ae244df299afa546"
+    },
+    {
+      "name": "stop_adb_app",
+      "tool_bytes": 6552,
+      "description_chars": 175,
+      "input_schema_bytes": 766,
+      "schema_sha256": "71fc60b13a2d3dbcfdd5a7c56d4a4424d5a2c13686fb70a0f57b758869830cd1"
+    },
+    {
+      "name": "uninstall_adb_package",
+      "tool_bytes": 6539,
+      "description_chars": 166,
+      "input_schema_bytes": 744,
+      "schema_sha256": "7a71914cf44e0e7f954cc02c337e1e44a59323ec55e476fd56f5f6dab8359426"
+    },
+    {
+      "name": "list_adb_features",
+      "tool_bytes": 6496,
+      "description_chars": 116,
+      "input_schema_bytes": 450,
+      "schema_sha256": "dba36395cacaaa4dec133640aa23970c2ffd8f07286f72f255f990718ec07a7b"
+    },
+    {
+      "name": "read_bytes",
+      "tool_bytes": 6447,
+      "description_chars": 227,
+      "input_schema_bytes": 869,
+      "schema_sha256": "0ca78b86bc8439791ebb63d32724561603c5dbb18ac58ded412058c6599cacd2"
+    },
+    {
+      "name": "list_adb_services",
+      "tool_bytes": 6412,
+      "description_chars": 84,
+      "input_schema_bytes": 450,
+      "schema_sha256": "dba36395cacaaa4dec133640aa23970c2ffd8f07286f72f255f990718ec07a7b"
+    },
+    {
+      "name": "search_procedures",
+      "tool_bytes": 6380,
+      "description_chars": 252,
+      "input_schema_bytes": 1004,
+      "schema_sha256": "948cf38872e98478d89f2e8329fcffeeff4d08de0176232e28e027e7a8cdff0e"
+    },
+    {
+      "name": "inspect_adb_window",
+      "tool_bytes": 6359,
+      "description_chars": 181,
+      "input_schema_bytes": 450,
+      "schema_sha256": "dba36395cacaaa4dec133640aa23970c2ffd8f07286f72f255f990718ec07a7b"
+    },
+    {
+      "name": "set_address_name",
+      "tool_bytes": 6210,
+      "description_chars": 367,
+      "input_schema_bytes": 874,
+      "schema_sha256": "fd5cf48be772a9022be635a4db54995ee9e6a2e916e14f52c5caf26a9bb8154a"
+    },
+    {
+      "name": "set_addresses_names",
+      "tool_bytes": 6144,
+      "description_chars": 462,
+      "input_schema_bytes": 632,
+      "schema_sha256": "e58ea5ea92c7b399db05d990599d9839376f187298da9ab99e01f2ec8c0bfb95"
+    },
+    {
+      "name": "set_inline_comment",
+      "tool_bytes": 6086,
+      "description_chars": 221,
+      "input_schema_bytes": 892,
+      "schema_sha256": "cd22b1e12d4c57a22120f36079d2f2e6f0fd65cf7a23010c267e1b87120530ce"
+    },
+    {
+      "name": "set_comment",
+      "tool_bytes": 6066,
+      "description_chars": 206,
+      "input_schema_bytes": 901,
+      "schema_sha256": "7726a3fe66baf5caef15447cef0ce6814993c4e1fcbe3ae9734234bf937695b7"
+    },
+    {
+      "name": "procedure_pseudo_code",
+      "tool_bytes": 6055,
+      "description_chars": 400,
+      "input_schema_bytes": 649,
+      "schema_sha256": "c843a5927878df68ff52c22970305fbddc54c9e35857bb61317e85dbece9111d"
+    },
+    {
+      "name": "goto_address",
+      "tool_bytes": 6006,
+      "description_chars": 311,
+      "input_schema_bytes": 735,
+      "schema_sha256": "d99d7867fc8a60a978c881428cc434794161a265056777b433c31bc82963d16f"
+    },
+    {
+      "name": "set_bookmark",
+      "tool_bytes": 5996,
+      "description_chars": 183,
+      "input_schema_bytes": 852,
+      "schema_sha256": "fc5f9860e13272589b2a578d6e2e4558dd73147ce55d7eb05ebda2ee2f0cde66"
+    },
+    {
+      "name": "find_xrefs_to_name",
+      "tool_bytes": 5963,
+      "description_chars": 217,
+      "input_schema_bytes": 296,
+      "schema_sha256": "2a723eb1439cb002af9a11637c74387810567962b5d2c5cd36abedd9920d92e6"
+    },
+    {
+      "name": "binary_overview",
+      "tool_bytes": 5956,
+      "description_chars": 220,
+      "input_schema_bytes": 135,
+      "schema_sha256": "c0cd46452db6c33ae1672c165c78e593f6bc472932b6b0370130b9d1d3e57fe5"
+    },
+    {
+      "name": "xrefs",
+      "tool_bytes": 5952,
+      "description_chars": 287,
+      "input_schema_bytes": 694,
+      "schema_sha256": "22bc5d871f0d401347251bf0149a49e0d15ac1703cb5d4f97b2a6f85576a875e"
+    },
+    {
+      "name": "procedure_assembly",
+      "tool_bytes": 5940,
+      "description_chars": 319,
+      "input_schema_bytes": 649,
+      "schema_sha256": "c843a5927878df68ff52c22970305fbddc54c9e35857bb61317e85dbece9111d"
+    },
+    {
+      "name": "inspect_jeb_client",
+      "tool_bytes": 5935,
+      "description_chars": 262,
+      "input_schema_bytes": 135,
+      "schema_sha256": "c0cd46452db6c33ae1672c165c78e593f6bc472932b6b0370130b9d1d3e57fe5"
+    },
+    {
+      "name": "unset_bookmark",
+      "tool_bytes": 5929,
+      "description_chars": 230,
+      "input_schema_bytes": 735,
+      "schema_sha256": "d99d7867fc8a60a978c881428cc434794161a265056777b433c31bc82963d16f"
+    },
+    {
+      "name": "address_name",
+      "tool_bytes": 5902,
+      "description_chars": 220,
+      "input_schema_bytes": 694,
+      "schema_sha256": "22bc5d871f0d401347251bf0149a49e0d15ac1703cb5d4f97b2a6f85576a875e"
+    },
+    {
+      "name": "inspect_adb_client",
+      "tool_bytes": 5880,
+      "description_chars": 235,
+      "input_schema_bytes": 135,
+      "schema_sha256": "c0cd46452db6c33ae1672c165c78e593f6bc472932b6b0370130b9d1d3e57fe5"
+    },
+    {
+      "name": "prev_address",
+      "tool_bytes": 5874,
+      "description_chars": 220,
+      "input_schema_bytes": 694,
+      "schema_sha256": "22bc5d871f0d401347251bf0149a49e0d15ac1703cb5d4f97b2a6f85576a875e"
+    },
+    {
+      "name": "procedure_callees",
+      "tool_bytes": 5863,
+      "description_chars": 219,
+      "input_schema_bytes": 649,
+      "schema_sha256": "c843a5927878df68ff52c22970305fbddc54c9e35857bb61317e85dbece9111d"
+    },
+    {
+      "name": "comment",
+      "tool_bytes": 5851,
+      "description_chars": 179,
+      "input_schema_bytes": 694,
+      "schema_sha256": "22bc5d871f0d401347251bf0149a49e0d15ac1703cb5d4f97b2a6f85576a875e"
+    },
+    {
+      "name": "inline_comment",
+      "tool_bytes": 5833,
+      "description_chars": 147,
+      "input_schema_bytes": 694,
+      "schema_sha256": "22bc5d871f0d401347251bf0149a49e0d15ac1703cb5d4f97b2a6f85576a875e"
+    },
+    {
+      "name": "procedure_callers",
+      "tool_bytes": 5827,
+      "description_chars": 183,
+      "input_schema_bytes": 649,
+      "schema_sha256": "c843a5927878df68ff52c22970305fbddc54c9e35857bb61317e85dbece9111d"
+    },
+    {
+      "name": "next_address",
+      "tool_bytes": 5808,
+      "description_chars": 154,
+      "input_schema_bytes": 694,
+      "schema_sha256": "22bc5d871f0d401347251bf0149a49e0d15ac1703cb5d4f97b2a6f85576a875e"
+    },
+    {
+      "name": "list_bookmarks",
+      "tool_bytes": 5794,
+      "description_chars": 207,
+      "input_schema_bytes": 443,
+      "schema_sha256": "0a9f741bbf7f606cdd823830e2aef3f2be0a8f7937eeff6c6229862fe899037d"
+    },
+    {
+      "name": "procedure_address",
+      "tool_bytes": 5767,
+      "description_chars": 148,
+      "input_schema_bytes": 649,
+      "schema_sha256": "c843a5927878df68ff52c22970305fbddc54c9e35857bb61317e85dbece9111d"
+    },
+    {
+      "name": "inspect_apktool_client",
+      "tool_bytes": 5715,
+      "description_chars": 221,
+      "input_schema_bytes": 135,
+      "schema_sha256": "c0cd46452db6c33ae1672c165c78e593f6bc472932b6b0370130b9d1d3e57fe5"
+    },
+    {
+      "name": "get_objc_classes",
+      "tool_bytes": 5704,
+      "description_chars": 93,
+      "input_schema_bytes": 322,
+      "schema_sha256": "11c604cafc847f1edd9c1dd3c7a646e76089a0bd85e0e134f8c8ac1becab0daf"
+    },
+    {
+      "name": "current_address",
+      "tool_bytes": 5575,
+      "description_chars": 166,
+      "input_schema_bytes": 443,
+      "schema_sha256": "0a9f741bbf7f606cdd823830e2aef3f2be0a8f7937eeff6c6229862fe899037d"
+    },
+    {
+      "name": "current_procedure",
+      "tool_bytes": 5541,
+      "description_chars": 128,
+      "input_schema_bytes": 443,
+      "schema_sha256": "0a9f741bbf7f606cdd823830e2aef3f2be0a8f7937eeff6c6229862fe899037d"
+    },
+    {
+      "name": "get_objc_protocols",
+      "tool_bytes": 5495,
+      "description_chars": 63,
+      "input_schema_bytes": 135,
+      "schema_sha256": "c0cd46452db6c33ae1672c165c78e593f6bc472932b6b0370130b9d1d3e57fe5"
+    },
+    {
+      "name": "list_unknowns",
+      "tool_bytes": 5396,
+      "description_chars": 247,
+      "input_schema_bytes": 532,
+      "schema_sha256": "00ba3d47af7e22e14bf6734fffcbd3cbfc693102ad945f7acd02a0089067442d"
+    },
+    {
+      "name": "list_documents",
+      "tool_bytes": 5275,
+      "description_chars": 151,
+      "input_schema_bytes": 135,
+      "schema_sha256": "c0cd46452db6c33ae1672c165c78e593f6bc472932b6b0370130b9d1d3e57fe5"
+    },
+    {
+      "name": "verify_unknown_resolution",
+      "tool_bytes": 5253,
+      "description_chars": 214,
+      "input_schema_bytes": 407,
+      "schema_sha256": "c48f04fecf77116de6b845c85ad9f23cdf3505b626430f452e97f5022e5dfb34"
+    },
+    {
+      "name": "current_document",
+      "tool_bytes": 5165,
+      "description_chars": 62,
+      "input_schema_bytes": 135,
+      "schema_sha256": "c0cd46452db6c33ae1672c165c78e593f6bc472932b6b0370130b9d1d3e57fe5"
+    },
+    {
+      "name": "open_binary",
+      "tool_bytes": 3327,
+      "description_chars": 741,
+      "input_schema_bytes": 1515,
+      "schema_sha256": "37520b59e2f89daf1e4d76867dd1a5dac9b20375a8af57fb67d31b6b8680244d"
+    },
+    {
+      "name": "inspect_address_context",
+      "tool_bytes": 2558,
+      "description_chars": 258,
+      "input_schema_bytes": 413,
+      "schema_sha256": "1f98719b1074ddd5dea40f13ccefa65aa666e27f314236aca6174f159715bb3c"
+    },
+    {
+      "name": "close_binary",
+      "tool_bytes": 2399,
+      "description_chars": 551,
+      "input_schema_bytes": 633,
+      "schema_sha256": "a4657d52d5fc193f174b42c4dbdc13d1bf5da183df525f76b2c0337009a7833a"
+    },
+    {
+      "name": "export_evidence_bundle",
+      "tool_bytes": 1730,
+      "description_chars": 187,
+      "input_schema_bytes": 686,
+      "schema_sha256": "ee8a5bdd617511e0837345b08879a741e41cb29b4430333c743eb948cd1b4683"
+    },
+    {
+      "name": "import_evidence_bundle",
+      "tool_bytes": 1535,
+      "description_chars": 178,
+      "input_schema_bytes": 517,
+      "schema_sha256": "7fd804c6d2f8850f17712bce9fcab46f148e3daec7eebb4e837510f35918246a"
+    },
+    {
+      "name": "get_navigation_context",
+      "tool_bytes": 1283,
+      "description_chars": 252,
+      "input_schema_bytes": 289,
+      "schema_sha256": "fb942a2946bd06ce5bcce8a49ada8a58c129df8ee2d643513ad52a6d7ba42bfe"
+    }
+  ]
+}

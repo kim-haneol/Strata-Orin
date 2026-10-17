@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "publication_date": "2026-10-17",
+  "source_tree_matches_historical_final": true,
+  "runtime_source_unchanged_after_consolidation": true,
+  "selected_json_files_with_numeric_and_structure_parity": 88,
+  "export_manifest_entries": 241,
+  "local_document_links_checked": 255,
+  "python_tools_parsed": 10,
+  "reproduction_bash_blocks_checked": 12,
+  "embedded_python_blocks_parsed": 4,
+  "json_examples_executed_in_path_with_spaces": 3,
+  "server_inference_arguments_preserved": true,
+  "optimization_sections_1_to_7_unchanged_except_links": true,
+  "upstream_readme_body_preserved": true,
+  "publication_text_files_scanned": 249,
+  "cpu_setup_tests": {
+    "tests": 145,
+    "result": "passed",
+    "modules": [
+      "choices",
+      "config",
+      "hybrid",
+      "pins",
+      "remote_opt",
+      "risk",
+      "unsloth"
+    ]
+  },
+  "fresh_gpu_build": false,
+  "new_inference_or_benchmark": false
+}

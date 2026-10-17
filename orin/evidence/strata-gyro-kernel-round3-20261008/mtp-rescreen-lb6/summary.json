@@ -1,0 +1,2646 @@
+{
+  "protocol": "orin-strata-gyro-mtp-rescreen-lb6-v1",
+  "binary_sha256": "8ce7f7cb68919ed026c54ebf0a413056c653b9fbee1688295ce7c3c5ab465354",
+  "comparison": {
+    "baseline": "base",
+    "candidate": [
+      "p04",
+      "p03",
+      "cap5",
+      "cap5p04",
+      "cap6",
+      "cap6p04",
+      "cap6p06"
+    ]
+  },
+  "engines": {
+    "base": {
+      "expert_slots": 24576,
+      "vram_free_mib": 16808,
+      "mtp_max": 4
+    },
+    "p04": {
+      "expert_slots": 24576,
+      "vram_free_mib": 16791,
+      "mtp_max": 4
+    },
+    "p03": {
+      "expert_slots": 24576,
+      "vram_free_mib": 16745,
+      "mtp_max": 4
+    },
+    "cap5": {
+      "expert_slots": 24576,
+      "vram_free_mib": 16900,
+      "mtp_max": 5
+    },
+    "cap5p04": {
+      "expert_slots": 24576,
+      "vram_free_mib": 17051,
+      "mtp_max": 5
+    },
+    "cap6": {
+      "expert_slots": 24576,
+      "vram_free_mib": 16926,
+      "mtp_max": 6
+    },
+    "cap6p04": {
+      "expert_slots": 24576,
+      "vram_free_mib": 17182,
+      "mtp_max": 6
+    },
+    "cap6p06": {
+      "expert_slots": 24576,
+      "vram_free_mib": 17007,
+      "mtp_max": 6
+    }
+  },
+  "groups": {
+    "base-2048": {
+      "internal_prefill_tps": {
+        "samples": 3,
+        "mean": 422.17502544041844,
+        "median": 422.20113851992414,
+        "min": 422.0879642039714,
+        "max": 422.23597359735976,
+        "stdev": 0.07738291041147442
+      },
+      "internal_decode_tps": {
+        "samples": 3,
+        "mean": 25.796223542514205,
+        "median": 25.794620411001006,
+        "min": 25.794100607068188,
+        "max": 25.79994960947342,
+        "stdev": 0.0032373183764587378
+      },
+      "ttft_seconds": {
+        "samples": 3,
+        "mean": 4.907723459327826,
+        "median": 4.907714033994125,
+        "min": 4.907477385975653,
+        "max": 4.9079789580137,
+        "stdev": 0.0002509188215821836
+      },
+      "stream_decode_tps": {
+        "samples": 3,
+        "mean": 25.819879415413173,
+        "median": 25.81855027849235,
+        "min": 25.817699548008,
+        "max": 25.82338841973917,
+        "stdev": 0.0030685125238705565
+      },
+      "elapsed_seconds": {
+        "samples": 3,
+        "mean": 24.700607431324897,
+        "median": 24.70189352700254,
+        "min": 24.69759387697559,
+        "max": 24.702334889996564,
+        "stdev": 0.0026191282300227713
+      },
+      "last_pp_ms": {
+        "samples": 3,
+        "mean": 4848.666666666667,
+        "median": 4848.0,
+        "min": 4848.0,
+        "max": 4850.0,
+        "stdev": 1.1547005383792515
+      },
+      "prompt_ms": {
+        "samples": 3,
+        "mean": 4848.7,
+        "median": 4848.4,
+        "min": 4848.0,
+        "max": 4849.7,
+        "stdev": 0.888819441731518
+      },
+      "decode_ms": {
+        "samples": 3,
+        "mean": 19847.866666666665,
+        "median": 19849.1,
+        "min": 19845.0,
+        "max": 19849.5,
+        "stdev": 2.490649179095992
+      },
+      "drafts_accepted": {
+        "samples": 3,
+        "mean": 298,
+        "median": 298,
+        "min": 298,
+        "max": 298,
+        "stdev": 0.0
+      },
+      "drafts_offered": {
+        "samples": 3,
+        "mean": 393,
+        "median": 393,
+        "min": 393,
+        "max": 393,
+        "stdev": 0.0
+      },
+      "file_blobs": {
+        "samples": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "stdev": 0.0
+      },
+      "file_mb": {
+        "samples": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "stdev": 0.0
+      },
+      "ram_blobs": {
+        "samples": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "stdev": 0.0
+      },
+      "acceptance_fraction": 0.7582697201017812,
+      "gguf_in_place_mb_delta": {
+        "samples": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "stdev": 0.0
+      },
+      "natural_eos_positions": [
+        [],
+        [],
+        []
+      ],
+      "output_variants": 1
+    },
+    "p04-2048": {
+      "internal_prefill_tps": {
+        "samples": 3,
+        "mean": 420.42351717106965,
+        "median": 420.380334332772,
+        "min": 420.3630688352226,
+        "max": 420.5271483452144,
+        "stdev": 0.0901614637324148
+      },
+      "internal_decode_tps": {
+        "samples": 3,
+        "mean": 25.126409112569192,
+        "median": 25.127107830627587,
+        "min": 25.124888361091752,
+        "max": 25.127231145988233,
+        "stdev": 0.0013184519185928324
+      },
+      "ttft_seconds": {
+        "samples": 3,
+        "mean": 4.92824116833314,
+        "median": 4.928716018999694,
+        "min": 4.92696672398597,
+        "max": 4.929040762013756,
+        "stdev": 0.0011155809257155746
+      },
+      "stream_decode_tps": {
+        "samples": 3,
+        "mean": 25.147221159614055,
+        "median": 25.147811922831668,
+        "min": 25.145901851916562,
+        "max": 25.14794970409394,
+        "stdev": 0.0011446289877329716
+      },
+      "elapsed_seconds": {
+        "samples": 3,
+        "mean": 25.25142010100535,
+        "median": 25.251639447000343,
+        "min": 25.25037664899719,
+        "max": 25.25224420701852,
+        "stdev": 0.000952904895516318
+      },
+      "last_pp_ms": {
+        "samples": 3,
+        "mean": 4869.0,
+        "median": 4869.0,
+        "min": 4868.0,
+        "max": 4870.0,
+        "stdev": 1.0
+      },
+      "prompt_ms": {
+        "samples": 3,
+        "mean": 4868.9,
+        "median": 4869.4,
+        "min": 4867.7,
+        "max": 4869.6,
+        "stdev": 1.0440306508911943
+      },
+      "decode_ms": {
+        "samples": 3,
+        "mean": 20376.966666666667,
+        "median": 20376.4,
+        "min": 20376.3,
+        "max": 20378.2,
+        "stdev": 1.0692676621566235
+      },
+      "drafts_accepted": {
+        "samples": 3,
+        "mean": 303,
+        "median": 303,
+        "min": 303,
+        "max": 303,
+        "stdev": 0.0
+      },
+      "drafts_offered": {
+        "samples": 3,
+        "mean": 448,
+        "median": 448,
+        "min": 448,
+        "max": 448,
+        "stdev": 0.0
+      },
+      "file_blobs": {
+        "samples": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "stdev": 0.0
+      },
+      "file_mb": {
+        "samples": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "stdev": 0.0
+      },
+      "ram_blobs": {
+        "samples": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "stdev": 0.0
+      },
+      "acceptance_fraction": 0.6763392857142857,
+      "gguf_in_place_mb_delta": {
+        "samples": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "stdev": 0.0
+      },
+      "natural_eos_positions": [
+        [],
+        [],
+        []
+      ],
+      "output_variants": 1
+    },
+    "p03-2048": {
+      "internal_prefill_tps": {
+        "samples": 3,
+        "mean": 420.18475000601285,
+        "median": 420.1473697173703,
+        "min": 420.13874635688194,
+        "max": 420.2681339437863,
+        "stdev": 0.07234121505398007
+      },
+      "internal_decode_tps": {
+        "samples": 3,
+        "mean": 25.009403049596134,
+        "median": 25.010135943766272,
+        "min": 25.00720422387309,
+        "max": 25.010868981149038,
+        "stdev": 0.0019391910352963475
+      },
+      "ttft_seconds": {
+        "samples": 3,
+        "mean": 4.931342979000571,
+        "median": 4.9319694230216555,
+        "min": 4.929951415979303,
+        "max": 4.932108098000754,
+        "stdev": 0.0012071219570019512
+      },
+      "stream_decode_tps": {
+        "samples": 3,
+        "mean": 25.030237748073862,
+        "median": 25.031299154832574,
+        "min": 25.028064262332652,
+        "max": 25.031349827056363,
+        "stdev": 0.0018824643738997741
+      },
+      "elapsed_seconds": {
+        "samples": 3,
+        "mean": 25.34929891699964,
+        "median": 25.34841699700337,
+        "min": 25.345962794992374,
+        "max": 25.353516959003173,
+        "stdev": 0.003853528984629058
+      },
+      "last_pp_ms": {
+        "samples": 3,
+        "mean": 4871.666666666667,
+        "median": 4872.0,
+        "min": 4871.0,
+        "max": 4872.0,
+        "stdev": 0.5773502691896257
+      },
+      "prompt_ms": {
+        "samples": 3,
+        "mean": 4871.666666666667,
+        "median": 4872.1,
+        "min": 4870.7,
+        "max": 4872.2,
+        "stdev": 0.8386497083607493
+      },
+      "decode_ms": {
+        "samples": 3,
+        "mean": 20472.3,
+        "median": 20471.7,
+        "min": 20471.1,
+        "max": 20474.1,
+        "stdev": 1.5874507866383418
+      },
+      "drafts_accepted": {
+        "samples": 3,
+        "mean": 310,
+        "median": 310,
+        "min": 310,
+        "max": 310,
+        "stdev": 0.0
+      },
+      "drafts_offered": {
+        "samples": 3,
+        "mean": 485,
+        "median": 485,
+        "min": 485,
+        "max": 485,
+        "stdev": 0.0
+      },
+      "file_blobs": {
+        "samples": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "stdev": 0.0
+      },
+      "file_mb": {
+        "samples": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "stdev": 0.0
+      },
+      "ram_blobs": {
+        "samples": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "stdev": 0.0
+      },
+      "acceptance_fraction": 0.6391752577319587,
+      "gguf_in_place_mb_delta": {
+        "samples": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "stdev": 0.0
+      },
+      "natural_eos_positions": [
+        [],
+        [],
+        []
+      ],
+      "output_variants": 1
+    },
+    "cap5-2048": {
+      "internal_prefill_tps": {
+        "samples": 3,
+        "mean": 420.1042631785308,
+        "median": 420.095634863628,
+        "min": 420.0439127490612,
+        "max": 420.17324192290323,
+        "stdev": 0.06509488970121576
+      },
+      "internal_decode_tps": {
+        "samples": 3,
+        "mean": 25.5929619921672,
+        "median": 25.59308986573625,
+        "min": 25.59142687199788,
+        "max": 25.59436923876747,
+        "stdev": 0.0014753454812163312
+      },
+      "ttft_seconds": {
+        "samples": 3,
+        "mean": 4.931536009671011,
+        "median": 4.931826787011232,
+        "min": 4.930596040998353,
+        "max": 4.932185201003449,
+        "stdev": 0.0008335292296248009
+      },
+      "stream_decode_tps": {
+        "samples": 3,
+        "mean": 25.615391962002324,
+        "median": 25.615503670126426,
+        "min": 25.61389682275563,
+        "max": 25.61677539312491,
+        "stdev": 0.001442532797362617
+      },
+      "elapsed_seconds": {
+        "samples": 3,
+        "mean": 24.882188779340748,
+        "median": 24.882720937021077,
+        "min": 24.88016325701028,
+        "max": 24.88368214399088,
+        "stdev": 0.0018188004956869225
+      },
+      "last_pp_ms": {
+        "samples": 3,
+        "mean": 4872.666666666667,
+        "median": 4873.0,
+        "min": 4872.0,
+        "max": 4873.0,
+        "stdev": 0.5773502691896257
+      },
+      "prompt_ms": {
+        "samples": 3,
+        "mean": 4872.6,
+        "median": 4872.7,
+        "min": 4871.8,
+        "max": 4873.3,
+        "stdev": 0.7549834435270508
+      },
+      "decode_ms": {
+        "samples": 3,
+        "mean": 20005.5,
+        "median": 20005.4,
+        "min": 20004.4,
+        "max": 20006.7,
+        "stdev": 1.153256259466701
+      },
+      "drafts_accepted": {
+        "samples": 3,
+        "mean": 310,
+        "median": 310,
+        "min": 310,
+        "max": 310,
+        "stdev": 0.0
+      },
+      "drafts_offered": {
+        "samples": 3,
+        "mean": 432,
+        "median": 432,
+        "min": 432,
+        "max": 432,
+        "stdev": 0.0
+      },
+      "file_blobs": {
+        "samples": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "stdev": 0.0
+      },
+      "file_mb": {
+        "samples": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "stdev": 0.0
+      },
+      "ram_blobs": {
+        "samples": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "stdev": 0.0
+      },
+      "acceptance_fraction": 0.7175925925925926,
+      "gguf_in_place_mb_delta": {
+        "samples": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "stdev": 0.0
+      },
+      "natural_eos_positions": [
+        [],
+        [],
+        []
+      ],
+      "output_variants": 1
+    },
+    "cap5p04-2048": {
+      "internal_prefill_tps": {
+        "samples": 3,
+        "mean": 420.35443992695446,
+        "median": 420.37170140671526,
+        "min": 420.3026507607334,
+        "max": 420.38896761341465,
+        "stdev": 0.04567404927143153
+      },
+      "internal_decode_tps": {
+        "samples": 3,
+        "mean": 24.995524957398256,
+        "median": 24.9953621886564,
+        "min": 24.9940199854527,
+        "max": 24.997192698085666,
+        "stdev": 0.001592606859944029
+      },
+      "ttft_seconds": {
+        "samples": 3,
+        "mean": 4.928545002340495,
+        "median": 4.9282064819999505,
+        "min": 4.928146460995777,
+        "max": 4.929282064025756,
+        "stdev": 0.0006390192298718743
+      },
+      "stream_decode_tps": {
+        "samples": 3,
+        "mean": 25.01619693663046,
+        "median": 25.016376162910397,
+        "min": 25.014534701511465,
+        "max": 25.01767994546952,
+        "stdev": 0.0015802630899587526
+      },
+      "elapsed_seconds": {
+        "samples": 3,
+        "mean": 25.357189508999,
+        "median": 25.35777068900643,
+        "min": 25.355578051996417,
+        "max": 25.35821978599415,
+        "stdev": 0.0014135123909868406
+      },
+      "last_pp_ms": {
+        "samples": 3,
+        "mean": 4869.333333333333,
+        "median": 4869.0,
+        "min": 4869.0,
+        "max": 4870.0,
+        "stdev": 0.5773502691896257
+      },
+      "prompt_ms": {
+        "samples": 3,
+        "mean": 4869.7,
+        "median": 4869.5,
+        "min": 4869.3,
+        "max": 4870.3,
+        "stdev": 0.5291502622129525
+      },
+      "decode_ms": {
+        "samples": 3,
+        "mean": 20483.666666666668,
+        "median": 20483.8,
+        "min": 20482.3,
+        "max": 20484.9,
+        "stdev": 1.3051181300311576
+      },
+      "drafts_accepted": {
+        "samples": 3,
+        "mean": 317,
+        "median": 317,
+        "min": 317,
+        "max": 317,
+        "stdev": 0.0
+      },
+      "drafts_offered": {
+        "samples": 3,
+        "mean": 489,
+        "median": 489,
+        "min": 489,
+        "max": 489,
+        "stdev": 0.0
+      },
+      "file_blobs": {
+        "samples": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "stdev": 0.0
+      },
+      "file_mb": {
+        "samples": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "stdev": 0.0
+      },
+      "ram_blobs": {
+        "samples": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "stdev": 0.0
+      },
+      "acceptance_fraction": 0.6482617586912065,
+      "gguf_in_place_mb_delta": {
+        "samples": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "stdev": 0.0
+      },
+      "natural_eos_positions": [
+        [],
+        [],
+        []
+      ],
+      "output_variants": 1
+    },
+    "cap6-2048": {
+      "internal_prefill_tps": {
+        "samples": 3,
+        "mean": 420.9451239462809,
+        "median": 420.94223611425286,
+        "min": 420.90761417144734,
+        "max": 420.9855215531425,
+        "stdev": 0.039033891825135704
+      },
+      "internal_decode_tps": {
+        "samples": 3,
+        "mean": 25.0153495959765,
+        "median": 25.015390328033845,
+        "min": 25.01477923968751,
+        "max": 25.01587922020814,
+        "stdev": 0.0005511203242614921
+      },
+      "ttft_seconds": {
+        "samples": 3,
+        "mean": 4.921911601006286,
+        "median": 4.921975768025732,
+        "min": 4.921692053991137,
+        "max": 4.92206698100199,
+        "stdev": 0.00019552652161573003
+      },
+      "stream_decode_tps": {
+        "samples": 3,
+        "mean": 25.03591781454485,
+        "median": 25.036122287496884,
+        "min": 25.035372081582242,
+        "max": 25.036259074555417,
+        "stdev": 0.00047754164708569617
+      },
+      "elapsed_seconds": {
+        "samples": 3,
+        "mean": 25.334386488665285,
+        "median": 25.33424355601892,
+        "min": 25.333822071988834,
+        "max": 25.335093837988097,
+        "stdev": 0.0006478190297205238
+      },
+      "last_pp_ms": {
+        "samples": 3,
+        "mean": 4862.666666666667,
+        "median": 4863.0,
+        "min": 4862.0,
+        "max": 4863.0,
+        "stdev": 0.5773502691896257
+      },
+      "prompt_ms": {
+        "samples": 3,
+        "mean": 4862.866666666667,
+        "median": 4862.9,
+        "min": 4862.4,
+        "max": 4863.3,
+        "stdev": 0.45092497528255165
+      },
+      "decode_ms": {
+        "samples": 3,
+        "mean": 20467.433333333334,
+        "median": 20467.4,
+        "min": 20467.0,
+        "max": 20467.9,
+        "stdev": 0.45092497528298864
+      },
+      "drafts_accepted": {
+        "samples": 3,
+        "mean": 316,
+        "median": 316,
+        "min": 316,
+        "max": 316,
+        "stdev": 0.0
+      },
+      "drafts_offered": {
+        "samples": 3,
+        "mean": 468,
+        "median": 468,
+        "min": 468,
+        "max": 468,
+        "stdev": 0.0
+      },
+      "file_blobs": {
+        "samples": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "stdev": 0.0
+      },
+      "file_mb": {
+        "samples": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "stdev": 0.0
+      },
+      "ram_blobs": {
+        "samples": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "stdev": 0.0
+      },
+      "acceptance_fraction": 0.6752136752136753,
+      "gguf_in_place_mb_delta": {
+        "samples": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "stdev": 0.0
+      },
+      "natural_eos_positions": [
+        [],
+        [],
+        []
+      ],
+      "output_variants": 1
+    },
+    "cap6p04-2048": {
+      "internal_prefill_tps": {
+        "samples": 3,
+        "mean": 418.6750517861791,
+        "median": 418.70359385546857,
+        "min": 418.6179676476002,
+        "max": 418.70359385546857,
+        "stdev": 0.04943631416248363
+      },
+      "internal_decode_tps": {
+        "samples": 3,
+        "mean": 23.926426243610283,
+        "median": 23.926463509806577,
+        "min": 23.926016271560286,
+        "max": 23.926798949463986,
+        "stdev": 0.0003926674830882608
+      },
+      "ttft_seconds": {
+        "samples": 3,
+        "mean": 4.947648673337729,
+        "median": 4.947239161992911,
+        "min": 4.947007882001344,
+        "max": 4.948698976018932,
+        "stdev": 0.0009169102465514238
+      },
+      "stream_decode_tps": {
+        "samples": 3,
+        "mean": 23.942980188457852,
+        "median": 23.94294572621072,
+        "min": 23.942209069022205,
+        "max": 23.943785770140632,
+        "stdev": 0.0007889152927092787
+      },
+      "elapsed_seconds": {
+        "samples": 3,
+        "mean": 26.291775801675005,
+        "median": 26.291861742007313,
+        "min": 26.291313738009194,
+        "max": 26.29215192500851,
+        "stdev": 0.00042565087453677055
+      },
+      "last_pp_ms": {
+        "samples": 3,
+        "mean": 4889.333333333333,
+        "median": 4889.0,
+        "min": 4889.0,
+        "max": 4890.0,
+        "stdev": 0.5773502691896257
+      },
+      "prompt_ms": {
+        "samples": 3,
+        "mean": 4889.233333333333,
+        "median": 4888.9,
+        "min": 4888.9,
+        "max": 4889.9,
+        "stdev": 0.5773502691896257
+      },
+      "decode_ms": {
+        "samples": 3,
+        "mean": 21398.933333333334,
+        "median": 21398.9,
+        "min": 21398.6,
+        "max": 21399.3,
+        "stdev": 0.35118845842866636
+      },
+      "drafts_accepted": {
+        "samples": 3,
+        "mean": 321,
+        "median": 321,
+        "min": 321,
+        "max": 321,
+        "stdev": 0.0
+      },
+      "drafts_offered": {
+        "samples": 3,
+        "mean": 539,
+        "median": 539,
+        "min": 539,
+        "max": 539,
+        "stdev": 0.0
+      },
+      "file_blobs": {
+        "samples": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "stdev": 0.0
+      },
+      "file_mb": {
+        "samples": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "stdev": 0.0
+      },
+      "ram_blobs": {
+        "samples": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "stdev": 0.0
+      },
+      "acceptance_fraction": 0.5955473098330241,
+      "gguf_in_place_mb_delta": {
+        "samples": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "stdev": 0.0
+      },
+      "natural_eos_positions": [
+        [],
+        [],
+        []
+      ],
+      "output_variants": 1
+    },
+    "cap6p06-2048": {
+      "internal_prefill_tps": {
+        "samples": 3,
+        "mean": 420.94800726871375,
+        "median": 420.9508924899235,
+        "min": 420.93358009459183,
+        "max": 420.9595492216259,
+        "stdev": 0.013222793418923217
+      },
+      "internal_decode_tps": {
+        "samples": 3,
+        "mean": 25.04573865188116,
+        "median": 25.045370275254488,
+        "min": 25.040348217342398,
+        "max": 25.051497463046594,
+        "stdev": 0.005583743900596003
+      },
+      "ttft_seconds": {
+        "samples": 3,
+        "mean": 4.921335836009045,
+        "median": 4.921271265018731,
+        "min": 4.92096231499454,
+        "max": 4.921773928013863,
+        "stdev": 0.00040964128560996605
+      },
+      "stream_decode_tps": {
+        "samples": 3,
+        "mean": 25.066351494582968,
+        "median": 25.066114321830128,
+        "min": 25.060806507342896,
+        "max": 25.072133654575882,
+        "stdev": 0.005667296912590264
+      },
+      "elapsed_seconds": {
+        "samples": 3,
+        "mean": 25.309727493004175,
+        "median": 25.311553136009024,
+        "min": 25.304395630024374,
+        "max": 25.313233712979127,
+        "stdev": 0.0046933630655045
+      },
+      "last_pp_ms": {
+        "samples": 3,
+        "mean": 4863.0,
+        "median": 4863.0,
+        "min": 4863.0,
+        "max": 4863.0,
+        "stdev": 0.0
+      },
+      "prompt_ms": {
+        "samples": 3,
+        "mean": 4862.833333333333,
+        "median": 4862.8,
+        "min": 4862.7,
+        "max": 4863.0,
+        "stdev": 0.1527525231652542
+      },
+      "decode_ms": {
+        "samples": 3,
+        "mean": 20442.600000000002,
+        "median": 20442.9,
+        "min": 20437.9,
+        "max": 20447.0,
+        "stdev": 4.557411546041634
+      },
+      "drafts_accepted": {
+        "samples": 3,
+        "mean": 304,
+        "median": 304,
+        "min": 304,
+        "max": 304,
+        "stdev": 0.0
+      },
+      "drafts_offered": {
+        "samples": 3,
+        "mean": 421,
+        "median": 421,
+        "min": 421,
+        "max": 421,
+        "stdev": 0.0
+      },
+      "file_blobs": {
+        "samples": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "stdev": 0.0
+      },
+      "file_mb": {
+        "samples": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "stdev": 0.0
+      },
+      "ram_blobs": {
+        "samples": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "stdev": 0.0
+      },
+      "acceptance_fraction": 0.7220902612826603,
+      "gguf_in_place_mb_delta": {
+        "samples": 3,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "stdev": 0.0
+      },
+      "natural_eos_positions": [
+        [],
+        [],
+        []
+      ],
+      "output_variants": 1
+    }
+  },
+  "speedups": {
+    "p04:2048": {
+      "stream_decode": 0.9739480481307913,
+      "internal_decode": 0.9740343996926097,
+      "end_to_end": 0.9781868636505507,
+      "internal_prefill": 0.9958512271835086,
+      "ttft": 0.9958367075992238
+    },
+    "p03:2048": {
+      "stream_decode": 0.9694172984065939,
+      "internal_decode": 0.9694986170506187,
+      "end_to_end": 0.97440988455741,
+      "internal_prefill": 0.995285662783275,
+      "ttft": 0.9952103271313057
+    },
+    "cap5:2048": {
+      "stream_decode": 0.9920802320521768,
+      "internal_decode": 0.9921204919777497,
+      "end_to_end": 0.9927023563069092,
+      "internal_prefill": 0.9950950147756197,
+      "ttft": 0.9951713725102104
+    },
+    "cap5p04:2048": {
+      "stream_decode": 0.9688734999163879,
+      "internal_decode": 0.968960627752495,
+      "end_to_end": 0.9741066699272375,
+      "internal_prefill": 0.9956876048942859,
+      "ttft": 0.9957753164467849
+    },
+    "cap6:2048": {
+      "stream_decode": 0.9696372865165149,
+      "internal_decode": 0.9697291370866451,
+      "end_to_end": 0.9749834456175229,
+      "internal_prefill": 0.9970867497601155,
+      "ttft": 0.9971173513812074
+    },
+    "cap6p04:2048": {
+      "stream_decode": 0.9273079786021423,
+      "internal_decode": 0.9275166267720409,
+      "end_to_end": 0.9394803765879999,
+      "internal_prefill": 0.9917096620043118,
+      "ttft": 0.9919304670468915
+    },
+    "cap6p06:2048": {
+      "stream_decode": 0.9708159783124166,
+      "internal_decode": 0.9709071799057646,
+      "end_to_end": 0.9759333615169249,
+      "internal_prefill": 0.9970935794451018,
+      "ttft": 0.9972340077704882
+    }
+  },
+  "output_comparisons": {
+    "p04:2048": [
+      {
+        "index": 1,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      },
+      {
+        "index": 2,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      },
+      {
+        "index": 3,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      }
+    ],
+    "p03:2048": [
+      {
+        "index": 1,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      },
+      {
+        "index": 2,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      },
+      {
+        "index": 3,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      }
+    ],
+    "cap5:2048": [
+      {
+        "index": 1,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      },
+      {
+        "index": 2,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      },
+      {
+        "index": 3,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      }
+    ],
+    "cap5p04:2048": [
+      {
+        "index": 1,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      },
+      {
+        "index": 2,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      },
+      {
+        "index": 3,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      }
+    ],
+    "cap6:2048": [
+      {
+        "index": 1,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      },
+      {
+        "index": 2,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      },
+      {
+        "index": 3,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      }
+    ],
+    "cap6p04:2048": [
+      {
+        "index": 1,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      },
+      {
+        "index": 2,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      },
+      {
+        "index": 3,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      }
+    ],
+    "cap6p06:2048": [
+      {
+        "index": 1,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      },
+      {
+        "index": 2,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      },
+      {
+        "index": 3,
+        "exact_match": true,
+        "first_mismatch_zero_based": null
+      }
+    ]
+  },
+  "telemetry": {
+    "base-2048": {
+      "samples": 72,
+      "pressure_states": [
+        "normal"
+      ],
+      "gpu_device_utilization_percent": {
+        "samples": 72,
+        "mean": 99.69861111111112,
+        "median": 99.9,
+        "min": 97.9,
+        "max": 99.9,
+        "stdev": 0.35780750807180073
+      },
+      "gpu_frequency_mhz": {
+        "samples": 72,
+        "mean": 1300.5,
+        "median": 1300.5,
+        "min": 1300.5,
+        "max": 1300.5,
+        "stdev": 0.0
+      },
+      "gpu_temperature_c": {
+        "samples": 72,
+        "mean": 56.981791666666666,
+        "median": 57.0935,
+        "min": 55.343,
+        "max": 58.343,
+        "stdev": 0.7871448662685653
+      },
+      "gpu_power_watts": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "memory_free_bytes": {
+        "samples": 72,
+        "mean": 602008064,
+        "median": 601366528.0,
+        "min": 594677760,
+        "max": 611008512,
+        "stdev": 6030612.21742846
+      },
+      "memory_swap_used_bytes": {
+        "samples": 72,
+        "mean": 552721521.7777778,
+        "median": 552714240.0,
+        "min": 552583168,
+        "max": 553107456,
+        "stdev": 145738.07971859173
+      },
+      "memory_used_bytes": {
+        "samples": 72,
+        "mean": 48231214819.55556,
+        "median": 48232347648.0,
+        "min": 48224595968,
+        "max": 48236572672,
+        "stdev": 4393561.251567568
+      },
+      "cpu_percent": {
+        "samples": 72,
+        "mean": 1.4901434381802876,
+        "median": 1.5397071838378906,
+        "min": 0.6488263607025146,
+        "max": 2.351987361907959,
+        "stdev": 0.3186574770978514
+      },
+      "cpu_per_core_peak_percent": [
+        13.592231273651123,
+        2.9126226902008057,
+        1.9607841968536377,
+        1.904761791229248,
+        1.9607841968536377,
+        4.76190447807312,
+        4.950493574142456,
+        6.666666269302368,
+        0.9803950786590576,
+        1.9230782985687256,
+        1.9230782985687256,
+        1.9230782985687256
+      ],
+      "engine_cpu_percent": {
+        "samples": 72,
+        "mean": 9.813910292254555,
+        "median": 10.71863842010498,
+        "min": 2.91262149810791,
+        "max": 12.682926177978516,
+        "stdev": 3.1509397797502636
+      },
+      "engine_gpu_percent": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "engine_gpu_memory_bytes": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "engine_resident_memory_bytes": {
+        "samples": 72,
+        "mean": 62907125760,
+        "median": 62907125760.0,
+        "min": 62907125760,
+        "max": 62907125760,
+        "stdev": 0.0
+      }
+    },
+    "p04-2048": {
+      "samples": 73,
+      "pressure_states": [
+        "normal"
+      ],
+      "gpu_device_utilization_percent": {
+        "samples": 73,
+        "mean": 99.7041095890411,
+        "median": 99.8,
+        "min": 98.7,
+        "max": 99.9,
+        "stdev": 0.3084181667820794
+      },
+      "gpu_frequency_mhz": {
+        "samples": 73,
+        "mean": 1300.5,
+        "median": 1300.5,
+        "min": 1300.5,
+        "max": 1300.5,
+        "stdev": 0.0
+      },
+      "gpu_temperature_c": {
+        "samples": 73,
+        "mean": 56.67041095890411,
+        "median": 56.875,
+        "min": 54.75,
+        "max": 58.187,
+        "stdev": 0.8784815630079558
+      },
+      "gpu_power_watts": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "memory_free_bytes": {
+        "samples": 73,
+        "mean": 795352919.6712328,
+        "median": 792698880,
+        "min": 777629696,
+        "max": 804720640,
+        "stdev": 6372646.692379819
+      },
+      "memory_swap_used_bytes": {
+        "samples": 73,
+        "mean": 554385856.8767123,
+        "median": 554418176,
+        "min": 554156032,
+        "max": 554418176,
+        "stdev": 86780.76722471166
+      },
+      "memory_used_bytes": {
+        "samples": 73,
+        "mean": 48501544763.61644,
+        "median": 48503681024,
+        "min": 48494772224,
+        "max": 48516571136,
+        "stdev": 4899311.519071324
+      },
+      "cpu_percent": {
+        "samples": 73,
+        "mean": 1.4927219038140285,
+        "median": 1.538461446762085,
+        "min": 0.5686461925506592,
+        "max": 2.2672057151794434,
+        "stdev": 0.3397147740391751
+      },
+      "cpu_per_core_peak_percent": [
+        14.28571343421936,
+        5.769228935241699,
+        5.882352590560913,
+        4.950493574142456,
+        0.9708762168884277,
+        3.883492946624756,
+        0.9900987148284912,
+        2.9126226902008057,
+        4.807692766189575,
+        1.9230782985687256,
+        0.9708762168884277,
+        3.9215683937072754
+      ],
+      "engine_cpu_percent": {
+        "samples": 73,
+        "mean": 10.050115510208967,
+        "median": 11.669368743896484,
+        "min": 2.9149796962738037,
+        "max": 12.662337303161621,
+        "stdev": 3.1159594632230987
+      },
+      "engine_gpu_percent": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "engine_gpu_memory_bytes": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "engine_resident_memory_bytes": {
+        "samples": 73,
+        "mean": 62678795418.30137,
+        "median": 62678061056,
+        "min": 62678061056,
+        "max": 62691561472,
+        "stdev": 2684198.584448701
+      }
+    },
+    "p03-2048": {
+      "samples": 74,
+      "pressure_states": [
+        "normal"
+      ],
+      "gpu_device_utilization_percent": {
+        "samples": 74,
+        "mean": 98.35135135135135,
+        "median": 99.85,
+        "min": 0.0,
+        "max": 99.9,
+        "stdev": 11.595065592485419
+      },
+      "gpu_frequency_mhz": {
+        "samples": 74,
+        "mean": 1287.0608108108108,
+        "median": 1300.5,
+        "min": 306.0,
+        "max": 1300.5,
+        "stdev": 115.60827673072828
+      },
+      "gpu_temperature_c": {
+        "samples": 74,
+        "mean": 57.181243243243244,
+        "median": 57.3745,
+        "min": 54.187,
+        "max": 58.906,
+        "stdev": 0.9688577063174485
+      },
+      "gpu_power_watts": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "memory_free_bytes": {
+        "samples": 74,
+        "mean": 538146096.4324324,
+        "median": 531431424.0,
+        "min": 524492800,
+        "max": 570503168,
+        "stdev": 13469007.54979373
+      },
+      "memory_swap_used_bytes": {
+        "samples": 74,
+        "mean": 553096828.5405406,
+        "median": 553107456.0,
+        "min": 552583168,
+        "max": 553369600,
+        "stdev": 223109.23956265094
+      },
+      "memory_used_bytes": {
+        "samples": 74,
+        "mean": 48437618466.5946,
+        "median": 48444381184.0,
+        "min": 48407879680,
+        "max": 48450658304,
+        "stdev": 12148927.636417907
+      },
+      "cpu_percent": {
+        "samples": 74,
+        "mean": 1.6076766961329692,
+        "median": 1.5801966190338135,
+        "min": 0.6482958793640137,
+        "max": 7.866990566253662,
+        "stdev": 0.828215937868754
+      },
+      "cpu_per_core_peak_percent": [
+        47.11538553237915,
+        6.999999284744263,
+        5.882352590560913,
+        8.823531866073608,
+        38.461536169052124,
+        0.9708762168884277,
+        0.9803950786590576,
+        1.9230782985687256,
+        6.862747669219971,
+        0.9999990463256836,
+        2.9126226902008057,
+        6.730771064758301
+      ],
+      "engine_cpu_percent": {
+        "samples": 74,
+        "mean": 10.640607212040875,
+        "median": 11.669368743896484,
+        "min": 2.917342185974121,
+        "max": 46.75324630737305,
+        "stdev": 5.33249556775762
+      },
+      "engine_gpu_percent": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "engine_gpu_memory_bytes": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "engine_resident_memory_bytes": {
+        "samples": 74,
+        "mean": 62864961812.75676,
+        "median": 62928089088.0,
+        "min": 58780303360,
+        "max": 62928089088,
+        "stdev": 481470125.27222353
+      }
+    },
+    "cap5-2048": {
+      "samples": 73,
+      "pressure_states": [
+        "normal"
+      ],
+      "gpu_device_utilization_percent": {
+        "samples": 73,
+        "mean": 98.26986301369863,
+        "median": 99.8,
+        "min": 0.0,
+        "max": 100.0,
+        "stdev": 11.6688293820606
+      },
+      "gpu_frequency_mhz": {
+        "samples": 73,
+        "mean": 1286.876712328767,
+        "median": 1300.5,
+        "min": 306.0,
+        "max": 1300.5,
+        "stdev": 116.39742088655184
+      },
+      "gpu_temperature_c": {
+        "samples": 73,
+        "mean": 57.78602739726028,
+        "median": 57.968,
+        "min": 54.562,
+        "max": 59.437,
+        "stdev": 0.9751617240888071
+      },
+      "gpu_power_watts": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "memory_free_bytes": {
+        "samples": 73,
+        "mean": 645713695.5616438,
+        "median": 650813440,
+        "min": 628551680,
+        "max": 669466624,
+        "stdev": 10539129.601573821
+      },
+      "memory_swap_used_bytes": {
+        "samples": 73,
+        "mean": 561876262.5753424,
+        "median": 561987584,
+        "min": 561201152,
+        "max": 562249728,
+        "stdev": 335360.5419401433
+      },
+      "memory_used_bytes": {
+        "samples": 73,
+        "mean": 48314303025.095894,
+        "median": 48311521280,
+        "min": 48288014336,
+        "max": 48331943936,
+        "stdev": 9401235.143123914
+      },
+      "cpu_percent": {
+        "samples": 73,
+        "mean": 1.749607063319585,
+        "median": 1.6233742237091064,
+        "min": 0.6488263607025146,
+        "max": 13.392859697341919,
+        "stdev": 1.4306283884711382
+      },
+      "cpu_per_core_peak_percent": [
+        24.271845817565918,
+        8.653843402862549,
+        7.766991853713989,
+        6.9306910037994385,
+        66.99029207229614,
+        7.766991853713989,
+        1.9607841968536377,
+        0.961536169052124,
+        50.0,
+        1.9230782985687256,
+        1.9607841968536377,
+        3.883492946624756
+      ],
+      "engine_cpu_percent": {
+        "samples": 73,
+        "mean": 11.465196005285602,
+        "median": 11.697806358337402,
+        "min": 2.91262149810791,
+        "max": 75.06092071533203,
+        "stdev": 8.295449800543073
+      },
+      "engine_gpu_percent": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "engine_gpu_memory_bytes": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "engine_resident_memory_bytes": {
+        "samples": 73,
+        "mean": 62329195141.26028,
+        "median": 62822428672,
+        "min": 26593296384,
+        "max": 62833307648,
+        "stdev": 4240666953.501782
+      }
+    },
+    "cap5p04-2048": {
+      "samples": 74,
+      "pressure_states": [
+        "normal"
+      ],
+      "gpu_device_utilization_percent": {
+        "samples": 74,
+        "mean": 97.25675675675676,
+        "median": 99.8,
+        "min": 0.0,
+        "max": 99.9,
+        "stdev": 14.386105178747819
+      },
+      "gpu_frequency_mhz": {
+        "samples": 74,
+        "mean": 1287.0608108108108,
+        "median": 1300.5,
+        "min": 306.0,
+        "max": 1300.5,
+        "stdev": 115.60827673072828
+      },
+      "gpu_temperature_c": {
+        "samples": 74,
+        "mean": 58.242824324324324,
+        "median": 58.3435,
+        "min": 55.781,
+        "max": 59.718,
+        "stdev": 0.906893710195414
+      },
+      "gpu_power_watts": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "memory_free_bytes": {
+        "samples": 74,
+        "mean": 483195987.027027,
+        "median": 471789568.0,
+        "min": 451428352,
+        "max": 527294464,
+        "stdev": 18555812.381042592
+      },
+      "memory_swap_used_bytes": {
+        "samples": 74,
+        "mean": 675905093.1891892,
+        "median": 675823616.0,
+        "min": 675561472,
+        "max": 676085760,
+        "stdev": 129632.54305051852
+      },
+      "memory_used_bytes": {
+        "samples": 74,
+        "mean": 48196492038.91892,
+        "median": 48206452736.0,
+        "min": 48155172864,
+        "max": 48225497088,
+        "stdev": 17012845.028014466
+      },
+      "cpu_percent": {
+        "samples": 74,
+        "mean": 1.669015272243603,
+        "median": 1.6240358352661133,
+        "min": 0.7287442684173584,
+        "max": 5.280262231826782,
+        "stdev": 0.5709745094058316
+      },
+      "cpu_per_core_peak_percent": [
+        32.692307233810425,
+        8.823531866073608,
+        10.576921701431274,
+        5.882352590560913,
+        1.904761791229248,
+        4.76190447807312,
+        3.883492946624756,
+        0.9708762168884277,
+        21.359223127365112,
+        6.9306910037994385,
+        1.9230782985687256,
+        1.9607841968536377
+      ],
+      "engine_cpu_percent": {
+        "samples": 74,
+        "mean": 11.177967570923471,
+        "median": 12.636698246002197,
+        "min": 2.910266876220703,
+        "max": 33.1437873840332,
+        "stdev": 4.375009987981667
+      },
+      "engine_gpu_percent": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "engine_gpu_memory_bytes": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "engine_resident_memory_bytes": {
+        "samples": 74,
+        "mean": 62951554850.5946,
+        "median": 63018278912.0,
+        "min": 58864902144,
+        "max": 63018672128,
+        "stdev": 481791992.1880148
+      }
+    },
+    "cap6-2048": {
+      "samples": 74,
+      "pressure_states": [
+        "normal"
+      ],
+      "gpu_device_utilization_percent": {
+        "samples": 74,
+        "mean": 99.65945945945946,
+        "median": 99.7,
+        "min": 98.1,
+        "max": 100.0,
+        "stdev": 0.315759106602557
+      },
+      "gpu_frequency_mhz": {
+        "samples": 74,
+        "mean": 1300.5,
+        "median": 1300.5,
+        "min": 1300.5,
+        "max": 1300.5,
+        "stdev": 0.0
+      },
+      "gpu_temperature_c": {
+        "samples": 74,
+        "mean": 57.87421621621622,
+        "median": 57.9055,
+        "min": 56.375,
+        "max": 59.187,
+        "stdev": 0.7374709145928525
+      },
+      "gpu_power_watts": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "memory_free_bytes": {
+        "samples": 74,
+        "mean": 504263929.0810811,
+        "median": 504758272.0,
+        "min": 488849408,
+        "max": 516972544,
+        "stdev": 5744439.714307652
+      },
+      "memory_swap_used_bytes": {
+        "samples": 74,
+        "mean": 578373355.2432432,
+        "median": 578306048.0,
+        "min": 578043904,
+        "max": 578830336,
+        "stdev": 313075.4067935173
+      },
+      "memory_used_bytes": {
+        "samples": 74,
+        "mean": 48359567968.86487,
+        "median": 48359426048.0,
+        "min": 48349499392,
+        "max": 48372658176,
+        "stdev": 4649084.387729979
+      },
+      "cpu_percent": {
+        "samples": 74,
+        "mean": 1.5958254401748244,
+        "median": 1.6220629215240479,
+        "min": 0.5686461925506592,
+        "max": 2.6720643043518066,
+        "stdev": 0.4492987626023444
+      },
+      "cpu_per_core_peak_percent": [
+        15.238094329833984,
+        0.9999990463256836,
+        9.803920984268188,
+        11.650484800338745,
+        3.809523582458496,
+        0.9708762168884277,
+        3.883492946624756,
+        5.825245380401611,
+        8.571428060531616,
+        3.9215683937072754,
+        1.9801974296569824,
+        5.769228935241699
+      ],
+      "engine_cpu_percent": {
+        "samples": 74,
+        "mean": 10.904900399414268,
+        "median": 12.641816139221191,
+        "min": 2.919708013534546,
+        "max": 16.558441162109375,
+        "stdev": 3.638233352558012
+      },
+      "engine_gpu_percent": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "engine_gpu_memory_bytes": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "engine_resident_memory_bytes": {
+        "samples": 74,
+        "mean": 62951439387.675674,
+        "median": 62950961152.0,
+        "min": 62950961152,
+        "max": 62954500096,
+        "stdev": 1218109.6605895513
+      }
+    },
+    "cap6p04-2048": {
+      "samples": 77,
+      "pressure_states": [
+        "normal"
+      ],
+      "gpu_device_utilization_percent": {
+        "samples": 77,
+        "mean": 98.26103896103896,
+        "median": 99.8,
+        "min": 0.0,
+        "max": 100.0,
+        "stdev": 11.359857252672397
+      },
+      "gpu_frequency_mhz": {
+        "samples": 77,
+        "mean": 1298.1818181818182,
+        "median": 1300.5,
+        "min": 1122.0,
+        "max": 1300.5,
+        "stdev": 20.341962898045374
+      },
+      "gpu_temperature_c": {
+        "samples": 77,
+        "mean": 56.66438961038961,
+        "median": 56.718,
+        "min": 54.156,
+        "max": 58.062,
+        "stdev": 0.8426919608868161
+      },
+      "gpu_power_watts": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "memory_free_bytes": {
+        "samples": 77,
+        "mean": 1089960122.1818182,
+        "median": 1087164416,
+        "min": 1075867648,
+        "max": 1105014784,
+        "stdev": 9838947.908513807
+      },
+      "memory_swap_used_bytes": {
+        "samples": 77,
+        "mean": 785470131.5324675,
+        "median": 785473536,
+        "min": 784687104,
+        "max": 785735680,
+        "stdev": 234829.04252374885
+      },
+      "memory_used_bytes": {
+        "samples": 77,
+        "mean": 48111440297.55844,
+        "median": 48113889280,
+        "min": 48101167104,
+        "max": 48122081280,
+        "stdev": 6855877.744043056
+      },
+      "cpu_percent": {
+        "samples": 77,
+        "mean": 1.6575100359978614,
+        "median": 1.7004072666168213,
+        "min": 0.4874110221862793,
+        "max": 3.5044848918914795,
+        "stdev": 0.45430490874183116
+      },
+      "cpu_per_core_peak_percent": [
+        19.607841968536377,
+        6.666666269302368,
+        11.650484800338745,
+        11.650484800338745,
+        4.854369163513184,
+        3.883492946624756,
+        2.8301894664764404,
+        0.961536169052124,
+        4.76190447807312,
+        23.529410362243652,
+        0.9999990463256836,
+        1.9801974296569824
+      ],
+      "engine_cpu_percent": {
+        "samples": 77,
+        "mean": 11.429774011884417,
+        "median": 12.662337303161621,
+        "min": 2.910266876220703,
+        "max": 21.37651824951172,
+        "stdev": 3.8945359248573124
+      },
+      "engine_gpu_percent": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "engine_gpu_memory_bytes": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "engine_resident_memory_bytes": {
+        "samples": 77,
+        "mean": 62331672762.181816,
+        "median": 62351507456,
+        "min": 60834852864,
+        "max": 62351507456,
+        "stdev": 172823014.3159317
+      }
+    },
+    "cap6p06-2048": {
+      "samples": 75,
+      "pressure_states": [
+        "normal"
+      ],
+      "gpu_device_utilization_percent": {
+        "samples": 75,
+        "mean": 97.05866666666667,
+        "median": 99.9,
+        "min": 0.0,
+        "max": 99.9,
+        "stdev": 16.176201182128167
+      },
+      "gpu_frequency_mhz": {
+        "samples": 75,
+        "mean": 1287.24,
+        "median": 1300.5,
+        "min": 306.0,
+        "max": 1300.5,
+        "stdev": 114.83496854181656
+      },
+      "gpu_temperature_c": {
+        "samples": 75,
+        "mean": 56.32465333333333,
+        "median": 56.531,
+        "min": 53.562,
+        "max": 57.937,
+        "stdev": 0.993166686607735
+      },
+      "gpu_power_watts": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "memory_free_bytes": {
+        "samples": 75,
+        "mean": 512279565.6533333,
+        "median": 512512000,
+        "min": 502624256,
+        "max": 531025920,
+        "stdev": 7103037.252578131
+      },
+      "memory_swap_used_bytes": {
+        "samples": 75,
+        "mean": 580263717.5466666,
+        "median": 580476928,
+        "min": 579690496,
+        "max": 580476928,
+        "stdev": 246415.86247984038
+      },
+      "memory_used_bytes": {
+        "samples": 75,
+        "mean": 48332571224.746666,
+        "median": 48334180352,
+        "min": 48310636544,
+        "max": 48340811776,
+        "stdev": 6254133.6832017405
+      },
+      "cpu_percent": {
+        "samples": 75,
+        "mean": 1.7001235485076904,
+        "median": 1.7031610012054443,
+        "min": 0.6482958793640137,
+        "max": 7.078927755355835,
+        "stdev": 0.7739918189990704
+      },
+      "cpu_per_core_peak_percent": [
+        40.77669978141785,
+        15.238094329833984,
+        4.901963472366333,
+        7.843136787414551,
+        28.155338764190674,
+        3.883492946624756,
+        0.961536169052124,
+        1.9230782985687256,
+        7.692307233810425,
+        0.9708762168884277,
+        2.9411792755126953,
+        6.7961156368255615
+      ],
+      "engine_cpu_percent": {
+        "samples": 75,
+        "mean": 11.135283937454224,
+        "median": 11.688311576843262,
+        "min": 2.917342185974121,
+        "max": 40.97561264038086,
+        "stdev": 4.950498906977184
+      },
+      "engine_gpu_percent": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "engine_gpu_memory_bytes": {
+        "samples": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null,
+        "stdev": null
+      },
+      "engine_resident_memory_bytes": {
+        "samples": 75,
+        "mean": 62884068174.50667,
+        "median": 62939529216,
+        "min": 58779951104,
+        "max": 62939529216,
+        "stdev": 480306708.5356951
+      }
+    }
+  },
+  "vendor_phases": {
+    "base-2048": {
+      "prefill": {
+        "samples": 8,
+        "gr3d_percent": {
+          "samples": 8,
+          "mean": 98.75,
+          "median": 99.0,
+          "min": 98,
+          "max": 99,
+          "stdev": 0.4629100498862757
+        },
+        "gr3d_below_50_fraction": 0.0,
+        "vdd_gpu_soc_watts": {
+          "samples": 8,
+          "mean": 32.433875,
+          "median": 32.576,
+          "min": 32.179,
+          "max": 32.59,
+          "stdev": 0.2040017069256324
+        },
+        "busiest_cpu_core_percent": {
+          "samples": 8,
+          "mean": 4.125,
+          "median": 4.0,
+          "min": 3,
+          "max": 6,
+          "stdev": 0.8345229603962802
+        }
+      },
+      "decode": {
+        "samples": 53,
+        "gr3d_percent": {
+          "samples": 53,
+          "mean": 98.98113207547169,
+          "median": 99,
+          "min": 98,
+          "max": 99,
+          "stdev": 0.13736056394868904
+        },
+        "gr3d_below_50_fraction": 0.0,
+        "vdd_gpu_soc_watts": {
+          "samples": 53,
+          "mean": 31.577830188679247,
+          "median": 31.782,
+          "min": 30.205,
+          "max": 32.59,
+          "stdev": 0.554536734437268
+        },
+        "busiest_cpu_core_percent": {
+          "samples": 53,
+          "mean": 11.226415094339623,
+          "median": 11,
+          "min": 10,
+          "max": 14,
+          "stdev": 0.8691620507920316
+        }
+      }
+    },
+    "p04-2048": {
+      "prefill": {
+        "samples": 9,
+        "gr3d_percent": {
+          "samples": 9,
+          "mean": 98.88888888888889,
+          "median": 99,
+          "min": 98,
+          "max": 99,
+          "stdev": 0.3333333333333333
+        },
+        "gr3d_below_50_fraction": 0.0,
+        "vdd_gpu_soc_watts": {
+          "samples": 9,
+          "mean": 32.39955555555556,
+          "median": 32.576,
+          "min": 32.179,
+          "max": 32.576,
+          "stdev": 0.20923737184780697
+        },
+        "busiest_cpu_core_percent": {
+          "samples": 9,
+          "mean": 3.6666666666666665,
+          "median": 4,
+          "min": 3,
+          "max": 4,
+          "stdev": 0.5
+        }
+      },
+      "decode": {
+        "samples": 55,
+        "gr3d_percent": {
+          "samples": 55,
+          "mean": 98.94545454545455,
+          "median": 99,
+          "min": 98,
+          "max": 99,
+          "stdev": 0.22918388365077622
+        },
+        "gr3d_below_50_fraction": 0.0,
+        "vdd_gpu_soc_watts": {
+          "samples": 55,
+          "mean": 31.91329090909091,
+          "median": 31.782,
+          "min": 30.59,
+          "max": 32.59,
+          "stdev": 0.4837948628915667
+        },
+        "busiest_cpu_core_percent": {
+          "samples": 55,
+          "mean": 11.472727272727273,
+          "median": 11,
+          "min": 10,
+          "max": 13,
+          "stdev": 0.7163318456772064
+        }
+      }
+    },
+    "p03-2048": {
+      "prefill": {
+        "samples": 8,
+        "gr3d_percent": {
+          "samples": 8,
+          "mean": 98.625,
+          "median": 99.0,
+          "min": 96,
+          "max": 99,
+          "stdev": 1.0606601717798212
+        },
+        "gr3d_below_50_fraction": 0.0,
+        "vdd_gpu_soc_watts": {
+          "samples": 8,
+          "mean": 32.3775,
+          "median": 32.3775,
+          "min": 32.179,
+          "max": 32.576,
+          "stdev": 0.21220542607846415
+        },
+        "busiest_cpu_core_percent": {
+          "samples": 8,
+          "mean": 3.875,
+          "median": 4.0,
+          "min": 3,
+          "max": 6,
+          "stdev": 0.9910312089651149
+        }
+      },
+      "decode": {
+        "samples": 56,
+        "gr3d_percent": {
+          "samples": 56,
+          "mean": 98.98214285714286,
+          "median": 99.0,
+          "min": 98,
+          "max": 99,
+          "stdev": 0.1336306209562122
+        },
+        "gr3d_below_50_fraction": 0.0,
+        "vdd_gpu_soc_watts": {
+          "samples": 56,
+          "mean": 32.11616071428571,
+          "median": 32.179,
+          "min": 31.385,
+          "max": 32.59,
+          "stdev": 0.3996789974142074
+        },
+        "busiest_cpu_core_percent": {
+          "samples": 56,
+          "mean": 11.678571428571429,
+          "median": 11.5,
+          "min": 10,
+          "max": 14,
+          "stdev": 0.8760893034003254
+        }
+      }
+    },
+    "cap5-2048": {
+      "prefill": {
+        "samples": 9,
+        "gr3d_percent": {
+          "samples": 9,
+          "mean": 98.55555555555556,
+          "median": 99,
+          "min": 98,
+          "max": 99,
+          "stdev": 0.5270462766947299
+        },
+        "gr3d_below_50_fraction": 0.0,
+        "vdd_gpu_soc_watts": {
+          "samples": 9,
+          "mean": 32.53344444444445,
+          "median": 32.576,
+          "min": 32.179,
+          "max": 32.59,
+          "stdev": 0.13299728485114906
+        },
+        "busiest_cpu_core_percent": {
+          "samples": 9,
+          "mean": 4.111111111111111,
+          "median": 4,
+          "min": 3,
+          "max": 5,
+          "stdev": 0.7817359599705715
+        }
+      },
+      "decode": {
+        "samples": 54,
+        "gr3d_percent": {
+          "samples": 54,
+          "mean": 99.07407407407408,
+          "median": 99.0,
+          "min": 96,
+          "max": 100,
+          "stdev": 0.5779551412980942
+        },
+        "gr3d_below_50_fraction": 0.0,
+        "vdd_gpu_soc_watts": {
+          "samples": 54,
+          "mean": 31.806037037037036,
+          "median": 31.782,
+          "min": 30.59,
+          "max": 32.974,
+          "stdev": 0.5241832087526511
+        },
+        "busiest_cpu_core_percent": {
+          "samples": 54,
+          "mean": 12.314814814814815,
+          "median": 12.0,
+          "min": 10,
+          "max": 14,
+          "stdev": 0.8201259469331427
+        }
+      }
+    },
+    "cap5p04-2048": {
+      "prefill": {
+        "samples": 9,
+        "gr3d_percent": {
+          "samples": 9,
+          "mean": 98.77777777777777,
+          "median": 99,
+          "min": 98,
+          "max": 99,
+          "stdev": 0.44095855184409843
+        },
+        "gr3d_below_50_fraction": 0.0,
+        "vdd_gpu_soc_watts": {
+          "samples": 9,
+          "mean": 32.443666666666665,
+          "median": 32.576,
+          "min": 32.179,
+          "max": 32.576,
+          "stdev": 0.19849999999999923
+        },
+        "busiest_cpu_core_percent": {
+          "samples": 9,
+          "mean": 3.888888888888889,
+          "median": 4,
+          "min": 3,
+          "max": 5,
+          "stdev": 0.6009252125773316
+        }
+      },
+      "decode": {
+        "samples": 54,
+        "gr3d_percent": {
+          "samples": 54,
+          "mean": 98.96296296296296,
+          "median": 99.0,
+          "min": 98,
+          "max": 99,
+          "stdev": 0.19062587709298626
+        },
+        "gr3d_below_50_fraction": 0.0,
+        "vdd_gpu_soc_watts": {
+          "samples": 54,
+          "mean": 32.11840740740741,
+          "median": 32.179,
+          "min": 30.602,
+          "max": 32.987,
+          "stdev": 0.6005428524925964
+        },
+        "busiest_cpu_core_percent": {
+          "samples": 54,
+          "mean": 12.481481481481481,
+          "median": 12.0,
+          "min": 11,
+          "max": 14,
+          "stdev": 0.9057622817115696
+        }
+      }
+    },
+    "cap6-2048": {
+      "prefill": {
+        "samples": 9,
+        "gr3d_percent": {
+          "samples": 9,
+          "mean": 98.88888888888889,
+          "median": 99,
+          "min": 98,
+          "max": 99,
+          "stdev": 0.3333333333333333
+        },
+        "gr3d_below_50_fraction": 0.0,
+        "vdd_gpu_soc_watts": {
+          "samples": 9,
+          "mean": 32.489222222222224,
+          "median": 32.576,
+          "min": 32.179,
+          "max": 32.576,
+          "stdev": 0.1722249820567398
+        },
+        "busiest_cpu_core_percent": {
+          "samples": 9,
+          "mean": 3.3333333333333335,
+          "median": 3,
+          "min": 3,
+          "max": 4,
+          "stdev": 0.5
+        }
+      },
+      "decode": {
+        "samples": 55,
+        "gr3d_percent": {
+          "samples": 55,
+          "mean": 99.03636363636363,
+          "median": 99,
+          "min": 99,
+          "max": 100,
+          "stdev": 0.18891859540615819
+        },
+        "gr3d_below_50_fraction": 0.0,
+        "vdd_gpu_soc_watts": {
+          "samples": 55,
+          "mean": 31.757709090909092,
+          "median": 31.795,
+          "min": 30.205,
+          "max": 32.974,
+          "stdev": 0.636534706299062
+        },
+        "busiest_cpu_core_percent": {
+          "samples": 55,
+          "mean": 12.636363636363637,
+          "median": 13,
+          "min": 10,
+          "max": 14,
+          "stdev": 1.0067114847204304
+        }
+      }
+    },
+    "cap6p04-2048": {
+      "prefill": {
+        "samples": 9,
+        "gr3d_percent": {
+          "samples": 9,
+          "mean": 98.77777777777777,
+          "median": 99,
+          "min": 98,
+          "max": 99,
+          "stdev": 0.44095855184409843
+        },
+        "gr3d_below_50_fraction": 0.0,
+        "vdd_gpu_soc_watts": {
+          "samples": 9,
+          "mean": 32.39955555555556,
+          "median": 32.576,
+          "min": 32.179,
+          "max": 32.576,
+          "stdev": 0.20923737184780697
+        },
+        "busiest_cpu_core_percent": {
+          "samples": 9,
+          "mean": 3.7777777777777777,
+          "median": 4,
+          "min": 3,
+          "max": 5,
+          "stdev": 0.6666666666666666
+        }
+      },
+      "decode": {
+        "samples": 57,
+        "gr3d_percent": {
+          "samples": 57,
+          "mean": 99.08771929824562,
+          "median": 99,
+          "min": 98,
+          "max": 100,
+          "stdev": 0.3422979985327094
+        },
+        "gr3d_below_50_fraction": 0.0,
+        "vdd_gpu_soc_watts": {
+          "samples": 57,
+          "mean": 31.959280701754388,
+          "median": 32.179,
+          "min": 30.59,
+          "max": 32.974,
+          "stdev": 0.5410110493453762
+        },
+        "busiest_cpu_core_percent": {
+          "samples": 57,
+          "mean": 13.263157894736842,
+          "median": 13,
+          "min": 10,
+          "max": 21,
+          "stdev": 1.3954814298487213
+        }
+      }
+    },
+    "cap6p06-2048": {
+      "prefill": {
+        "samples": 9,
+        "gr3d_percent": {
+          "samples": 9,
+          "mean": 99,
+          "median": 99,
+          "min": 99,
+          "max": 99,
+          "stdev": 0.0
+        },
+        "gr3d_below_50_fraction": 0.0,
+        "vdd_gpu_soc_watts": {
+          "samples": 9,
+          "mean": 32.32022222222222,
+          "median": 32.192,
+          "min": 32.179,
+          "max": 32.59,
+          "stdev": 0.1989452046279195
+        },
+        "busiest_cpu_core_percent": {
+          "samples": 9,
+          "mean": 3.6666666666666665,
+          "median": 4,
+          "min": 3,
+          "max": 4,
+          "stdev": 0.5
+        }
+      },
+      "decode": {
+        "samples": 56,
+        "gr3d_percent": {
+          "samples": 56,
+          "mean": 99,
+          "median": 99.0,
+          "min": 99,
+          "max": 99,
+          "stdev": 0.0
+        },
+        "gr3d_below_50_fraction": 0.0,
+        "vdd_gpu_soc_watts": {
+          "samples": 56,
+          "mean": 31.450142857142858,
+          "median": 31.397,
+          "min": 29.808,
+          "max": 32.59,
+          "stdev": 0.6563501678655562
+        },
+        "busiest_cpu_core_percent": {
+          "samples": 56,
+          "mean": 12.553571428571429,
+          "median": 13.0,
+          "min": 10,
+          "max": 15,
+          "stdev": 1.1586770333153529
+        }
+      }
+    }
+  },
+  "vendor_whole_run_temperature_c": {
+    "cpu": {
+      "samples": 1526,
+      "mean": 55.986127785058976,
+      "median": 56.156,
+      "min": 51.25,
+      "max": 60.593,
+      "stdev": 2.1818445359534917
+    },
+    "soc2": {
+      "samples": 1526,
+      "mean": 53.02736107470511,
+      "median": 53.187,
+      "min": 48.656,
+      "max": 57.343,
+      "stdev": 2.117195660835549
+    },
+    "soc0": {
+      "samples": 1526,
+      "mean": 53.14205963302752,
+      "median": 53.2655,
+      "min": 48.656,
+      "max": 57.468,
+      "stdev": 2.1028735315173672
+    },
+    "gpu": {
+      "samples": 1526,
+      "mean": 53.18926867627785,
+      "median": 53.843,
+      "min": 46.156,
+      "max": 59.718,
+      "stdev": 3.9460295409762867
+    },
+    "tj": {
+      "samples": 1526,
+      "mean": 55.99171821756225,
+      "median": 56.171499999999995,
+      "min": 51.25,
+      "max": 60.593,
+      "stdev": 2.17882260351681
+    },
+    "soc1": {
+      "samples": 1526,
+      "mean": 53.05113040629096,
+      "median": 53.187,
+      "min": 48.906,
+      "max": 57.031,
+      "stdev": 1.9276206828838003
+    }
+  }
+}

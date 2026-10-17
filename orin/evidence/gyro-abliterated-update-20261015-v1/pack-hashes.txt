@@ -1,0 +1,4 @@
+e9588a855a18984a01c4202eaa295fb7211b341d49c440b0f203b5c310048954  ${RUNTIME}/packs/gyro-m-abliterated-20261015/dense.bin
+1f5a402aacae1473b17d988403dee208d5d5652495f14d5e486e6e0dfd3efc0b  ${RUNTIME}/packs/gyro-m-abliterated-20261015/index.txt
+56cc4156834ced52fc0b6b40408c28020571aed901eb5f8ba66130dac5b35803  ${RUNTIME}/packs/gyro-m-abliterated-20261015/native_experts.txt
+0ac6508d90038f53cb193cc91ae9c06e9352f154861f2777dcdba842be89668d  ${RUNTIME}/packs/gyro-m-abliterated-20261015/hadamard.txt

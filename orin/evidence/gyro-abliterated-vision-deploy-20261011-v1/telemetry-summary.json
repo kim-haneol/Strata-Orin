@@ -1,0 +1,62 @@
+{
+  "samples": 1079,
+  "since": "2026-10-11T08:24:52Z",
+  "until": "2026-10-11T09:01:23Z",
+  "pressure_states": [
+    "normal",
+    "warning"
+  ],
+  "metrics": {
+    "used_bytes": {
+      "available_samples": 1079,
+      "min": 10048196608,
+      "max": 61262680064,
+      "first": 10215133184,
+      "last": 57349160960
+    },
+    "headroom_bytes": {
+      "available_samples": 1079,
+      "min": 4669865984,
+      "max": 55884349440,
+      "first": 55717412864,
+      "last": 8583385088
+    },
+    "free_bytes": {
+      "available_samples": 1079,
+      "min": 531443712,
+      "max": 53201428480,
+      "first": 48887132160,
+      "last": 568840192
+    },
+    "swap_used_bytes": {
+      "available_samples": 1079,
+      "min": 421806080,
+      "max": 424599552,
+      "first": 422068224,
+      "last": 424599552
+    },
+    "gpu_util": {
+      "available_samples": 1079,
+      "min": 0.0,
+      "max": 100.0,
+      "first": 0.0,
+      "last": 0.0
+    },
+    "gpu_temperature_c": {
+      "available_samples": 829,
+      "min": 46.031,
+      "max": 68.531,
+      "first": 46.437,
+      "last": 49.843
+    },
+    "gpu_frequency_mhz": {
+      "available_samples": 1079,
+      "min": 306.0,
+      "max": 1300.5,
+      "first": 306.0,
+      "last": 306.0
+    },
+    "gpu_power_watts": null
+  },
+  "unavailable": "GPU/process GPU memory and GPU power unavailable under active Jetson backend; no zero substitutions"
+}

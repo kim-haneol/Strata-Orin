@@ -1,0 +1,1100 @@
+{
+  "status": "completed",
+  "scope": "Synthetic client capture with canned response; no Jetson inference and no MCP tool execution",
+  "results": [
+    {
+      "case": "without_mcp",
+      "exit_code": 0,
+      "elapsed_seconds": 0.4507968961261213,
+      "request_bytes": 3108,
+      "request_sha256": "71eb88e31f4d573b392eae5565167f208e424d5d69b093f73735ca4182bc6b08",
+      "messages": [
+        {
+          "role": "system",
+          "json_bytes": 2535,
+          "content_type": "str",
+          "chars": 1766
+        },
+        {
+          "role": "user",
+          "json_bytes": 310,
+          "content_type": "list",
+          "chars": null
+        }
+      ],
+      "tools_count": 0,
+      "tools_bytes": 2,
+      "tools": [],
+      "stream": true,
+      "max_tokens": null,
+      "model": "qwen38-flash-next-gyro-m",
+      "request_keys": [
+        "chat_template_kwargs",
+        "max_completion_tokens",
+        "messages",
+        "model",
+        "preserve_thinking",
+        "stream",
+        "stream_options"
+      ]
+    },
+    {
+      "case": "with_rea",
+      "exit_code": 0,
+      "elapsed_seconds": 2.1008430658839643,
+      "request_bytes": 563006,
+      "request_sha256": "85ff6fa70d8377da56f0fc48fc01784570ee8ffca726fa1cd9477dc4b4b44619",
+      "messages": [
+        {
+          "role": "system",
+          "json_bytes": 3003,
+          "content_type": "str",
+          "chars": 2227
+        },
+        {
+          "role": "user",
+          "json_bytes": 310,
+          "content_type": "list",
+          "chars": null
+        }
+      ],
+      "tools_count": 170,
+      "tools_bytes": 559421,
+      "tools": [
+        {
+          "name": "mcp__rea_compare_web_captures",
+          "json_bytes": 153407,
+          "description_chars": 885,
+          "parameters_bytes": 152420
+        },
+        {
+          "name": "mcp__rea_project_managed_application_graph",
+          "json_bytes": 25976,
+          "description_chars": 333,
+          "parameters_bytes": 25528
+        },
+        {
+          "name": "mcp__rea_evaluate_reconstruction_coverage",
+          "json_bytes": 20411,
+          "description_chars": 272,
+          "parameters_bytes": 20025
+        },
+        {
+          "name": "mcp__rea_capture_browser_scenario",
+          "json_bytes": 19731,
+          "description_chars": 744,
+          "parameters_bytes": 18881
+        },
+        {
+          "name": "mcp__rea_compare_application_versions",
+          "json_bytes": 18486,
+          "description_chars": 419,
+          "parameters_bytes": 17957
+        },
+        {
+          "name": "mcp__rea_build_reconstruction_obligation_ledger",
+          "json_bytes": 17094,
+          "description_chars": 495,
+          "parameters_bytes": 16479
+        },
+        {
+          "name": "mcp__rea_compare_source_to_bundle",
+          "json_bytes": 13056,
+          "description_chars": 454,
+          "parameters_bytes": 12496
+        },
+        {
+          "name": "mcp__rea_compare_process_captures",
+          "json_bytes": 12751,
+          "description_chars": 406,
+          "parameters_bytes": 12239
+        },
+        {
+          "name": "mcp__rea_compare_javascript_export_shapes",
+          "json_bytes": 10925,
+          "description_chars": 782,
+          "parameters_bytes": 10029
+        },
+        {
+          "name": "mcp__rea_correlate_static_and_runtime",
+          "json_bytes": 10843,
+          "description_chars": 337,
+          "parameters_bytes": 10396
+        },
+        {
+          "name": "mcp__rea_trace_application_feature",
+          "json_bytes": 10566,
+          "description_chars": 340,
+          "parameters_bytes": 10119
+        },
+        {
+          "name": "mcp__rea_reconcile_javascript_runtime",
+          "json_bytes": 9951,
+          "description_chars": 508,
+          "parameters_bytes": 9333
+        },
+        {
+          "name": "mcp__rea_compare_managed_members",
+          "json_bytes": 9285,
+          "description_chars": 518,
+          "parameters_bytes": 8662
+        },
+        {
+          "name": "mcp__rea_compare_artifacts",
+          "json_bytes": 9077,
+          "description_chars": 316,
+          "parameters_bytes": 8662
+        },
+        {
+          "name": "mcp__rea_verify_managed_native_boundaries",
+          "json_bytes": 9070,
+          "description_chars": 300,
+          "parameters_bytes": 8656
+        },
+        {
+          "name": "mcp__rea_compare_functions",
+          "json_bytes": 9030,
+          "description_chars": 269,
+          "parameters_bytes": 8662
+        },
+        {
+          "name": "mcp__rea_inspect_analysis_view",
+          "json_bytes": 8970,
+          "description_chars": 977,
+          "parameters_bytes": 7890
+        },
+        {
+          "name": "mcp__rea_trace_javascript_semantics",
+          "json_bytes": 8793,
+          "description_chars": 265,
+          "parameters_bytes": 8420
+        },
+        {
+          "name": "mcp__rea_import_managed_reconstruction",
+          "json_bytes": 6635,
+          "description_chars": 367,
+          "parameters_bytes": 6157
+        },
+        {
+          "name": "mcp__rea_capture_process_scenario",
+          "json_bytes": 6585,
+          "description_chars": 1128,
+          "parameters_bytes": 5350
+        },
+        {
+          "name": "mcp__rea_build_call_path",
+          "json_bytes": 5096,
+          "description_chars": 223,
+          "parameters_bytes": 4776
+        },
+        {
+          "name": "mcp__rea_project_apple_application_graph",
+          "json_bytes": 4968,
+          "description_chars": 473,
+          "parameters_bytes": 4382
+        },
+        {
+          "name": "mcp__rea_find_changed_behavior",
+          "json_bytes": 4784,
+          "description_chars": 245,
+          "parameters_bytes": 4436
+        },
+        {
+          "name": "mcp__rea_project_android_application_graph",
+          "json_bytes": 4778,
+          "description_chars": 281,
+          "parameters_bytes": 4382
+        },
+        {
+          "name": "mcp__rea_capture_electron_scenario",
+          "json_bytes": 3629,
+          "description_chars": 885,
+          "parameters_bytes": 2637
+        },
+        {
+          "name": "mcp__rea_update_unknown",
+          "json_bytes": 3618,
+          "description_chars": 166,
+          "parameters_bytes": 3356
+        },
+        {
+          "name": "mcp__rea_observe_native_calls",
+          "json_bytes": 3408,
+          "description_chars": 672,
+          "parameters_bytes": 2634
+        },
+        {
+          "name": "mcp__rea_record_unknown",
+          "json_bytes": 2684,
+          "description_chars": 165,
+          "parameters_bytes": 2423
+        },
+        {
+          "name": "mcp__rea_verify_reconstruction",
+          "json_bytes": 2595,
+          "description_chars": 275,
+          "parameters_bytes": 2215
+        },
+        {
+          "name": "mcp__rea_capture_native_ui_scenario",
+          "json_bytes": 2532,
+          "description_chars": 330,
+          "parameters_bytes": 2094
+        },
+        {
+          "name": "mcp__rea_trace_web_source_location",
+          "json_bytes": 2253,
+          "description_chars": 942,
+          "parameters_bytes": 1204
+        },
+        {
+          "name": "mcp__rea_analyze_web_bundle",
+          "json_bytes": 2189,
+          "description_chars": 311,
+          "parameters_bytes": 1778
+        },
+        {
+          "name": "mcp__rea_analyze_javascript_application",
+          "json_bytes": 2158,
+          "description_chars": 535,
+          "parameters_bytes": 1511
+        },
+        {
+          "name": "mcp__rea_inspect_web_page",
+          "json_bytes": 2065,
+          "description_chars": 376,
+          "parameters_bytes": 1591
+        },
+        {
+          "name": "mcp__rea_extract_firmware",
+          "json_bytes": 2017,
+          "description_chars": 530,
+          "parameters_bytes": 1389
+        },
+        {
+          "name": "mcp__rea_trace_web_module_imports",
+          "json_bytes": 1997,
+          "description_chars": 858,
+          "parameters_bytes": 1033
+        },
+        {
+          "name": "mcp__rea_inspect_web_network_capture",
+          "json_bytes": 1995,
+          "description_chars": 828,
+          "parameters_bytes": 1058
+        },
+        {
+          "name": "mcp__rea_inspect_binary_layout",
+          "json_bytes": 1958,
+          "description_chars": 1177,
+          "parameters_bytes": 678
+        },
+        {
+          "name": "mcp__rea_start_adb_activity",
+          "json_bytes": 1884,
+          "description_chars": 248,
+          "parameters_bytes": 1536
+        },
+        {
+          "name": "mcp__rea_compare_web_screenshots",
+          "json_bytes": 1737,
+          "description_chars": 165,
+          "parameters_bytes": 1467
+        },
+        {
+          "name": "mcp__rea_open_binary",
+          "json_bytes": 1708,
+          "description_chars": 741,
+          "parameters_bytes": 874
+        },
+        {
+          "name": "mcp__rea_trace_native_values",
+          "json_bytes": 1663,
+          "description_chars": 402,
+          "parameters_bytes": 1160
+        },
+        {
+          "name": "mcp__rea_recover_javascript_sources",
+          "json_bytes": 1618,
+          "description_chars": 596,
+          "parameters_bytes": 914
+        },
+        {
+          "name": "mcp__rea_inspect_recorded_crash",
+          "json_bytes": 1487,
+          "description_chars": 879,
+          "parameters_bytes": 504
+        },
+        {
+          "name": "mcp__rea_observe_javascript_runtime",
+          "json_bytes": 1466,
+          "description_chars": 694,
+          "parameters_bytes": 664
+        },
+        {
+          "name": "mcp__rea_get_evidence_bundle",
+          "json_bytes": 1462,
+          "description_chars": 564,
+          "parameters_bytes": 797
+        },
+        {
+          "name": "mcp__rea_inspect_electron_page",
+          "json_bytes": 1440,
+          "description_chars": 400,
+          "parameters_bytes": 937
+        },
+        {
+          "name": "mcp__rea_export_web_scripts",
+          "json_bytes": 1431,
+          "description_chars": 709,
+          "parameters_bytes": 622
+        },
+        {
+          "name": "mcp__rea_search_strings",
+          "json_bytes": 1386,
+          "description_chars": 662,
+          "parameters_bytes": 628
+        },
+        {
+          "name": "mcp__rea_trace_dylib_resolution",
+          "json_bytes": 1377,
+          "description_chars": 692,
+          "parameters_bytes": 581
+        },
+        {
+          "name": "mcp__rea_inspect_pe_resources",
+          "json_bytes": 1376,
+          "description_chars": 642,
+          "parameters_bytes": 632
+        },
+        {
+          "name": "mcp__rea_compare_bundles",
+          "json_bytes": 1355,
+          "description_chars": 291,
+          "parameters_bytes": 967
+        },
+        {
+          "name": "mcp__rea_observe_web_execution",
+          "json_bytes": 1345,
+          "description_chars": 549,
+          "parameters_bytes": 693
+        },
+        {
+          "name": "mcp__rea_analyze_swift_types",
+          "json_bytes": 1312,
+          "description_chars": 651,
+          "parameters_bytes": 556
+        },
+        {
+          "name": "mcp__rea_trace_native_ui_action",
+          "json_bytes": 1302,
+          "description_chars": 425,
+          "parameters_bytes": 773
+        },
+        {
+          "name": "mcp__rea_decode_android_resources",
+          "json_bytes": 1276,
+          "description_chars": 451,
+          "parameters_bytes": 719
+        },
+        {
+          "name": "mcp__rea_pull_adb_package",
+          "json_bytes": 1251,
+          "description_chars": 361,
+          "parameters_bytes": 792
+        },
+        {
+          "name": "mcp__rea_inspect_evm_interface",
+          "json_bytes": 1204,
+          "description_chars": 637,
+          "parameters_bytes": 464
+        },
+        {
+          "name": "mcp__rea_inspect_web_event_listeners",
+          "json_bytes": 1188,
+          "description_chars": 419,
+          "parameters_bytes": 660
+        },
+        {
+          "name": "mcp__rea_push_adb_file",
+          "json_bytes": 1185,
+          "description_chars": 279,
+          "parameters_bytes": 811
+        },
+        {
+          "name": "mcp__rea_annotate_native_function",
+          "json_bytes": 1153,
+          "description_chars": 504,
+          "parameters_bytes": 543
+        },
+        {
+          "name": "mcp__rea_close_binary",
+          "json_bytes": 1096,
+          "description_chars": 551,
+          "parameters_bytes": 451
+        },
+        {
+          "name": "mcp__rea_pull_adb_file",
+          "json_bytes": 1081,
+          "description_chars": 233,
+          "parameters_bytes": 753
+        },
+        {
+          "name": "mcp__rea_observe_web_session",
+          "json_bytes": 1073,
+          "description_chars": 273,
+          "parameters_bytes": 699
+        },
+        {
+          "name": "mcp__rea_read_adb_logcat",
+          "json_bytes": 1065,
+          "description_chars": 199,
+          "parameters_bytes": 769
+        },
+        {
+          "name": "mcp__rea_install_adb_package",
+          "json_bytes": 1056,
+          "description_chars": 270,
+          "parameters_bytes": 685
+        },
+        {
+          "name": "mcp__rea_trace_call_path",
+          "json_bytes": 1032,
+          "description_chars": 399,
+          "parameters_bytes": 536
+        },
+        {
+          "name": "mcp__rea_inspect_android_method",
+          "json_bytes": 1029,
+          "description_chars": 239,
+          "parameters_bytes": 686
+        },
+        {
+          "name": "mcp__rea_discover_webmcp_tools",
+          "json_bytes": 1028,
+          "description_chars": 230,
+          "parameters_bytes": 695
+        },
+        {
+          "name": "mcp__rea_start_adb_app",
+          "json_bytes": 1015,
+          "description_chars": 359,
+          "parameters_bytes": 561
+        },
+        {
+          "name": "mcp__rea_list_jeb_units",
+          "json_bytes": 996,
+          "description_chars": 229,
+          "parameters_bytes": 671
+        },
+        {
+          "name": "mcp__rea_decode_interface_builder",
+          "json_bytes": 988,
+          "description_chars": 312,
+          "parameters_bytes": 570
+        },
+        {
+          "name": "mcp__rea_decompile_jeb_item",
+          "json_bytes": 982,
+          "description_chars": 280,
+          "parameters_bytes": 602
+        },
+        {
+          "name": "mcp__rea_set_address_name",
+          "json_bytes": 980,
+          "description_chars": 367,
+          "parameters_bytes": 515
+        },
+        {
+          "name": "mcp__rea_inspect_native_dispatch_metadata",
+          "json_bytes": 971,
+          "description_chars": 554,
+          "parameters_bytes": 303
+        },
+        {
+          "name": "mcp__rea_set_addresses_names",
+          "json_bytes": 968,
+          "description_chars": 462,
+          "parameters_bytes": 405
+        },
+        {
+          "name": "mcp__rea_procedure_info",
+          "json_bytes": 963,
+          "description_chars": 491,
+          "parameters_bytes": 376
+        },
+        {
+          "name": "mcp__rea_search_procedures",
+          "json_bytes": 963,
+          "description_chars": 252,
+          "parameters_bytes": 612
+        },
+        {
+          "name": "mcp__rea_procedure_references",
+          "json_bytes": 960,
+          "description_chars": 304,
+          "parameters_bytes": 554
+        },
+        {
+          "name": "mcp__rea_address_to_file_offset",
+          "json_bytes": 956,
+          "description_chars": 435,
+          "parameters_bytes": 417
+        },
+        {
+          "name": "mcp__rea_observe_native_ui",
+          "json_bytes": 947,
+          "description_chars": 231,
+          "parameters_bytes": 617
+        },
+        {
+          "name": "mcp__rea_collect_adb_bugreport",
+          "json_bytes": 940,
+          "description_chars": 271,
+          "parameters_bytes": 566
+        },
+        {
+          "name": "mcp__rea_trace_android_references",
+          "json_bytes": 924,
+          "description_chars": 238,
+          "parameters_bytes": 580
+        },
+        {
+          "name": "mcp__rea_inspect_adb_package",
+          "json_bytes": 911,
+          "description_chars": 273,
+          "parameters_bytes": 537
+        },
+        {
+          "name": "mcp__rea_read_adb_setting",
+          "json_bytes": 907,
+          "description_chars": 184,
+          "parameters_bytes": 625
+        },
+        {
+          "name": "mcp__rea_get_call_graph",
+          "json_bytes": 906,
+          "description_chars": 352,
+          "parameters_bytes": 458
+        },
+        {
+          "name": "mcp__rea_inspect_keyed_archive",
+          "json_bytes": 900,
+          "description_chars": 321,
+          "parameters_bytes": 476
+        },
+        {
+          "name": "mcp__rea_inspect_artifact",
+          "json_bytes": 879,
+          "description_chars": 542,
+          "parameters_bytes": 239
+        },
+        {
+          "name": "mcp__rea_procedure_pseudo_code",
+          "json_bytes": 879,
+          "description_chars": 400,
+          "parameters_bytes": 376
+        },
+        {
+          "name": "mcp__rea_binary_session",
+          "json_bytes": 876,
+          "description_chars": 150,
+          "parameters_bytes": 630
+        },
+        {
+          "name": "mcp__rea_capture_web_screenshot",
+          "json_bytes": 864,
+          "description_chars": 175,
+          "parameters_bytes": 585
+        },
+        {
+          "name": "mcp__rea_capture_adb_screen",
+          "json_bytes": 863,
+          "description_chars": 215,
+          "parameters_bytes": 548
+        },
+        {
+          "name": "mcp__rea_resolve_adb_packages",
+          "json_bytes": 862,
+          "description_chars": 243,
+          "parameters_bytes": 515
+        },
+        {
+          "name": "mcp__rea_set_inline_comment",
+          "json_bytes": 854,
+          "description_chars": 221,
+          "parameters_bytes": 533
+        },
+        {
+          "name": "mcp__rea_set_comment",
+          "json_bytes": 841,
+          "description_chars": 206,
+          "parameters_bytes": 542
+        },
+        {
+          "name": "mcp__rea_read_bytes",
+          "json_bytes": 829,
+          "description_chars": 227,
+          "parameters_bytes": 510
+        },
+        {
+          "name": "mcp__rea_list_adb_directory",
+          "json_bytes": 826,
+          "description_chars": 199,
+          "parameters_bytes": 527
+        },
+        {
+          "name": "mcp__rea_goto_address",
+          "json_bytes": 822,
+          "description_chars": 311,
+          "parameters_bytes": 417
+        },
+        {
+          "name": "mcp__rea_inspect_android_class",
+          "json_bytes": 819,
+          "description_chars": 270,
+          "parameters_bytes": 446
+        },
+        {
+          "name": "mcp__rea_inspect_firmware_regions",
+          "json_bytes": 819,
+          "description_chars": 379,
+          "parameters_bytes": 334
+        },
+        {
+          "name": "mcp__rea_stop_adb_app",
+          "json_bytes": 819,
+          "description_chars": 175,
+          "parameters_bytes": 550
+        },
+        {
+          "name": "mcp__rea_inspect_managed_artifact",
+          "json_bytes": 814,
+          "description_chars": 365,
+          "parameters_bytes": 343
+        },
+        {
+          "name": "mcp__rea_analyze_function",
+          "json_bytes": 812,
+          "description_chars": 463,
+          "parameters_bytes": 251
+        },
+        {
+          "name": "mcp__rea_list_adb_packages",
+          "json_bytes": 808,
+          "description_chars": 186,
+          "parameters_bytes": 523
+        },
+        {
+          "name": "mcp__rea_uninstall_adb_package",
+          "json_bytes": 808,
+          "description_chars": 166,
+          "parameters_bytes": 539
+        },
+        {
+          "name": "mcp__rea_inspect_managed_members",
+          "json_bytes": 798,
+          "description_chars": 375,
+          "parameters_bytes": 318
+        },
+        {
+          "name": "mcp__rea_inspect_native_load_image",
+          "json_bytes": 796,
+          "description_chars": 542,
+          "parameters_bytes": 147
+        },
+        {
+          "name": "mcp__rea_procedure_assembly",
+          "json_bytes": 795,
+          "description_chars": 319,
+          "parameters_bytes": 376
+        },
+        {
+          "name": "mcp__rea_batch_decompile",
+          "json_bytes": 788,
+          "description_chars": 330,
+          "parameters_bytes": 361
+        },
+        {
+          "name": "mcp__rea_list_strings",
+          "json_bytes": 787,
+          "description_chars": 304,
+          "parameters_bytes": 389
+        },
+        {
+          "name": "mcp__rea_resolve_containing_procedure",
+          "json_bytes": 777,
+          "description_chars": 250,
+          "parameters_bytes": 417
+        },
+        {
+          "name": "mcp__rea_export_evidence_bundle",
+          "json_bytes": 775,
+          "description_chars": 187,
+          "parameters_bytes": 484
+        },
+        {
+          "name": "mcp__rea_trace_feature",
+          "json_bytes": 775,
+          "description_chars": 252,
+          "parameters_bytes": 428
+        },
+        {
+          "name": "mcp__rea_set_bookmark",
+          "json_bytes": 770,
+          "description_chars": 183,
+          "parameters_bytes": 493
+        },
+        {
+          "name": "mcp__rea_xrefs",
+          "json_bytes": 763,
+          "description_chars": 287,
+          "parameters_bytes": 389
+        },
+        {
+          "name": "mcp__rea_list_unknowns",
+          "json_bytes": 754,
+          "description_chars": 247,
+          "parameters_bytes": 412
+        },
+        {
+          "name": "mcp__rea_unset_bookmark",
+          "json_bytes": 743,
+          "description_chars": 230,
+          "parameters_bytes": 417
+        },
+        {
+          "name": "mcp__rea_extract_artifact",
+          "json_bytes": 734,
+          "description_chars": 397,
+          "parameters_bytes": 239
+        },
+        {
+          "name": "mcp__rea_search_android_classes",
+          "json_bytes": 722,
+          "description_chars": 185,
+          "parameters_bytes": 433
+        },
+        {
+          "name": "mcp__rea_inspect_native_data_type",
+          "json_bytes": 721,
+          "description_chars": 279,
+          "parameters_bytes": 336
+        },
+        {
+          "name": "mcp__rea_open_jeb_project",
+          "json_bytes": 719,
+          "description_chars": 278,
+          "parameters_bytes": 343
+        },
+        {
+          "name": "mcp__rea_inspect_managed_native_boundaries",
+          "json_bytes": 717,
+          "description_chars": 284,
+          "parameters_bytes": 318
+        },
+        {
+          "name": "mcp__rea_address_name",
+          "json_bytes": 703,
+          "description_chars": 220,
+          "parameters_bytes": 389
+        },
+        {
+          "name": "mcp__rea_prev_address",
+          "json_bytes": 703,
+          "description_chars": 220,
+          "parameters_bytes": 389
+        },
+        {
+          "name": "mcp__rea_inspect_adb_device",
+          "json_bytes": 700,
+          "description_chars": 267,
+          "parameters_bytes": 333
+        },
+        {
+          "name": "mcp__rea_inspect_native_instruction",
+          "json_bytes": 698,
+          "description_chars": 283,
+          "parameters_bytes": 307
+        },
+        {
+          "name": "mcp__rea_list_browser_targets",
+          "json_bytes": 697,
+          "description_chars": 205,
+          "parameters_bytes": 390
+        },
+        {
+          "name": "mcp__rea_procedure_callees",
+          "json_bytes": 694,
+          "description_chars": 219,
+          "parameters_bytes": 376
+        },
+        {
+          "name": "mcp__rea_inspect_address_context",
+          "json_bytes": 684,
+          "description_chars": 258,
+          "parameters_bytes": 321
+        },
+        {
+          "name": "mcp__rea_verify_unknown_resolution",
+          "json_bytes": 677,
+          "description_chars": 214,
+          "parameters_bytes": 356
+        },
+        {
+          "name": "mcp__rea_inspect_android_package",
+          "json_bytes": 663,
+          "description_chars": 255,
+          "parameters_bytes": 303
+        },
+        {
+          "name": "mcp__rea_inspect_native_api",
+          "json_bytes": 663,
+          "description_chars": 312,
+          "parameters_bytes": 251
+        },
+        {
+          "name": "mcp__rea_procedure_callers",
+          "json_bytes": 658,
+          "description_chars": 183,
+          "parameters_bytes": 376
+        },
+        {
+          "name": "mcp__rea_comment",
+          "json_bytes": 657,
+          "description_chars": 179,
+          "parameters_bytes": 389
+        },
+        {
+          "name": "mcp__rea_list_names",
+          "json_bytes": 657,
+          "description_chars": 176,
+          "parameters_bytes": 389
+        },
+        {
+          "name": "mcp__rea_list_javascript_runtime_targets",
+          "json_bytes": 647,
+          "description_chars": 269,
+          "parameters_bytes": 265
+        },
+        {
+          "name": "mcp__rea_list_electron_targets",
+          "json_bytes": 638,
+          "description_chars": 220,
+          "parameters_bytes": 315
+        },
+        {
+          "name": "mcp__rea_import_evidence_bundle",
+          "json_bytes": 637,
+          "description_chars": 178,
+          "parameters_bytes": 355
+        },
+        {
+          "name": "mcp__rea_next_address",
+          "json_bytes": 637,
+          "description_chars": 154,
+          "parameters_bytes": 389
+        },
+        {
+          "name": "mcp__rea_inline_comment",
+          "json_bytes": 632,
+          "description_chars": 147,
+          "parameters_bytes": 389
+        },
+        {
+          "name": "mcp__rea_read_function_instructions",
+          "json_bytes": 629,
+          "description_chars": 205,
+          "parameters_bytes": 316
+        },
+        {
+          "name": "mcp__rea_inspect_asset_catalog",
+          "json_bytes": 628,
+          "description_chars": 206,
+          "parameters_bytes": 319
+        },
+        {
+          "name": "mcp__rea_procedure_address",
+          "json_bytes": 623,
+          "description_chars": 148,
+          "parameters_bytes": 376
+        },
+        {
+          "name": "mcp__rea_resolve_native_call_targets",
+          "json_bytes": 623,
+          "description_chars": 207,
+          "parameters_bytes": 307
+        },
+        {
+          "name": "mcp__rea_inspect_adb_window",
+          "json_bytes": 616,
+          "description_chars": 181,
+          "parameters_bytes": 333
+        },
+        {
+          "name": "mcp__rea_demangle_swift",
+          "json_bytes": 611,
+          "description_chars": 139,
+          "parameters_bytes": 376
+        },
+        {
+          "name": "mcp__rea_get_navigation_context",
+          "json_bytes": 607,
+          "description_chars": 252,
+          "parameters_bytes": 251
+        },
+        {
+          "name": "mcp__rea_inspect_adb_display",
+          "json_bytes": 597,
+          "description_chars": 163,
+          "parameters_bytes": 333
+        },
+        {
+          "name": "mcp__rea_list_adb_processes",
+          "json_bytes": 585,
+          "description_chars": 152,
+          "parameters_bytes": 333
+        },
+        {
+          "name": "mcp__rea_list_bookmarks",
+          "json_bytes": 573,
+          "description_chars": 207,
+          "parameters_bytes": 270
+        },
+        {
+          "name": "mcp__rea_list_segments",
+          "json_bytes": 571,
+          "description_chars": 206,
+          "parameters_bytes": 270
+        },
+        {
+          "name": "mcp__rea_find_xrefs_to_name",
+          "json_bytes": 562,
+          "description_chars": 217,
+          "parameters_bytes": 245
+        },
+        {
+          "name": "mcp__rea_list_procedures",
+          "json_bytes": 558,
+          "description_chars": 191,
+          "parameters_bytes": 270
+        },
+        {
+          "name": "mcp__rea_inspect_plist",
+          "json_bytes": 553,
+          "description_chars": 132,
+          "parameters_bytes": 326
+        },
+        {
+          "name": "mcp__rea_list_adb_features",
+          "json_bytes": 548,
+          "description_chars": 116,
+          "parameters_bytes": 333
+        },
+        {
+          "name": "mcp__rea_list_adb_devices",
+          "json_bytes": 547,
+          "description_chars": 302,
+          "parameters_bytes": 147
+        },
+        {
+          "name": "mcp__rea_current_address",
+          "json_bytes": 533,
+          "description_chars": 166,
+          "parameters_bytes": 270
+        },
+        {
+          "name": "mcp__rea_list_adb_services",
+          "json_bytes": 516,
+          "description_chars": 84,
+          "parameters_bytes": 333
+        },
+        {
+          "name": "mcp__rea_inspect_jeb_client",
+          "json_bytes": 509,
+          "description_chars": 262,
+          "parameters_bytes": 147
+        },
+        {
+          "name": "mcp__rea_current_procedure",
+          "json_bytes": 497,
+          "description_chars": 128,
+          "parameters_bytes": 270
+        },
+        {
+          "name": "mcp__rea_inspect_adb_client",
+          "json_bytes": 482,
+          "description_chars": 235,
+          "parameters_bytes": 147
+        },
+        {
+          "name": "mcp__rea_get_objc_classes",
+          "json_bytes": 475,
+          "description_chars": 93,
+          "parameters_bytes": 284
+        },
+        {
+          "name": "mcp__rea_inspect_apktool_client",
+          "json_bytes": 472,
+          "description_chars": 221,
+          "parameters_bytes": 147
+        },
+        {
+          "name": "mcp__rea_binary_overview",
+          "json_bytes": 464,
+          "description_chars": 220,
+          "parameters_bytes": 147
+        },
+        {
+          "name": "mcp__rea_inspect_macho",
+          "json_bytes": 415,
+          "description_chars": 173,
+          "parameters_bytes": 147
+        },
+        {
+          "name": "mcp__rea_inspect_signature",
+          "json_bytes": 401,
+          "description_chars": 155,
+          "parameters_bytes": 147
+        },
+        {
+          "name": "mcp__rea_list_documents",
+          "json_bytes": 394,
+          "description_chars": 151,
+          "parameters_bytes": 147
+        },
+        {
+          "name": "mcp__rea_list_architectures",
+          "json_bytes": 362,
+          "description_chars": 115,
+          "parameters_bytes": 147
+        },
+        {
+          "name": "mcp__rea_get_objc_protocols",
+          "json_bytes": 310,
+          "description_chars": 63,
+          "parameters_bytes": 147
+        },
+        {
+          "name": "mcp__rea_current_document",
+          "json_bytes": 307,
+          "description_chars": 62,
+          "parameters_bytes": 147
+        }
+      ],
+      "stream": true,
+      "max_tokens": null,
+      "model": "qwen38-flash-next-gyro-m",
+      "request_keys": [
+        "chat_template_kwargs",
+        "max_completion_tokens",
+        "messages",
+        "model",
+        "preserve_thinking",
+        "stream",
+        "stream_options",
+        "tools"
+      ]
+    }
+  ]
+}

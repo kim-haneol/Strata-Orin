@@ -1,0 +1,317 @@
+{
+  "status": "completed",
+  "context": 262144,
+  "kv": "int8",
+  "encoder": [
+    {
+      "image": "a",
+      "response": "OK 300 20 15 262",
+      "tokens": 300,
+      "width": 2560,
+      "grid": [
+        20,
+        15
+      ],
+      "sha256": "3b5d9aeca4a48d95b5297d8488c1559c19b03df7a009d59e9abf97bcf9c735c7",
+      "passed": true
+    },
+    {
+      "image": "b",
+      "response": "OK 300 20 15 275",
+      "tokens": 300,
+      "width": 2560,
+      "grid": [
+        20,
+        15
+      ],
+      "sha256": "ba80e2a1eca2a9003d7917003f0f4ddae4411d757409d77f341635251555b5f2",
+      "passed": true
+    },
+    {
+      "image": "large",
+      "response": "OK 1024 32 32 1753",
+      "tokens": 1024,
+      "width": 2560,
+      "grid": [
+        32,
+        32
+      ],
+      "sha256": "2017bcdfec1ee19d15876cec401d61ac22aaa2dab9863936bd3aa8d2a919eccb",
+      "passed": true
+    }
+  ],
+  "text_vision_comparison": {
+    "warmups_per_mode": 1,
+    "measured_requests_per_mode": 3,
+    "outputs_identical": true,
+    "text": {
+      "median_http_seconds": 11.026149608020205,
+      "median_prefill_seconds": 7.4284,
+      "median_decode_tok_s": 36.2
+    },
+    "vision": {
+      "median_http_seconds": 10.977696139016189,
+      "median_prefill_seconds": 7.3768,
+      "median_decode_tok_s": 36.1
+    },
+    "vision_http_change_percent": -0.439441425398146
+  },
+  "recall": [
+    {
+      "input_tokens": 64000,
+      "http_seconds": 114.08536472800188,
+      "prefill_seconds": 112.38589999999999,
+      "decode_tok_s": 32.5,
+      "recall": "3/3"
+    },
+    {
+      "input_tokens": 128000,
+      "http_seconds": 235.5643547080108,
+      "prefill_seconds": 233.6084,
+      "decode_tok_s": 31.9,
+      "recall": "3/3"
+    },
+    {
+      "input_tokens": 253952,
+      "http_seconds": 497.96247590496205,
+      "prefill_seconds": 495.1754,
+      "decode_tok_s": 25.9,
+      "recall": "3/3"
+    }
+  ],
+  "api_context_checks": 11,
+  "image_checks": [
+    {
+      "name": "image-a-0",
+      "seconds": 3.9894361959886737,
+      "usage": {
+        "prompt_tokens": 355,
+        "completion_tokens": 59,
+        "total_tokens": 414,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 355,
+        "prompt_ms": 2064.9,
+        "prompt_per_token_ms": 5.817,
+        "prompt_per_second": 171.9,
+        "predicted_n": 59,
+        "predicted_ms": 1609.6,
+        "predicted_per_token_ms": 27.281,
+        "predicted_per_second": 36.7,
+        "draft_n": 43,
+        "draft_n_accepted": 43
+      },
+      "passed": true
+    },
+    {
+      "name": "image-b-1",
+      "seconds": 4.047315651958343,
+      "usage": {
+        "prompt_tokens": 355,
+        "completion_tokens": 59,
+        "total_tokens": 414,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 355,
+        "prompt_ms": 1935.6,
+        "prompt_per_token_ms": 5.452,
+        "prompt_per_second": 183.4,
+        "predicted_n": 59,
+        "predicted_ms": 1804.4,
+        "predicted_per_token_ms": 30.583,
+        "predicted_per_second": 32.7,
+        "draft_n": 48,
+        "draft_n_accepted": 43
+      },
+      "passed": true
+    },
+    {
+      "name": "image-a-2",
+      "seconds": 1.9741379860206507,
+      "usage": {
+        "prompt_tokens": 355,
+        "completion_tokens": 59,
+        "total_tokens": 414,
+        "prompt_tokens_details": {
+          "cached_tokens": 348
+        }
+      },
+      "timings": {
+        "cache_n": 348,
+        "prompt_n": 7,
+        "prompt_ms": 327.4,
+        "prompt_per_token_ms": 46.771,
+        "prompt_per_second": 21.4,
+        "predicted_n": 59,
+        "predicted_ms": 1608.5,
+        "predicted_per_token_ms": 27.263,
+        "predicted_per_second": 36.7,
+        "draft_n": 43,
+        "draft_n_accepted": 43
+      },
+      "passed": true
+    },
+    {
+      "name": "large-image-2048",
+      "seconds": 6.907478704990353,
+      "usage": {
+        "prompt_tokens": 1079,
+        "completion_tokens": 59,
+        "total_tokens": 1138,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 1079,
+        "prompt_ms": 3475.9,
+        "prompt_per_token_ms": 3.221,
+        "prompt_per_second": 310.4,
+        "predicted_n": 59,
+        "predicted_ms": 1626.5,
+        "predicted_per_token_ms": 27.568,
+        "predicted_per_second": 36.3,
+        "draft_n": 43,
+        "draft_n_accepted": 43
+      },
+      "passed": true
+    },
+    {
+      "name": "two-images",
+      "seconds": 3.172667526989244,
+      "usage": {
+        "prompt_tokens": 637,
+        "completion_tokens": 16,
+        "total_tokens": 653,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 637,
+        "prompt_ms": 2658.3,
+        "prompt_per_token_ms": 4.173,
+        "prompt_per_second": 239.6,
+        "predicted_n": 16,
+        "predicted_ms": 469.6,
+        "predicted_per_token_ms": 29.35,
+        "predicted_per_second": 34.1,
+        "draft_n": 12,
+        "draft_n_accepted": 12
+      },
+      "passed": true
+    },
+    {
+      "name": "long-context-with-image",
+      "seconds": 500.5194687870098,
+      "usage": {
+        "prompt_tokens": 255001,
+        "completion_tokens": 62,
+        "total_tokens": 255063,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 255001,
+        "prompt_ms": 497332.6,
+        "prompt_per_token_ms": 1.95,
+        "prompt_per_second": 512.7,
+        "predicted_n": 62,
+        "predicted_ms": 2170.6,
+        "predicted_per_token_ms": 35.01,
+        "predicted_per_second": 28.6,
+        "draft_n": 50,
+        "draft_n_accepted": 45
+      },
+      "passed": true
+    }
+  ],
+  "scope": "Synthetic identifiers, OCR/shapes, image cache and API checks; not broad quality, concurrent maximum-context users or 8192 generated tokens",
+  "telemetry": {
+    "samples": 1079,
+    "since": "2026-10-11T08:24:52Z",
+    "until": "2026-10-11T09:01:23Z",
+    "pressure_states": [
+      "normal",
+      "warning"
+    ],
+    "metrics": {
+      "used_bytes": {
+        "available_samples": 1079,
+        "min": 10048196608,
+        "max": 61262680064,
+        "first": 10215133184,
+        "last": 57349160960
+      },
+      "headroom_bytes": {
+        "available_samples": 1079,
+        "min": 4669865984,
+        "max": 55884349440,
+        "first": 55717412864,
+        "last": 8583385088
+      },
+      "free_bytes": {
+        "available_samples": 1079,
+        "min": 531443712,
+        "max": 53201428480,
+        "first": 48887132160,
+        "last": 568840192
+      },
+      "swap_used_bytes": {
+        "available_samples": 1079,
+        "min": 421806080,
+        "max": 424599552,
+        "first": 422068224,
+        "last": 424599552
+      },
+      "gpu_util": {
+        "available_samples": 1079,
+        "min": 0.0,
+        "max": 100.0,
+        "first": 0.0,
+        "last": 0.0
+      },
+      "gpu_temperature_c": {
+        "available_samples": 829,
+        "min": 46.031,
+        "max": 68.531,
+        "first": 46.437,
+        "last": 49.843
+      },
+      "gpu_frequency_mhz": {
+        "available_samples": 1079,
+        "min": 306.0,
+        "max": 1300.5,
+        "first": 306.0,
+        "last": 306.0
+      },
+      "gpu_power_watts": null
+    },
+    "unavailable": "GPU/process GPU memory and GPU power unavailable under active Jetson backend; no zero substitutions"
+  },
+  "hermes": {
+    "passed": true,
+    "answer": {
+      "code": "ORIN 7319",
+      "left_color": "red",
+      "left_shape": "square",
+      "right_color": "blue",
+      "right_shape": "circle",
+      "sum": 89,
+      "marker": "ORIN_VISUAL_20261011"
+    },
+    "fixture": "${TEST_HOME}/.local/share/gyro-hermes-vision-validation-20261011"
+  }
+}

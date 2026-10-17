@@ -1,0 +1,96 @@
+{
+  "protocol": "orin-strata-gyro-prefill-chunk-own-v1",
+  "runtime_directory": "${RUNTIME}",
+  "workload": "Korean explanation of inference latency with varied reference notes",
+  "input_lengths": [
+    2048,
+    25000
+  ],
+  "output_tokens": 512,
+  "concurrency": 1,
+  "warmup_requests_per_length_and_mode": 1,
+  "measured_requests_per_length_and_mode": 3,
+  "mode_order": [
+    "c1024",
+    "c2048",
+    "c4096",
+    "c8192"
+  ],
+  "max_context": 32768,
+  "prefill_chunk": {
+    "c1024": 1024,
+    "c2048": 2048,
+    "c4096": 4096,
+    "c8192": 8192
+  },
+  "kv": "int8",
+  "verifier_capacity": 4,
+  "mtp_max_t": {
+    "c1024": 4,
+    "c2048": 4,
+    "c4096": 4,
+    "c8192": 4
+  },
+  "spec_min_p": 0.5,
+  "expert_cache": 24576,
+  "pool_workers": 2,
+  "prompt_cache": 0,
+  "prompt_cache_every": 0,
+  "conversation_cache_mib": 0,
+  "short_read": 0,
+  "suffix_draft": 0,
+  "sampling": {
+    "temperature": 0
+  },
+  "eos_ids": [
+    2147483647
+  ],
+  "power_mode": "MAXN",
+  "input_scope": "Synthetic exact Qwen token lengths. 25K approximates the earlier gpchan size estimate; it is not a replay of the gpchan system prompt/tools.",
+  "eos_scope": "Unreachable EOS id forces exactly 512 tokens, including any natural end-of-turn followed by continuation. Record natural EOS positions; not an answer-quality evaluation.",
+  "timers": {
+    "internal_prompt_ms": "DONE.prompt_ms: engine r0 to prompt completion after expert-cache refill, including reset, target prefill and draft KV prefill. Last input token is processed by first verify window.",
+    "internal_prefill_tps": "(input_tokens - 1) / (DONE.prompt_ms / 1000), after verifying zero reused tokens and final PP position=input_tokens-1.",
+    "last_pp_ms": "Cumulative engine r0-to-last-prefill-chunk timer; includes target and draft prefill. Excludes subsequent cache refill; not a pure target kernel timer.",
+    "internal_decode_ms": "DONE.decode_ms: first verify window (last prompt token and first output), subsequent verify/draft windows, completion bookkeeping.",
+    "internal_decode_tps": "512 / (DONE.decode_ms / 1000).",
+    "ttft_seconds": "IPC client time immediately before GEN serialization/write to first received token; excludes model startup, includes prefill/first generation/IPC.",
+    "stream_decode_tps": "511 / (last_token_received - first_token_received); tokens accepted together arrive in bursts.",
+    "elapsed_seconds": "IPC client time immediately before GEN serialization/write to DONE receipt; excludes model startup."
+  },
+  "limitations": [
+    "One explanation prompt at each length, three repeated measurements; no workload-wide generalization.",
+    "Single mode order c1024, c2048, c4096, c8192; report thermal/clock telemetry and observed variability.",
+    "OS/model/PLE cache warming is allowed; prompt/prefix/KV result reuse is forbidden.",
+    "GPU power is unavailable in ASTOP; tegrastats VDD_GPU_SOC is a board rail including SoC, not GPU-only power. GPU temperature can be null at idle; preserve nulls.",
+    "Existing dynamic CPU/GPU/EMC governors; no jetson_clocks."
+  ],
+  "comparison": [
+    "c1024",
+    "c2048",
+    "c4096",
+    "c8192"
+  ],
+  "mode_args": {
+    "c1024": [
+      "--no-prefill-borrow"
+    ],
+    "c2048": [
+      "--no-prefill-borrow"
+    ],
+    "c4096": [
+      "--no-prefill-borrow"
+    ],
+    "c8192": [
+      "--no-prefill-borrow"
+    ]
+  },
+  "hypothesis": "With owned prompt buffers (the new default, evidence/strata-gyro-prefill-borrow-20261007-v1) the prompt path keeps the GPU about 99% busy. Larger chunks may raise GPU efficiency per token (fewer launches, larger MMQ tiles, fewer per-chunk fixed costs) at the cost of larger reserved buffers. Upstream reports gains to 8,192 on other cards; Orin is unmeasured.",
+  "decision_metrics": [
+    "internal_prefill_tps and TTFT per chunk relative to c1024",
+    "engine vram_free_mib after loading (buffer reservation) and expert_slots unchanged at 24576",
+    "decode tok/s unchanged beyond load-to-load variation (about 0.4% observed)",
+    "output equality with c1024; chunk boundaries can change floating-point rounding, so record first mismatch rather than require identity"
+  ],
+  "chunk_scope": "Explicit chunk per mode, all with --no-prefill-borrow. The 2,048-token prompt fits in one chunk from c2048 upward (2,047 tokens are prefilled; the last enters the first verify window)."
+}

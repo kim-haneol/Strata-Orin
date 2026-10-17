@@ -1,0 +1,1693 @@
+{
+  "source_record_commit": "3376917",
+  "scope": "Exported testbed files and adapted English guides. Generated publication records and this manifest are outside this export manifest; Git records the complete public tree.",
+  "files": [
+    {
+      "source": "docs/OPTIMIZATION.md",
+      "published": "docs/OPTIMIZATION.md",
+      "source_sha256": "364052081ed1387b8f73e482c250ce24a8d85aa01ed666126d00803139c13463",
+      "published_sha256": "914b1bf6d3aef0329b5bc489a5cb670ffada80645893453546760acdd95d1925",
+      "treatment": "links and reproduction index adapted; optimization findings preserved"
+    },
+    {
+      "source": "docs/REPRODUCING.md",
+      "published": "docs/REPRODUCING.md",
+      "source_sha256": "35de1b56e6ac47463549fb5728506557523b7d1d651686fda24a210667bbf26d",
+      "published_sha256": "824b7c05b6119406a860d18c937c56383ccd23f91e718a08262b0b49eb4259ef",
+      "treatment": "adapted to build the published checkout with pinned external GGML"
+    },
+    {
+      "source": "config/gyro-m-download.json",
+      "published": "orin/config/gyro-m-download.json",
+      "source_sha256": "fa873cd0d9e7b74a96299a387273529b89618993a61ef4d4e26bec6bc6026b0e",
+      "published_sha256": "d4db1f9eb42c32b2a103942e5dcad7e2b9e9c3ef2278619463c4bc51db905e90",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "config/inference-strata-gyro.env",
+      "published": "orin/config/inference-strata-gyro.env",
+      "source_sha256": "866fc5041f16ab8c1416a5c2eef1a47205b9e70ed3dee15738b0fa31f15df160",
+      "published_sha256": "fd78aaf3a91952eb4c3e6bbf657482e4ddf43d3e5a414fd00a271ed7b312a5e6",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "config/strata-gyro-decode-tune-v1.json",
+      "published": "orin/config/strata-gyro-decode-tune-v1.json",
+      "source_sha256": "11f0ca8c5629bbb4b88d7a0054081d48fba3c25221e99f6513479e0718ad6f79",
+      "published_sha256": "bb6b6b47bd99783ece573441aa81dea70c76c7f300d98e574c3187a5879a267b",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "config/strata-gyro-grup-ab-v1.json",
+      "published": "orin/config/strata-gyro-grup-ab-v1.json",
+      "source_sha256": "5c058b730d232cd1966ab553688fd9a26d993f879cc48cb503fffa64f9f3837c",
+      "published_sha256": "65f4da3b76d6153b117939118c5c2009aa8f668161c4e73a5e13f2530a029eef",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "config/strata-gyro-lb6-ab-v1.json",
+      "published": "orin/config/strata-gyro-lb6-ab-v1.json",
+      "source_sha256": "954f491a6617ea05db25dd6135294eaca772dbc758824764f5d1aa96d375fb88",
+      "published_sha256": "103d7c93fcdbbd9fdc3194880150287c4e5dac1226c3de540e56bdb1a312aadf",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "config/strata-gyro-mmq-lut-ab-v1.json",
+      "published": "orin/config/strata-gyro-mmq-lut-ab-v1.json",
+      "source_sha256": "110380972421addd80e342f5d6d60fa26ae78b6cbf95fbc3145d6fe81f8d7bf1",
+      "published_sha256": "d9977321bbb45535c4e5e0d0d5a3aaee1bb1957f1c8828768032ddc169e98b09",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "config/strata-gyro-mtp-benchmark-v1.json",
+      "published": "orin/config/strata-gyro-mtp-benchmark-v1.json",
+      "source_sha256": "55af7ee2eef0bac04d635dad5c973477161ec8f656ea251c9a5022150fa0ab94",
+      "published_sha256": "1be4bff5619ed2a9bbda3a0b76d6949e537cb4abbb37313112e2863bd2ce7f3f",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "config/strata-gyro-mtp-rescreen-lb6-v1.json",
+      "published": "orin/config/strata-gyro-mtp-rescreen-lb6-v1.json",
+      "source_sha256": "11400b31fc2d6dc3d0214af8373c29766d8b79489df972e4a0bfcc2ff28fee63",
+      "published_sha256": "fd228c2c72fc52d6779dfb5f1ae46265c496212ea769a8c85a61e467020b83fb",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "config/strata-gyro-orin-server.json",
+      "published": "orin/config/strata-gyro-orin-server.json",
+      "source_sha256": "561306126d4d7f7c385a412a657356d24782a7a27dc2ba3d44405f0a66c94d3c",
+      "published_sha256": "fe76eb40420e7fd2b74afe170399a21d692d13d5d2c5637d09e03dc49eef9ee8",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "config/strata-gyro-prefill-borrow-v1.json",
+      "published": "orin/config/strata-gyro-prefill-borrow-v1.json",
+      "source_sha256": "fb2c79db93624ca63d0f14283e71992932e846b1e936b07c6791159153e5fa93",
+      "published_sha256": "7b75779d8693ca53c9dc08c0ada96de7973bd22c57ccbdc66b290ba4d89898c4",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "config/strata-gyro-prefill-chunk-own-v1.json",
+      "published": "orin/config/strata-gyro-prefill-chunk-own-v1.json",
+      "source_sha256": "5d9562912dbda80e9f3ab5cb5e38aabec034ec4da8287933ad3a5af61b881db7",
+      "published_sha256": "cc80b2015f51310977cb05a541075cdc0b32cdc99ab3bc76b87b3ab75cf6a337",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "config/strata-gyro-profile-sub8-graph-v1.json",
+      "published": "orin/config/strata-gyro-profile-sub8-graph-v1.json",
+      "source_sha256": "a4fad59f59b309bee9303b663bd0132e22a90191b16914d38b979b2fbeb6f718",
+      "published_sha256": "9c0e831e667548ef1dcfbb421e6aa03dc98866279960d3cee7b6374181a00786",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "config/strata-gyro-profile-v1.json",
+      "published": "orin/config/strata-gyro-profile-v1.json",
+      "source_sha256": "2b65dc0a8f0c21b503e3db2ca5f714bc139217ac9e8bec20c9c07b8a4bca7c4c",
+      "published_sha256": "2853cc464daddda406af94f0652d366e7d0017f0f22241d8a62b550e039a3d2a",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "config/strata-gyro-replay-enko.json",
+      "published": "orin/config/strata-gyro-replay-enko.json",
+      "source_sha256": "152ab09243a5b128985144bed82870c369b119b4f61ee44e6eae168fdc1bf9ba",
+      "published_sha256": "e14672f3a2081c3ca9510c2a84e24b1f7faeb3e352778d69270d320a6b1f14bb",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "config/strata-gyro-replay-f16cache.json",
+      "published": "orin/config/strata-gyro-replay-f16cache.json",
+      "source_sha256": "3ca831e6516fcfd0c4c7d911a2cfe87b6127ca8c28b43d5bdcd8520c552a2414",
+      "published_sha256": "2c98d86bb0af7faeccf109f1dc6a681c04123100d57f5dee06b33b44b1f5bf64",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "config/strata-gyro-sub8-ab-v1.json",
+      "published": "orin/config/strata-gyro-sub8-ab-v1.json",
+      "source_sha256": "1205b3bd4ba05fb2b29b66073b23588f32396eea71fcd5f216c7f705afd93dd2",
+      "published_sha256": "252cf245a6ea67175cd095a4448ed9ee85295dd93c4345c6f6638762b8bb4469",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "config/strata-gyro-tq2t-stage-lut-ab-v1.json",
+      "published": "orin/config/strata-gyro-tq2t-stage-lut-ab-v1.json",
+      "source_sha256": "1cff29d5a565762088d7406a55b9d1f1f881d591e6f5aca86884bf1c7caf26b5",
+      "published_sha256": "35ebbff0c81c2609cd5b7ee9f31775b03474cdffa6164357870f7e687ba9a10b",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/gyro-abliterated-update-20261015-v1/README.md",
+      "published": "orin/evidence/gyro-abliterated-update-20261015-v1/README.md",
+      "source_sha256": "4f22c922c9afd8ccc05fa295c8525630936fb33b3f8259e5e15483201c2763ce",
+      "published_sha256": "81772503f17b405e2a2d2a92061ea278e732bd3be5a6b85bcc87b26d3923ca20",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/gyro-abliterated-update-20261015-v1/bench-new.json",
+      "published": "orin/evidence/gyro-abliterated-update-20261015-v1/bench-new.json",
+      "source_sha256": "a895a69ecc7c453112c53f42cf9d71e7c6473f28e62d41c3659bdb0316e7e93a",
+      "published_sha256": "a895a69ecc7c453112c53f42cf9d71e7c6473f28e62d41c3659bdb0316e7e93a",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/gyro-abliterated-update-20261015-v1/bench-old.json",
+      "published": "orin/evidence/gyro-abliterated-update-20261015-v1/bench-old.json",
+      "source_sha256": "419adde2fc71aebd27c1b81c6a0e98d7edcb9aa567d41aeba092b0362255db9f",
+      "published_sha256": "419adde2fc71aebd27c1b81c6a0e98d7edcb9aa567d41aeba092b0362255db9f",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/gyro-abliterated-update-20261015-v1/binary-hashes.txt",
+      "published": "orin/evidence/gyro-abliterated-update-20261015-v1/binary-hashes.txt",
+      "source_sha256": "c255f9fabb6e98725766fb4ae6c68c73f2bef79da60a4fe85c5341e169ce089b",
+      "published_sha256": "186bcf349b15776632ad6d552526e3dfcfc9522fcbc0f586da4c4f2f87fda885",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/gyro-abliterated-update-20261015-v1/context-result.json",
+      "published": "orin/evidence/gyro-abliterated-update-20261015-v1/context-result.json",
+      "source_sha256": "d22886ac2045f19dd80b91369a3e6940a0aa8bc7df4a1be87619c0eedc91a9ec",
+      "published_sha256": "d22886ac2045f19dd80b91369a3e6940a0aa8bc7df4a1be87619c0eedc91a9ec",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/gyro-abliterated-update-20261015-v1/download-complete.json",
+      "published": "orin/evidence/gyro-abliterated-update-20261015-v1/download-complete.json",
+      "source_sha256": "a1a39bde001b458fd793a2b8f71195eb82d2c96452ce2da346f9495ee2b0a7f1",
+      "published_sha256": "d2e01af3357a1c383b8912a002368c48f74deb02c1ab5efa5429489a6e62486c",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/gyro-abliterated-update-20261015-v1/header-comparison.json",
+      "published": "orin/evidence/gyro-abliterated-update-20261015-v1/header-comparison.json",
+      "source_sha256": "075140a8406e453a08487cf7acebebeba0adb689ada0d7d3d50724d1d8e327b9",
+      "published_sha256": "075140a8406e453a08487cf7acebebeba0adb689ada0d7d3d50724d1d8e327b9",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/gyro-abliterated-update-20261015-v1/omp-probes-engine-log.txt",
+      "published": "orin/evidence/gyro-abliterated-update-20261015-v1/omp-probes-engine-log.txt",
+      "source_sha256": "779c8fa50f0769800d23f2d80dd615993780584a9b0f3b4ac4fe1a8d8f86c770",
+      "published_sha256": "779c8fa50f0769800d23f2d80dd615993780584a9b0f3b4ac4fe1a8d8f86c770",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/gyro-abliterated-update-20261015-v1/pack-hashes.txt",
+      "published": "orin/evidence/gyro-abliterated-update-20261015-v1/pack-hashes.txt",
+      "source_sha256": "351ac1369b48dcfea2043ed14631543a334cdfd7717019dc122cd04393d44dc7",
+      "published_sha256": "70504822c102969370ad73ebacbe3b7661451f5cb0a551e75d16e9cd0a240c91",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/gyro-abliterated-update-20261015-v1/summary.json",
+      "published": "orin/evidence/gyro-abliterated-update-20261015-v1/summary.json",
+      "source_sha256": "165f88fb5a0783673d9a7b80b94066ebfc94cb385c54e5c8536ef949b6fd7ec1",
+      "published_sha256": "f751c7de0c82021441b802a5f9fc502b3441e01205de49f629bde9cc3099fa0f",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/gyro-abliterated-update-20261015-v1/telemetry-summary.json",
+      "published": "orin/evidence/gyro-abliterated-update-20261015-v1/telemetry-summary.json",
+      "source_sha256": "f9a909c67f428e1fb7e0c2b4206361ebb11d78bfbd99f42d047c6fef4fa683c7",
+      "published_sha256": "f9a909c67f428e1fb7e0c2b4206361ebb11d78bfbd99f42d047c6fef4fa683c7",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/gyro-abliterated-update-20261015-v1/vision-result.json",
+      "published": "orin/evidence/gyro-abliterated-update-20261015-v1/vision-result.json",
+      "source_sha256": "f64350d8e47e45effd8e8ef202a21440185c1e8679c0c60d4d13e0fd46e0fefb",
+      "published_sha256": "f64350d8e47e45effd8e8ef202a21440185c1e8679c0c60d4d13e0fd46e0fefb",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/gyro-abliterated-vision-deploy-20261011-v1/README.md",
+      "published": "orin/evidence/gyro-abliterated-vision-deploy-20261011-v1/README.md",
+      "source_sha256": "346dcf5fae1b1c01b438ef24160f0455322e80ead2d1752f66e3987dbd6d8789",
+      "published_sha256": "c3b65744f804fe45973fc60b84c92c86660f44b402c7163d9d4cdd1608e4db98",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/gyro-abliterated-vision-deploy-20261011-v1/bench-text.json",
+      "published": "orin/evidence/gyro-abliterated-vision-deploy-20261011-v1/bench-text.json",
+      "source_sha256": "5c188582a9dd09c549645b931f09fc6290901791b2ed6fba0f0a349faca98ae1",
+      "published_sha256": "5c188582a9dd09c549645b931f09fc6290901791b2ed6fba0f0a349faca98ae1",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/gyro-abliterated-vision-deploy-20261011-v1/bench-vision.json",
+      "published": "orin/evidence/gyro-abliterated-vision-deploy-20261011-v1/bench-vision.json",
+      "source_sha256": "fb9bfe361edb2230dc63589fb26569235cfb0083cca0422dc218fbe84b1e1733",
+      "published_sha256": "fb9bfe361edb2230dc63589fb26569235cfb0083cca0422dc218fbe84b1e1733",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/gyro-abliterated-vision-deploy-20261011-v1/context-result.json",
+      "published": "orin/evidence/gyro-abliterated-vision-deploy-20261011-v1/context-result.json",
+      "source_sha256": "5aef99f17a9a3d7d0dc554314cf880afb130bb8a26275465dd268bcf5b564794",
+      "published_sha256": "5aef99f17a9a3d7d0dc554314cf880afb130bb8a26275465dd268bcf5b564794",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/gyro-abliterated-vision-deploy-20261011-v1/protocol.json",
+      "published": "orin/evidence/gyro-abliterated-vision-deploy-20261011-v1/protocol.json",
+      "source_sha256": "1736557f88834b62505e2a3aac7cf4284383e77197a63b1ed714a7f35199bb19",
+      "published_sha256": "1736557f88834b62505e2a3aac7cf4284383e77197a63b1ed714a7f35199bb19",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/gyro-abliterated-vision-deploy-20261011-v1/summary.json",
+      "published": "orin/evidence/gyro-abliterated-vision-deploy-20261011-v1/summary.json",
+      "source_sha256": "924e1aff49aee420bf932aba40e2c436a10851d5d348b55ac8f3b500e3e4232f",
+      "published_sha256": "c38c5fdc6b35a5cf677d70ee05b44d368d9316d31a3bbd38db11d5c317356e57",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/gyro-abliterated-vision-deploy-20261011-v1/telemetry-summary.json",
+      "published": "orin/evidence/gyro-abliterated-vision-deploy-20261011-v1/telemetry-summary.json",
+      "source_sha256": "eeb46828429fe2f664394526a1fd397b31aea89fd538f94f0b77a03b22053870",
+      "published_sha256": "eeb46828429fe2f664394526a1fd397b31aea89fd538f94f0b77a03b22053870",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/gyro-abliterated-vision-deploy-20261011-v1/vision-result.json",
+      "published": "orin/evidence/gyro-abliterated-vision-deploy-20261011-v1/vision-result.json",
+      "source_sha256": "95b67b7ef605e7ed233bab9c97f163f19d1559be1632bcac9e20ef574c40af5a",
+      "published_sha256": "95b67b7ef605e7ed233bab9c97f163f19d1559be1632bcac9e20ef574c40af5a",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/hermes-replay-ab-20261008-v1/README.md",
+      "published": "orin/evidence/hermes-replay-ab-20261008-v1/README.md",
+      "source_sha256": "b5bae80cbca5e51edd14f9fba7e72c2bec0c1800c162366bfb4b9aa7569ed8b2",
+      "published_sha256": "385aaba5aad2f72e65179ceeab38b39bc0e05b86bb85d15d8c6df29356b2410f",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/hermes-replay-ab-20261008-v1/compare.txt",
+      "published": "orin/evidence/hermes-replay-ab-20261008-v1/compare.txt",
+      "source_sha256": "fd0df8ddecd10476f4f13450c517bb9d3ecb1d2bf2f1e3138b1f6803b2c62903",
+      "published_sha256": "fd0df8ddecd10476f4f13450c517bb9d3ecb1d2bf2f1e3138b1f6803b2c62903",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/hermes-replay-ab-20261008-v1/engine-replay-a-summary.txt",
+      "published": "orin/evidence/hermes-replay-ab-20261008-v1/engine-replay-a-summary.txt",
+      "source_sha256": "b635b7d8c512e18361259db4e1310aead79d50750e2083e4e3368b051768badd",
+      "published_sha256": "b635b7d8c512e18361259db4e1310aead79d50750e2083e4e3368b051768badd",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/hermes-replay-ab-20261008-v1/engine-replay-b-summary.txt",
+      "published": "orin/evidence/hermes-replay-ab-20261008-v1/engine-replay-b-summary.txt",
+      "source_sha256": "0bdabcd8d73d019524cc4bcc9609a266832ac9263cbb26b0a9acf885812fd1d2",
+      "published_sha256": "0bdabcd8d73d019524cc4bcc9609a266832ac9263cbb26b0a9acf885812fd1d2",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/hermes-replay-ab-20261008-v1/engine-replay-c-summary.txt",
+      "published": "orin/evidence/hermes-replay-ab-20261008-v1/engine-replay-c-summary.txt",
+      "source_sha256": "fd1d08cfd6fa1ae3246b45fea194483eb857034045632b38da08b800cb14e9d0",
+      "published_sha256": "fd1d08cfd6fa1ae3246b45fea194483eb857034045632b38da08b800cb14e9d0",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/hermes-replay-ab-20261008-v1/replay-a2-timings.json",
+      "published": "orin/evidence/hermes-replay-ab-20261008-v1/replay-a2-timings.json",
+      "source_sha256": "c6ab07aa85d4284a200c3452e79bc277ec227cb22998bc0effef3a82fe76c2d0",
+      "published_sha256": "c6ab07aa85d4284a200c3452e79bc277ec227cb22998bc0effef3a82fe76c2d0",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/hermes-replay-ab-20261008-v1/replay-b-timings.json",
+      "published": "orin/evidence/hermes-replay-ab-20261008-v1/replay-b-timings.json",
+      "source_sha256": "91171e17161dd09a588a6575cea3ad0ce6df09298c8f89bae29ce90199a2b6a6",
+      "published_sha256": "91171e17161dd09a588a6575cea3ad0ce6df09298c8f89bae29ce90199a2b6a6",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/hermes-replay-ab-20261008-v1/replay-c-timings.json",
+      "published": "orin/evidence/hermes-replay-ab-20261008-v1/replay-c-timings.json",
+      "source_sha256": "be2e18d2a01790d0c0ea11fc1608ebb749be27d34c9004f5135c7ad9567ad3fa",
+      "published_sha256": "be2e18d2a01790d0c0ea11fc1608ebb749be27d34c9004f5135c7ad9567ad3fa",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/hermes-strata-orin-20261008/README.md",
+      "published": "orin/evidence/hermes-strata-orin-20261008/README.md",
+      "source_sha256": "730465268ca62aa7011d0fa73bce35c013459d548288d5a69a931d387ccc0a19",
+      "published_sha256": "b1df861e8a46e98460ab72208cea6ebec153336d3c5f22215d0d10e6b449a72e",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/omp-payload-audit-20261015-v1/README.md",
+      "published": "orin/evidence/omp-payload-audit-20261015-v1/README.md",
+      "source_sha256": "c4f422713ee0c07bc540359aed63e53f35512c4b73c49dad6dcaa6dc6f2fba19",
+      "published_sha256": "c4f422713ee0c07bc540359aed63e53f35512c4b73c49dad6dcaa6dc6f2fba19",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/omp-payload-audit-20261015-v1/largest-schema-shape.json",
+      "published": "orin/evidence/omp-payload-audit-20261015-v1/largest-schema-shape.json",
+      "source_sha256": "7eb9e02cdd27f1bf2bb6c41b95c6b7746b7a6d6039a2c391e9a0c402ee79f7a7",
+      "published_sha256": "7eb9e02cdd27f1bf2bb6c41b95c6b7746b7a6d6039a2c391e9a0c402ee79f7a7",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/omp-payload-audit-20261015-v1/rea-tools-summary.json",
+      "published": "orin/evidence/omp-payload-audit-20261015-v1/rea-tools-summary.json",
+      "source_sha256": "b25d64b28e96dd50a289ea1b67d63e1c977ff38d66855477e4364bd395efdb64",
+      "published_sha256": "b25d64b28e96dd50a289ea1b67d63e1c977ff38d66855477e4364bd395efdb64",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/omp-payload-audit-20261015-v1/request-comparison.json",
+      "published": "orin/evidence/omp-payload-audit-20261015-v1/request-comparison.json",
+      "source_sha256": "e73ef8777dfc2fdb22054172152aefbd9c9d278a38e560e854ee9525c519406a",
+      "published_sha256": "e73ef8777dfc2fdb22054172152aefbd9c9d278a38e560e854ee9525c519406a",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/omp-payload-audit-20261015-v1/schema-comparison.json",
+      "published": "orin/evidence/omp-payload-audit-20261015-v1/schema-comparison.json",
+      "source_sha256": "4f87b37f5a2e7c3f76fb80bf8a567661237819b9f2f56beccaaa186933f4fda5",
+      "published_sha256": "4f87b37f5a2e7c3f76fb80bf8a567661237819b9f2f56beccaaa186933f4fda5",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/omp-payload-audit-20261015-v1/token-counts.json",
+      "published": "orin/evidence/omp-payload-audit-20261015-v1/token-counts.json",
+      "source_sha256": "73575abb8465a971dc649bba5eb8ac3bbfe86103151c645832ac7d56e8f6f5e8",
+      "published_sha256": "73575abb8465a971dc649bba5eb8ac3bbfe86103151c645832ac7d56e8f6f5e8",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/omp-rea-disconnect-20261016-v1/README.md",
+      "published": "orin/evidence/omp-rea-disconnect-20261016-v1/README.md",
+      "source_sha256": "73e082a70e487e38af451b2889ebd21059d088f1fa2ec138e923c3190e00bbbb",
+      "published_sha256": "93de5f9d068c0c7a52a3b055c360df2823f57189559f3361107274d9ce0fd67d",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-262k-persistent-20261009-v1/README.md",
+      "published": "orin/evidence/strata-gyro-262k-persistent-20261009-v1/README.md",
+      "source_sha256": "0705551bbac89344841fd14dee93eb0299c90e3114c7c8491f69ee3ac79b41e6",
+      "published_sha256": "b67242fa5b68c88a10e0961dcdfdfa1e79b0890bfdd2df48cefd5db3bf7cb7fc",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-262k-persistent-20261009-v1/summary.json",
+      "published": "orin/evidence/strata-gyro-262k-persistent-20261009-v1/summary.json",
+      "source_sha256": "2aa6842e9d59bae41f8d0b8831e6f541f6c5f9fd2b27595a7de08e5dff3c1b21",
+      "published_sha256": "2aa6842e9d59bae41f8d0b8831e6f541f6c5f9fd2b27595a7de08e5dff3c1b21",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-262k-persistent-20261009-v1/telemetry-summary.json",
+      "published": "orin/evidence/strata-gyro-262k-persistent-20261009-v1/telemetry-summary.json",
+      "source_sha256": "8d3de9d50de22ed7b1be654c4ca3e81c0bdb57e32c4b039bdb5e5019f041817d",
+      "published_sha256": "8d3de9d50de22ed7b1be654c4ca3e81c0bdb57e32c4b039bdb5e5019f041817d",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-agent-round2-20261008-v1/README.md",
+      "published": "orin/evidence/strata-gyro-agent-round2-20261008-v1/README.md",
+      "source_sha256": "a7382ca73bae2d6ed34016b56632935b99bd5e60460511f540e944da49a8800b",
+      "published_sha256": "a7382ca73bae2d6ed34016b56632935b99bd5e60460511f540e944da49a8800b",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-agent-round2-20261008-v1/compare.txt",
+      "published": "orin/evidence/strata-gyro-agent-round2-20261008-v1/compare.txt",
+      "source_sha256": "db7d72c7e8c63798efcd0f4287390fdba75b64750e77038822480ee81a158bf5",
+      "published_sha256": "db7d72c7e8c63798efcd0f4287390fdba75b64750e77038822480ee81a158bf5",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-agent-round2-20261008-v1/draft-vocab-sha256.txt",
+      "published": "orin/evidence/strata-gyro-agent-round2-20261008-v1/draft-vocab-sha256.txt",
+      "source_sha256": "8c0cff516621f17f874b1d7146eddca327ac89ad8054b67747feb6e808c62346",
+      "published_sha256": "40201780f4b55c6ddc4eca92411b399e042f7275e531b7af05d8cd504420eda0",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-agent-round2-20261008-v1/draft_vocab_enko.bin",
+      "published": "orin/evidence/strata-gyro-agent-round2-20261008-v1/draft_vocab_enko.bin",
+      "source_sha256": "8de2bec33e6a866311c70ec35ca58eec8048c9645b49ee94ef5bce523055174f",
+      "published_sha256": "8de2bec33e6a866311c70ec35ca58eec8048c9645b49ee94ef5bce523055174f",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-agent-round2-20261008-v1/engine-enko-summary.txt",
+      "published": "orin/evidence/strata-gyro-agent-round2-20261008-v1/engine-enko-summary.txt",
+      "source_sha256": "be517abf7b540d2535841b62b4d6423e3a75a1a1db7661b9ee7185abb2214cc9",
+      "published_sha256": "be517abf7b540d2535841b62b4d6423e3a75a1a1db7661b9ee7185abb2214cc9",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-agent-round2-20261008-v1/prompt-timing-nat0.txt",
+      "published": "orin/evidence/strata-gyro-agent-round2-20261008-v1/prompt-timing-nat0.txt",
+      "source_sha256": "119ab98b2bba47360fdde259c4c120a20f5d5810957c59a090df77c06f3be34f",
+      "published_sha256": "119ab98b2bba47360fdde259c4c120a20f5d5810957c59a090df77c06f3be34f",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-agent-round2-20261008-v1/prompt-timing-nat1.txt",
+      "published": "orin/evidence/strata-gyro-agent-round2-20261008-v1/prompt-timing-nat1.txt",
+      "source_sha256": "7bdbd50d24907f1233abcb5ec2a92c5e6c2580aeb8142430e15442abedecb9a9",
+      "published_sha256": "7bdbd50d24907f1233abcb5ec2a92c5e6c2580aeb8142430e15442abedecb9a9",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-agent-round2-20261008-v1/prompt-timing-rec.txt",
+      "published": "orin/evidence/strata-gyro-agent-round2-20261008-v1/prompt-timing-rec.txt",
+      "source_sha256": "6f134b5da68bb2f94cbe9fa06a85d0ede69d4f0084acca72aacaad54a4ed912d",
+      "published_sha256": "6f134b5da68bb2f94cbe9fa06a85d0ede69d4f0084acca72aacaad54a4ed912d",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-agent-round2-20261008-v1/replay-enko-timings.json",
+      "published": "orin/evidence/strata-gyro-agent-round2-20261008-v1/replay-enko-timings.json",
+      "source_sha256": "206a1c2c3f9a8dfe472df6d9280e198f9e2788032335a4a20e0e62975e3e39a4",
+      "published_sha256": "206a1c2c3f9a8dfe472df6d9280e198f9e2788032335a4a20e0e62975e3e39a4",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-agent-round2-20261008-v1/replay-nat0-timings.json",
+      "published": "orin/evidence/strata-gyro-agent-round2-20261008-v1/replay-nat0-timings.json",
+      "source_sha256": "10ca28fefda03bb65949a1edd8d53f6f79e65d3ed87a98f8da500ef44ede4e53",
+      "published_sha256": "10ca28fefda03bb65949a1edd8d53f6f79e65d3ed87a98f8da500ef44ede4e53",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-agent-round2-20261008-v1/replay-nat1-timings.json",
+      "published": "orin/evidence/strata-gyro-agent-round2-20261008-v1/replay-nat1-timings.json",
+      "source_sha256": "b496774562567c56ceedbb5c5be1fcb8dec1bcb4d1ad1f9a3e46d499f8058465",
+      "published_sha256": "b496774562567c56ceedbb5c5be1fcb8dec1bcb4d1ad1f9a3e46d499f8058465",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-agent-round2-20261008-v1/replay-rec-timings.json",
+      "published": "orin/evidence/strata-gyro-agent-round2-20261008-v1/replay-rec-timings.json",
+      "source_sha256": "70e5c605a4f1987868d68519c776937a389d6a02191995b40430518a2e90ce09",
+      "published_sha256": "70e5c605a4f1987868d68519c776937a389d6a02191995b40430518a2e90ce09",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-decode-tune-20261007-v1/README.md",
+      "published": "orin/evidence/strata-gyro-decode-tune-20261007-v1/README.md",
+      "source_sha256": "13d2a1e7ae4e44e59942ef7ca9a4c0d3242c5e071d6bb5e6b87bd03baef11620",
+      "published_sha256": "83fa33a5d67ac7e80dcea8b838de34235fec9b8cfccdcc2a22c8272cca3a5266",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-decode-tune-20261007-v1/protocol.json",
+      "published": "orin/evidence/strata-gyro-decode-tune-20261007-v1/protocol.json",
+      "source_sha256": "11f0ca8c5629bbb4b88d7a0054081d48fba3c25221e99f6513479e0718ad6f79",
+      "published_sha256": "bb6b6b47bd99783ece573441aa81dea70c76c7f300d98e574c3187a5879a267b",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-decode-tune-20261007-v1/result.json",
+      "published": "orin/evidence/strata-gyro-decode-tune-20261007-v1/result.json",
+      "source_sha256": "ce8541df2cf1012621e8534bf778b86b4e6cfb99ea31db214a712ab7f85bcdd4",
+      "published_sha256": "0b0e2f6e3b8a5d8f831ddefd8c8134a1d92ec32971c470c91d335795cf675c4c",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-decode-tune-20261007-v1/summary.json",
+      "published": "orin/evidence/strata-gyro-decode-tune-20261007-v1/summary.json",
+      "source_sha256": "6ac6653a36c0386ee564d99fff4f418f7b0b9d1da05ebd19003e796bdb1179c4",
+      "published_sha256": "6ac6653a36c0386ee564d99fff4f418f7b0b9d1da05ebd19003e796bdb1179c4",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-dense-f16-cache-20261009-v1/README.md",
+      "published": "orin/evidence/strata-gyro-dense-f16-cache-20261009-v1/README.md",
+      "source_sha256": "465c626b4d937d5b25d01e82a281e6ce7925ac222c17b5c02b77002fe6ba4634",
+      "published_sha256": "465c626b4d937d5b25d01e82a281e6ce7925ac222c17b5c02b77002fe6ba4634",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-dense-f16-cache-20261009-v1/cache-memory-log.txt",
+      "published": "orin/evidence/strata-gyro-dense-f16-cache-20261009-v1/cache-memory-log.txt",
+      "source_sha256": "bd00d58c4df29bb844adf1fb463958fa47e2638d87980a83d38f9f4ddb86bf9d",
+      "published_sha256": "bd00d58c4df29bb844adf1fb463958fa47e2638d87980a83d38f9f4ddb86bf9d",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-dense-f16-cache-20261009-v1/compare-1-12.txt",
+      "published": "orin/evidence/strata-gyro-dense-f16-cache-20261009-v1/compare-1-12.txt",
+      "source_sha256": "46fc719ac69eeec5028874ef56d1f04407af0fef10f4e9be978df1ced0d7e751",
+      "published_sha256": "46fc719ac69eeec5028874ef56d1f04407af0fef10f4e9be978df1ced0d7e751",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-dense-f16-cache-20261009-v1/compare-61.txt",
+      "published": "orin/evidence/strata-gyro-dense-f16-cache-20261009-v1/compare-61.txt",
+      "source_sha256": "4c541f59430ac9dac542683e2c5d77a7bdbbf1f3eb6e29f1781d99946afa13b2",
+      "published_sha256": "4c541f59430ac9dac542683e2c5d77a7bdbbf1f3eb6e29f1781d99946afa13b2",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-dense-f16-cache-20261009-v1/prompt-timing-run1.txt",
+      "published": "orin/evidence/strata-gyro-dense-f16-cache-20261009-v1/prompt-timing-run1.txt",
+      "source_sha256": "91422cab836bc85a0306a6b176a237e5df16caa2ee6e16b1777d8f1783cf5243",
+      "published_sha256": "91422cab836bc85a0306a6b176a237e5df16caa2ee6e16b1777d8f1783cf5243",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-dense-f16-cache-20261009-v1/prompt-timing-run2.txt",
+      "published": "orin/evidence/strata-gyro-dense-f16-cache-20261009-v1/prompt-timing-run2.txt",
+      "source_sha256": "6d74976642443e65272d2f3e6f9bf3e22fc452310764eb06d486dd5d46e9945f",
+      "published_sha256": "6d74976642443e65272d2f3e6f9bf3e22fc452310764eb06d486dd5d46e9945f",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-dense-f16-cache-20261009-v1/prompt-timing-run3.txt",
+      "published": "orin/evidence/strata-gyro-dense-f16-cache-20261009-v1/prompt-timing-run3.txt",
+      "source_sha256": "b44059541b99240c09ad20272640956211b5586b59102b203b9fdd31991eff4a",
+      "published_sha256": "b44059541b99240c09ad20272640956211b5586b59102b203b9fdd31991eff4a",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-dense-f16-cache-20261009-v1/prompt-timing-run4.txt",
+      "published": "orin/evidence/strata-gyro-dense-f16-cache-20261009-v1/prompt-timing-run4.txt",
+      "source_sha256": "e6a8ba93b617b990e157609920007358852a3f97fd843c73a3523245d06536d2",
+      "published_sha256": "e6a8ba93b617b990e157609920007358852a3f97fd843c73a3523245d06536d2",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-dense-f16-cache-20261009-v1/prompt-timing-run5.txt",
+      "published": "orin/evidence/strata-gyro-dense-f16-cache-20261009-v1/prompt-timing-run5.txt",
+      "source_sha256": "b81aecda7770e9027b9be4ebd71369d58a83d95725abac23d333bb061104f7b1",
+      "published_sha256": "b81aecda7770e9027b9be4ebd71369d58a83d95725abac23d333bb061104f7b1",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-draft-measure-20261008-v1/README.md",
+      "published": "orin/evidence/strata-gyro-draft-measure-20261008-v1/README.md",
+      "source_sha256": "4d26a8cc5958295607eeac0404c7981c8614bfbe788fc0fb27288f0dfac0d6a3",
+      "published_sha256": "4d26a8cc5958295607eeac0404c7981c8614bfbe788fc0fb27288f0dfac0d6a3",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-draft-measure-20261008-v1/compare-policy.txt",
+      "published": "orin/evidence/strata-gyro-draft-measure-20261008-v1/compare-policy.txt",
+      "source_sha256": "89b7c1c242f7c731df3b9388e466fab75c81bd61cb79f98823960bc45e3ca83b",
+      "published_sha256": "89b7c1c242f7c731df3b9388e466fab75c81bd61cb79f98823960bc45e3ca83b",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-draft-measure-20261008-v1/nsys-graphs.json",
+      "published": "orin/evidence/strata-gyro-draft-measure-20261008-v1/nsys-graphs.json",
+      "source_sha256": "301728964634bd638ef100d5afea272c97f804df8cfb9edbde84ff1023241dba",
+      "published_sha256": "301728964634bd638ef100d5afea272c97f804df8cfb9edbde84ff1023241dba",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-group-gather-20261008-v1/README.md",
+      "published": "orin/evidence/strata-gyro-group-gather-20261008-v1/README.md",
+      "source_sha256": "97d784a6825c60c7791f6d82453818f418b723c15e70f1899737fd84ebe2a38c",
+      "published_sha256": "97d784a6825c60c7791f6d82453818f418b723c15e70f1899737fd84ebe2a38c",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-group-gather-20261008-v1/compare-1-12.txt",
+      "published": "orin/evidence/strata-gyro-group-gather-20261008-v1/compare-1-12.txt",
+      "source_sha256": "6ceebb390a83d9b4d1dcb2447d08b7c346e9b868fdbb2fcb73b6158e06587dd2",
+      "published_sha256": "6ceebb390a83d9b4d1dcb2447d08b7c346e9b868fdbb2fcb73b6158e06587dd2",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-group-gather-20261008-v1/compare-61.txt",
+      "published": "orin/evidence/strata-gyro-group-gather-20261008-v1/compare-61.txt",
+      "source_sha256": "fe2cd813cf8ea2f84f38619d2e55d568410546c0667839017cb56fd10522c8e7",
+      "published_sha256": "fe2cd813cf8ea2f84f38619d2e55d568410546c0667839017cb56fd10522c8e7",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-group-gather-20261008-v1/prompt-timing-1-12-run1.txt",
+      "published": "orin/evidence/strata-gyro-group-gather-20261008-v1/prompt-timing-1-12-run1.txt",
+      "source_sha256": "180a3ec858b9243a3661c70c11bc03d1eacafbf5087b052ac6fcf49135b3b883",
+      "published_sha256": "180a3ec858b9243a3661c70c11bc03d1eacafbf5087b052ac6fcf49135b3b883",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-group-gather-20261008-v1/prompt-timing-1-12-run2.txt",
+      "published": "orin/evidence/strata-gyro-group-gather-20261008-v1/prompt-timing-1-12-run2.txt",
+      "source_sha256": "8c8e6235a5bc3e0c0717e3c80321f027636031cf5ba9f0285e274ebbdd6a906b",
+      "published_sha256": "8c8e6235a5bc3e0c0717e3c80321f027636031cf5ba9f0285e274ebbdd6a906b",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-group-gather-20261008-v1/prompt-timing-1-12-run3.txt",
+      "published": "orin/evidence/strata-gyro-group-gather-20261008-v1/prompt-timing-1-12-run3.txt",
+      "source_sha256": "64cfcc8034e6b6403347cd96b180840e57b6c25a0b758611aa0a5dca21d40dab",
+      "published_sha256": "64cfcc8034e6b6403347cd96b180840e57b6c25a0b758611aa0a5dca21d40dab",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-group-gather-20261008-v1/prompt-timing-1-12-run4.txt",
+      "published": "orin/evidence/strata-gyro-group-gather-20261008-v1/prompt-timing-1-12-run4.txt",
+      "source_sha256": "390816a1b496034412dd4f532fbe1d122fcf8357d1a4c6b1261c9b0d1ad8345d",
+      "published_sha256": "390816a1b496034412dd4f532fbe1d122fcf8357d1a4c6b1261c9b0d1ad8345d",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-group-gather-20261008-v1/prompt-timing-61-dir0.txt",
+      "published": "orin/evidence/strata-gyro-group-gather-20261008-v1/prompt-timing-61-dir0.txt",
+      "source_sha256": "197014c5a38877e42e37269a7e48f397d5d274b745853bc38d9a854eef460d29",
+      "published_sha256": "197014c5a38877e42e37269a7e48f397d5d274b745853bc38d9a854eef460d29",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-group-gather-20261008-v1/prompt-timing-61-on.txt",
+      "published": "orin/evidence/strata-gyro-group-gather-20261008-v1/prompt-timing-61-on.txt",
+      "source_sha256": "bb3595e6849b7124ccf9076687cf27122a029f828cd13813f90ee3f7bc9623d9",
+      "published_sha256": "bb3595e6849b7124ccf9076687cf27122a029f828cd13813f90ee3f7bc9623d9",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-grup-ab-20261008-v1/README.md",
+      "published": "orin/evidence/strata-gyro-grup-ab-20261008-v1/README.md",
+      "source_sha256": "ea0e9d2409f4a40082010a2acf6042ffdbcf486f486f448bdb4441079a2be08b",
+      "published_sha256": "aee1be8f212dd8721fda96616759049a2c46b467019c0a087e9a9596ff4d4243",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-grup-ab-20261008-v1/protocol.json",
+      "published": "orin/evidence/strata-gyro-grup-ab-20261008-v1/protocol.json",
+      "source_sha256": "5c058b730d232cd1966ab553688fd9a26d993f879cc48cb503fffa64f9f3837c",
+      "published_sha256": "65f4da3b76d6153b117939118c5c2009aa8f668161c4e73a5e13f2530a029eef",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-grup-ab-20261008-v1/result.json",
+      "published": "orin/evidence/strata-gyro-grup-ab-20261008-v1/result.json",
+      "source_sha256": "da35b16fcbb6d8f585c9ffad6c18fdc5fd46045cea4d31ccc047c7f494d8fbe4",
+      "published_sha256": "2fbbda2a7f6d1f7caf3de6c7de2f031b092602f7335d64c28fa8dd26940f6c57",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-grup-ab-20261008-v1/summary.json",
+      "published": "orin/evidence/strata-gyro-grup-ab-20261008-v1/summary.json",
+      "source_sha256": "af53643aec617673a83dc0b5603523911dacc7f35c6e59a0e749cf53fdf1587c",
+      "published_sha256": "af53643aec617673a83dc0b5603523911dacc7f35c6e59a0e749cf53fdf1587c",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-round3-20261008/README.md",
+      "published": "orin/evidence/strata-gyro-kernel-round3-20261008/README.md",
+      "source_sha256": "b52052d1b372adcfd8f3a2b9a2614b488f696d2d7b9e26b056e2c7cf0a291cf7",
+      "published_sha256": "b52052d1b372adcfd8f3a2b9a2614b488f696d2d7b9e26b056e2c7cf0a291cf7",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-round3-20261008/lb6-ab/protocol.json",
+      "published": "orin/evidence/strata-gyro-kernel-round3-20261008/lb6-ab/protocol.json",
+      "source_sha256": "954f491a6617ea05db25dd6135294eaca772dbc758824764f5d1aa96d375fb88",
+      "published_sha256": "103d7c93fcdbbd9fdc3194880150287c4e5dac1226c3de540e56bdb1a312aadf",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-round3-20261008/lb6-ab/summary.json",
+      "published": "orin/evidence/strata-gyro-kernel-round3-20261008/lb6-ab/summary.json",
+      "source_sha256": "e658ab2015d3f9d99c2df3a1f6f263bfbf855cc1d4ff51f61d45f37d00ef83ec",
+      "published_sha256": "e658ab2015d3f9d99c2df3a1f6f263bfbf855cc1d4ff51f61d45f37d00ef83ec",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-round3-20261008/mtp-rescreen-lb6/protocol.json",
+      "published": "orin/evidence/strata-gyro-kernel-round3-20261008/mtp-rescreen-lb6/protocol.json",
+      "source_sha256": "11400b31fc2d6dc3d0214af8373c29766d8b79489df972e4a0bfcc2ff28fee63",
+      "published_sha256": "fd228c2c72fc52d6779dfb5f1ae46265c496212ea769a8c85a61e467020b83fb",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-round3-20261008/mtp-rescreen-lb6/summary.json",
+      "published": "orin/evidence/strata-gyro-kernel-round3-20261008/mtp-rescreen-lb6/summary.json",
+      "source_sha256": "a6539bd2d7d61a3ed7464c5343d454f7af87f35d1e5412296ceda66c604a484a",
+      "published_sha256": "a6539bd2d7d61a3ed7464c5343d454f7af87f35d1e5412296ceda66c604a484a",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-round3-20261008/strata-gyro-bench-combo-20261008-v1/bench.txt",
+      "published": "orin/evidence/strata-gyro-kernel-round3-20261008/strata-gyro-bench-combo-20261008-v1/bench.txt",
+      "source_sha256": "fabca34fb2df95403691d759827d7ea825d6a991fe74b81a1d896e463e06c4f4",
+      "published_sha256": "fabca34fb2df95403691d759827d7ea825d6a991fe74b81a1d896e463e06c4f4",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-round3-20261008/strata-gyro-bench-combo-20261008-v1/parity.txt",
+      "published": "orin/evidence/strata-gyro-kernel-round3-20261008/strata-gyro-bench-combo-20261008-v1/parity.txt",
+      "source_sha256": "f5404d5b92e2eca93c1ba84282ffd7f39d253e3b38722068f50c7729f6071d2b",
+      "published_sha256": "f5404d5b92e2eca93c1ba84282ffd7f39d253e3b38722068f50c7729f6071d2b",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-round3-20261008/strata-gyro-bench-gr-20261008-v1/bench.txt",
+      "published": "orin/evidence/strata-gyro-kernel-round3-20261008/strata-gyro-bench-gr-20261008-v1/bench.txt",
+      "source_sha256": "85782302ec7824befd08cbb3ac090ca9a9af8ebafded3f50a8df1fdcb393f063",
+      "published_sha256": "85782302ec7824befd08cbb3ac090ca9a9af8ebafded3f50a8df1fdcb393f063",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-round3-20261008/strata-gyro-bench-grlo-20261008-v1/bench.txt",
+      "published": "orin/evidence/strata-gyro-kernel-round3-20261008/strata-gyro-bench-grlo-20261008-v1/bench.txt",
+      "source_sha256": "9dc9162b299eed8627cad68fb9a4c69b27ecf57284f2c9aae5b440f991ba7d6c",
+      "published_sha256": "9dc9162b299eed8627cad68fb9a4c69b27ecf57284f2c9aae5b440f991ba7d6c",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-round3-20261008/strata-gyro-bench-lb6-stage4-20261008-v1/bench.txt",
+      "published": "orin/evidence/strata-gyro-kernel-round3-20261008/strata-gyro-bench-lb6-stage4-20261008-v1/bench.txt",
+      "source_sha256": "c0c76de83566e6b41881b470e8e179eac47678b901be776cddfc5c9269ef064d",
+      "published_sha256": "c0c76de83566e6b41881b470e8e179eac47678b901be776cddfc5c9269ef064d",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-round3-20261008/strata-gyro-bench-lb6-stage4-20261008-v1/parity.txt",
+      "published": "orin/evidence/strata-gyro-kernel-round3-20261008/strata-gyro-bench-lb6-stage4-20261008-v1/parity.txt",
+      "source_sha256": "e8bb4860fb66b0f4f5652419a5c1a890b1db0ed26c214054f82ac64aa805dfe7",
+      "published_sha256": "e8bb4860fb66b0f4f5652419a5c1a890b1db0ed26c214054f82ac64aa805dfe7",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-tq2t-20261007/README.md",
+      "published": "orin/evidence/strata-gyro-kernel-tq2t-20261007/README.md",
+      "source_sha256": "79ab012a2204033fd0bdc258a366f135b31dcd20c928c7bbfc0474e04cb1c8f0",
+      "published_sha256": "79ab012a2204033fd0bdc258a366f135b31dcd20c928c7bbfc0474e04cb1c8f0",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-tq2t-20261007/prefetch-registers/ncu-build-sm87-layer10.csv",
+      "published": "orin/evidence/strata-gyro-kernel-tq2t-20261007/prefetch-registers/ncu-build-sm87-layer10.csv",
+      "source_sha256": "abd9ac0619d219ae0f6b67a4cd8a9d6251646337adb1730b84f79da552a65e1a",
+      "published_sha256": "98e44a51730da416c9815888f59b279618f9d2d24baef214ea045a5bbaae160e",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-tq2t-20261007/prefetch-registers/ncu-build-sm87-layer30.csv",
+      "published": "orin/evidence/strata-gyro-kernel-tq2t-20261007/prefetch-registers/ncu-build-sm87-layer30.csv",
+      "source_sha256": "716908b20a698b898984c480a48b4b413499882577b70a25f4d3d910ea0c0cf2",
+      "published_sha256": "b05973b0b0b4835282320668b8085432e506fed54ed64345ef91c11939b7a66b",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-tq2t-20261007/prefetch-registers/ncu-build-sm87-tq2t-prefetch-layer10.csv",
+      "published": "orin/evidence/strata-gyro-kernel-tq2t-20261007/prefetch-registers/ncu-build-sm87-tq2t-prefetch-layer10.csv",
+      "source_sha256": "84336cd675675da7e297591369e1dd312b2569e6c1da21ddad05c7ba74b0cc1c",
+      "published_sha256": "60e0fe574107c8cccdfaf8a9a8f50d00e3607c618960f39808ba8f789bf4b9d4",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-tq2t-20261007/prefetch-registers/ncu-build-sm87-tq2t-prefetch-layer30.csv",
+      "published": "orin/evidence/strata-gyro-kernel-tq2t-20261007/prefetch-registers/ncu-build-sm87-tq2t-prefetch-layer30.csv",
+      "source_sha256": "189c1b60c5ddb4ab9556d88370372f2b4bbb9ad6cd90e375f7608c1d3851dfc7",
+      "published_sha256": "dd9716efc8c40209d14c56492dce0994dde97702ce29f500aa05fbecd740fa83",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-tq2t-20261007/prefetch-registers/parity-exp-layer10.log",
+      "published": "orin/evidence/strata-gyro-kernel-tq2t-20261007/prefetch-registers/parity-exp-layer10.log",
+      "source_sha256": "30583f197e325be62fa556acc2d843c641c8e0e8c876fe7b967f9e7abb104bed",
+      "published_sha256": "30583f197e325be62fa556acc2d843c641c8e0e8c876fe7b967f9e7abb104bed",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-tq2t-20261007/prefetch-registers/parity-exp-layer30.log",
+      "published": "orin/evidence/strata-gyro-kernel-tq2t-20261007/prefetch-registers/parity-exp-layer30.log",
+      "source_sha256": "b21504a43e20692165c8bee488673a4d64bfe68a8ec691889d0eb10d77ffc0c0",
+      "published_sha256": "b21504a43e20692165c8bee488673a4d64bfe68a8ec691889d0eb10d77ffc0c0",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-tq2t-20261007/stage-shared/ncu-build-sm87-layer10.csv",
+      "published": "orin/evidence/strata-gyro-kernel-tq2t-20261007/stage-shared/ncu-build-sm87-layer10.csv",
+      "source_sha256": "66ad1b3f82da8443fcf7331c2dc303ae7711d4bf939c62b288785dc4ed77c428",
+      "published_sha256": "1548283b70a98644c67383e03083b4c71b706e2f1113aaed5668414e2da419cf",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-tq2t-20261007/stage-shared/ncu-build-sm87-layer30.csv",
+      "published": "orin/evidence/strata-gyro-kernel-tq2t-20261007/stage-shared/ncu-build-sm87-layer30.csv",
+      "source_sha256": "2b1173f8a1ef65ce7ca87af9357fd55a990cafdba10ae25ea05ef58f56fa26a9",
+      "published_sha256": "66b40a35098cbe6c881bfa8a1ac8d8e661c1f561e63f4fbb6f73f1d02cf30e7e",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-tq2t-20261007/stage-shared/ncu-build-sm87-tq2t-prefetch-layer10.csv",
+      "published": "orin/evidence/strata-gyro-kernel-tq2t-20261007/stage-shared/ncu-build-sm87-tq2t-prefetch-layer10.csv",
+      "source_sha256": "0dab1eba21db42f2658c7d52aada63f5ebd9849d8965274b5d604403caf71efa",
+      "published_sha256": "4aa8d5a87991dad3a4dcdfe69d30d39d9abcf22376c5351e87f22a4f945aee9f",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-tq2t-20261007/stage-shared/ncu-build-sm87-tq2t-prefetch-layer30.csv",
+      "published": "orin/evidence/strata-gyro-kernel-tq2t-20261007/stage-shared/ncu-build-sm87-tq2t-prefetch-layer30.csv",
+      "source_sha256": "a45fc597e3729a9a666e194c572ebb37c666f1de8abb5b97c26bb4a795cbf92d",
+      "published_sha256": "dc8d13b6f063037e54688a22d859fd9cb488a4347d27c4dd19e419690f5cdd81",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-tq2t-20261007/stage-shared/nsys-decode-compare.txt",
+      "published": "orin/evidence/strata-gyro-kernel-tq2t-20261007/stage-shared/nsys-decode-compare.txt",
+      "source_sha256": "070ac9209ade9902d124413cb91a22b758c4ffa3e9454c45798e4da9a291359d",
+      "published_sha256": "070ac9209ade9902d124413cb91a22b758c4ffa3e9454c45798e4da9a291359d",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-tq2t-20261007/stage-shared/parity-exp-layer10.log",
+      "published": "orin/evidence/strata-gyro-kernel-tq2t-20261007/stage-shared/parity-exp-layer10.log",
+      "source_sha256": "30583f197e325be62fa556acc2d843c641c8e0e8c876fe7b967f9e7abb104bed",
+      "published_sha256": "30583f197e325be62fa556acc2d843c641c8e0e8c876fe7b967f9e7abb104bed",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-kernel-tq2t-20261007/stage-shared/parity-exp-layer30.log",
+      "published": "orin/evidence/strata-gyro-kernel-tq2t-20261007/stage-shared/parity-exp-layer30.log",
+      "source_sha256": "b21504a43e20692165c8bee488673a4d64bfe68a8ec691889d0eb10d77ffc0c0",
+      "published_sha256": "b21504a43e20692165c8bee488673a4d64bfe68a8ec691889d0eb10d77ffc0c0",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-direct-20261008-v1/README.md",
+      "published": "orin/evidence/strata-gyro-mmq-direct-20261008-v1/README.md",
+      "source_sha256": "91e29bb518ce7a6f32af8c3a849cf30a963aede80334f2447a93156858e24b58",
+      "published_sha256": "91e29bb518ce7a6f32af8c3a849cf30a963aede80334f2447a93156858e24b58",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-direct-20261008-v1/compare.txt",
+      "published": "orin/evidence/strata-gyro-mmq-direct-20261008-v1/compare.txt",
+      "source_sha256": "801d2efe28dc73b89f221f72ddc26283cde3ea54eb875c85140d8c70e49fa8aa",
+      "published_sha256": "801d2efe28dc73b89f221f72ddc26283cde3ea54eb875c85140d8c70e49fa8aa",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-direct-20261008-v1/nsys-request4-kernels.json",
+      "published": "orin/evidence/strata-gyro-mmq-direct-20261008-v1/nsys-request4-kernels.json",
+      "source_sha256": "2a33010d72a48e420fbfddd4fd900379473f3d5605e9303def5517f49f290e2f",
+      "published_sha256": "2a33010d72a48e420fbfddd4fd900379473f3d5605e9303def5517f49f290e2f",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-direct-20261008-v1/prefill-timing-request4.txt",
+      "published": "orin/evidence/strata-gyro-mmq-direct-20261008-v1/prefill-timing-request4.txt",
+      "source_sha256": "b87e4f0e4b78604323c8a943c03c3a5986094765c609e2230e935c9bc36cba2d",
+      "published_sha256": "b87e4f0e4b78604323c8a943c03c3a5986094765c609e2230e935c9bc36cba2d",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-direct-20261008-v1/prompt-timing-dir0.txt",
+      "published": "orin/evidence/strata-gyro-mmq-direct-20261008-v1/prompt-timing-dir0.txt",
+      "source_sha256": "197014c5a38877e42e37269a7e48f397d5d274b745853bc38d9a854eef460d29",
+      "published_sha256": "197014c5a38877e42e37269a7e48f397d5d274b745853bc38d9a854eef460d29",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-direct-20261008-v1/prompt-timing-dir1.txt",
+      "published": "orin/evidence/strata-gyro-mmq-direct-20261008-v1/prompt-timing-dir1.txt",
+      "source_sha256": "b89c087f1e34f9c6fa1202deb6018d29cb60efac77483e9ed3ab0f03f32e4fce",
+      "published_sha256": "b89c087f1e34f9c6fa1202deb6018d29cb60efac77483e9ed3ab0f03f32e4fce",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-lut-ab-20261007-v1/README.md",
+      "published": "orin/evidence/strata-gyro-mmq-lut-ab-20261007-v1/README.md",
+      "source_sha256": "2fe534c8e33d1b88d9b121777876b2c1ec0c360021cee8d8b0e6e3e165bf843a",
+      "published_sha256": "eb8c32e1db5840f053963cdb78952fe13c7ec2e90a38dc592ead3ba1a9a23b13",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-lut-ab-20261007-v1/protocol.json",
+      "published": "orin/evidence/strata-gyro-mmq-lut-ab-20261007-v1/protocol.json",
+      "source_sha256": "110380972421addd80e342f5d6d60fa26ae78b6cbf95fbc3145d6fe81f8d7bf1",
+      "published_sha256": "d9977321bbb45535c4e5e0d0d5a3aaee1bb1957f1c8828768032ddc169e98b09",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-lut-ab-20261007-v1/result.json",
+      "published": "orin/evidence/strata-gyro-mmq-lut-ab-20261007-v1/result.json",
+      "source_sha256": "a9742a3790489d141580dab5b5735e39e5d8521699f4dd0a1da1289ba33adebf",
+      "published_sha256": "e2f5c9a80fd5023868ad56bf1f3325afa8e6e1ec7b251cf65782e10ebb7ef6d6",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-lut-ab-20261007-v1/summary.json",
+      "published": "orin/evidence/strata-gyro-mmq-lut-ab-20261007-v1/summary.json",
+      "source_sha256": "8e7939cb4fd142d8cf96a113c50a4c9f36df5385cbb441cb5844b0b533acabb0",
+      "published_sha256": "8e7939cb4fd142d8cf96a113c50a4c9f36df5385cbb441cb5844b0b533acabb0",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/README.md",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/README.md",
+      "source_sha256": "9f475c9017f778e0bb241be7b187fc1c28f8351bd5067c469d0787cf077b7e3f",
+      "published_sha256": "9f475c9017f778e0bb241be7b187fc1c28f8351bd5067c469d0787cf077b7e3f",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/compare-61.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/compare-61.txt",
+      "source_sha256": "5efe777004c760c526e5c97a9a4d89f0ec4dd53a485d412124853e851dc58272",
+      "published_sha256": "5efe777004c760c526e5c97a9a4d89f0ec4dd53a485d412124853e851dc58272",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/compare-mmqptr-1-12.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/compare-mmqptr-1-12.txt",
+      "source_sha256": "ed58477bb6fbe1756267ee76f359b12dd58132f689afe797f7a8b9c5febd454f",
+      "published_sha256": "ed58477bb6fbe1756267ee76f359b12dd58132f689afe797f7a8b9c5febd454f",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/compare-mmqptr2-1-12.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/compare-mmqptr2-1-12.txt",
+      "source_sha256": "585d7227321e68f8e5ca80b73dd9394c3639988c4bad69a44c8795232633e0ec",
+      "published_sha256": "585d7227321e68f8e5ca80b73dd9394c3639988c4bad69a44c8795232633e0ec",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/prefill-timing-f16cache-vs-mmqptr.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/prefill-timing-f16cache-vs-mmqptr.txt",
+      "source_sha256": "a9989aaa01c66fbcf7bc661abe4e71e82942321e84063a4e2a6c3c66f7802174",
+      "published_sha256": "a9989aaa01c66fbcf7bc661abe4e71e82942321e84063a4e2a6c3c66f7802174",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr-run1.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr-run1.txt",
+      "source_sha256": "9709cf610c92efa8ac0e60a8cb3393c61e6354b4dd8c0c3621124e3e99af246f",
+      "published_sha256": "9709cf610c92efa8ac0e60a8cb3393c61e6354b4dd8c0c3621124e3e99af246f",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr-run2.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr-run2.txt",
+      "source_sha256": "6cb5f3fb40fb791c55a382a9eb25309aef87167f35a044ac3e51fdd719c5488e",
+      "published_sha256": "6cb5f3fb40fb791c55a382a9eb25309aef87167f35a044ac3e51fdd719c5488e",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr-run3.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr-run3.txt",
+      "source_sha256": "f14f4daac1ab662c3aaf3637ba91abf475b37550b42ba56551d3ef2e97673882",
+      "published_sha256": "f14f4daac1ab662c3aaf3637ba91abf475b37550b42ba56551d3ef2e97673882",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr-run4.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr-run4.txt",
+      "source_sha256": "03d3d87f2a9bbd21722cbd2fbced6df2fb0add008b69a2807f897ee737e82f9f",
+      "published_sha256": "03d3d87f2a9bbd21722cbd2fbced6df2fb0add008b69a2807f897ee737e82f9f",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr-run5.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr-run5.txt",
+      "source_sha256": "1e6b0724c9cd94fc1c918445e61c3dfcfdcf55f6a02ab8b16c31619a87696169",
+      "published_sha256": "1e6b0724c9cd94fc1c918445e61c3dfcfdcf55f6a02ab8b16c31619a87696169",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr2-run1.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr2-run1.txt",
+      "source_sha256": "2c469b31b6036da64dbf5e22320cb55d63e7493568d28df8f680f0603c62e758",
+      "published_sha256": "2c469b31b6036da64dbf5e22320cb55d63e7493568d28df8f680f0603c62e758",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr2-run2.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr2-run2.txt",
+      "source_sha256": "4d82d81ec7768cd9fc76451d6babed2cd7675496e0ec80f6e0bb2f116f730284",
+      "published_sha256": "4d82d81ec7768cd9fc76451d6babed2cd7675496e0ec80f6e0bb2f116f730284",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr2-run3.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr2-run3.txt",
+      "source_sha256": "03a9fc1dd2461a370b6761ef74cef9b2f9f1e8f1343570a841057d7cda108b3e",
+      "published_sha256": "03a9fc1dd2461a370b6761ef74cef9b2f9f1e8f1343570a841057d7cda108b3e",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr2-run4.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr2-run4.txt",
+      "source_sha256": "e046c665912f1613cf2de30cf8c84e60d9f0cabf0036ffbf21d53d107fe3481c",
+      "published_sha256": "e046c665912f1613cf2de30cf8c84e60d9f0cabf0036ffbf21d53d107fe3481c",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr2-run5.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/prompt-timing-mmqptr2-run5.txt",
+      "source_sha256": "376943995c56f9d4d1af6f0c3802d3cbbe3db8b5bc56838e70757ba47ebf3556",
+      "published_sha256": "376943995c56f9d4d1af6f0c3802d3cbbe3db8b5bc56838e70757ba47ebf3556",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/res-f16cache-vs-mmqptr-a.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/res-f16cache-vs-mmqptr-a.txt",
+      "source_sha256": "52ae2dd86c316e44b5eacefc71ceacb2a42d32860334be56b79615c83c603aee",
+      "published_sha256": "52ae2dd86c316e44b5eacefc71ceacb2a42d32860334be56b79615c83c603aee",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/res-f16cache.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/res-f16cache.txt",
+      "source_sha256": "52ae2dd86c316e44b5eacefc71ceacb2a42d32860334be56b79615c83c603aee",
+      "published_sha256": "52ae2dd86c316e44b5eacefc71ceacb2a42d32860334be56b79615c83c603aee",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/res-mmqptr.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/res-mmqptr.txt",
+      "source_sha256": "f4ae631aee8d0b40b2db9f7450206fb72b80016812501cae9a9c41009334d3d9",
+      "published_sha256": "f4ae631aee8d0b40b2db9f7450206fb72b80016812501cae9a9c41009334d3d9",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mmq-ptrs-20261009-v1/res-mmqptr2.txt",
+      "published": "orin/evidence/strata-gyro-mmq-ptrs-20261009-v1/res-mmqptr2.txt",
+      "source_sha256": "09dc6b175217080d773820fc8a9311aa9073d7e135e272adc2cccda2b83aaa17",
+      "published_sha256": "09dc6b175217080d773820fc8a9311aa9073d7e135e272adc2cccda2b83aaa17",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-mtp-20261007-v1/README.md",
+      "published": "orin/evidence/strata-gyro-mtp-20261007-v1/README.md",
+      "source_sha256": "9321ff5efa75392a8102fce9afc04efa5cb3b8936ac007d6efe189d4d6ab7c9b",
+      "published_sha256": "9f849f3a1d8402f3aa1755c59adb7893aff0a096f45d279d4a622b98608d2eb1",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-mtp-20261007-v1/protocol.json",
+      "published": "orin/evidence/strata-gyro-mtp-20261007-v1/protocol.json",
+      "source_sha256": "55af7ee2eef0bac04d635dad5c973477161ec8f656ea251c9a5022150fa0ab94",
+      "published_sha256": "1be4bff5619ed2a9bbda3a0b76d6949e537cb4abbb37313112e2863bd2ce7f3f",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-mtp-20261007-v1/result.json",
+      "published": "orin/evidence/strata-gyro-mtp-20261007-v1/result.json",
+      "source_sha256": "7dc9d30877801b34ef0194f77748cb40f61555d52b4aac2d702ddf81527db48f",
+      "published_sha256": "a2e611352f7e4d84ab8c01f1e638f37ef9f8073be33a9cac32897002295e2956",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-mtp-20261007-v1/summary.json",
+      "published": "orin/evidence/strata-gyro-mtp-20261007-v1/summary.json",
+      "source_sha256": "51d8c944b41595acd9c0248c5f8f0b84acf0f4ec5bfef989880d36c4c4659a60",
+      "published_sha256": "51d8c944b41595acd9c0248c5f8f0b84acf0f4ec5bfef989880d36c4c4659a60",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-ncu-20261007-v1/README.md",
+      "published": "orin/evidence/strata-gyro-ncu-20261007-v1/README.md",
+      "source_sha256": "e7c19d2aad390635942ab45a4ca0a636164713698f760bfd93295fa473f9b28c",
+      "published_sha256": "439224d23c683d8ac9ebd4310a8091ac3acd65be7651c01b07a3fc97d8736b5b",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-ncu-20261007-v1/in-engine-attempt-oom.txt",
+      "published": "orin/evidence/strata-gyro-ncu-20261007-v1/in-engine-attempt-oom.txt",
+      "source_sha256": "6e3e64e32579ed1e1f44e4ae6da6c9cb29b3ac3d1e778abcdc1efbb3217a4382",
+      "published_sha256": "acbd34027d60ecb082808a6d4c6ad5a5273c2df8d51a1133f9347241e79af94a",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-ncu-20261007-v1/native-expert-layer10-maxclk-details.txt",
+      "published": "orin/evidence/strata-gyro-ncu-20261007-v1/native-expert-layer10-maxclk-details.txt",
+      "source_sha256": "1ab4d590cdb51a3d6ea018dfb205b8107a4f494cc4a516c2cfe579518e6c6c5a",
+      "published_sha256": "1ab4d590cdb51a3d6ea018dfb205b8107a4f494cc4a516c2cfe579518e6c6c5a",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-ncu-20261007-v1/native-expert-layer30-maxclk-details.txt",
+      "published": "orin/evidence/strata-gyro-ncu-20261007-v1/native-expert-layer30-maxclk-details.txt",
+      "source_sha256": "9e93899e0bd7f68e6ac424c395c694cd3f75386551448ec14c008098432fd37b",
+      "published_sha256": "9e93899e0bd7f68e6ac424c395c694cd3f75386551448ec14c008098432fd37b",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-orin-20261007/README.md",
+      "published": "orin/evidence/strata-gyro-orin-20261007/README.md",
+      "source_sha256": "685ca88a3dd94683a878abecb912631694383bbe1d70ed36bff0b0dcc5725cb8",
+      "published_sha256": "1f6eb36bca390edbf7bc095a4ef8a26975e80ee181b57a79c83732b74b7ee861",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-orin-20261007/derived-artifacts.sha256",
+      "published": "orin/evidence/strata-gyro-orin-20261007/derived-artifacts.sha256",
+      "source_sha256": "9585c04964d30cac2432a8a12c54c537fca080feabcc497b927679048feae194",
+      "published_sha256": "9585c04964d30cac2432a8a12c54c537fca080feabcc497b927679048feae194",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-orin-20261007/smoke-mtp/result.json",
+      "published": "orin/evidence/strata-gyro-orin-20261007/smoke-mtp/result.json",
+      "source_sha256": "137bbd68f8c6ee827c70743aa7d7f95bb0c220103acc1c46aa3868514940ba1b",
+      "published_sha256": "9f51f813069e612d3ed91ed8fd1804534eed20367a180d0b8ea64780bf9fa120",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-orin-20261007/smoke-none/result.json",
+      "published": "orin/evidence/strata-gyro-orin-20261007/smoke-none/result.json",
+      "source_sha256": "b2149dc45685988af3c42eb66d75009142eeb03f98b5c59c75b1a5dbd2df7c85",
+      "published_sha256": "556e345224345206fb8ce14c7122f76381e348d2578d51637395cdc506d9450a",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-orin-20261007/source-verification.json",
+      "published": "orin/evidence/strata-gyro-orin-20261007/source-verification.json",
+      "source_sha256": "9ffad46b104204d15bf316f4efcf9a440d2bc85a911da6496cca80c53cae8ba6",
+      "published_sha256": "9ffad46b104204d15bf316f4efcf9a440d2bc85a911da6496cca80c53cae8ba6",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-orin-20261007/telemetry-summary.json",
+      "published": "orin/evidence/strata-gyro-orin-20261007/telemetry-summary.json",
+      "source_sha256": "e3c75285d4beaa7f108f8c1adc5c5ee0c5c923dcf5006a238f0fe418457510c1",
+      "published_sha256": "e3c75285d4beaa7f108f8c1adc5c5ee0c5c923dcf5006a238f0fe418457510c1",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-prefill-borrow-20261007-v1/README.md",
+      "published": "orin/evidence/strata-gyro-prefill-borrow-20261007-v1/README.md",
+      "source_sha256": "344822e6ab215ec0c9c20ae9bee17d3133797ba8618f542af786769760f39517",
+      "published_sha256": "354a81ce14eca4e4c23a12dae137ece045bbb3c549e43fe3c20f24c157795339",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-prefill-borrow-20261007-v1/protocol.json",
+      "published": "orin/evidence/strata-gyro-prefill-borrow-20261007-v1/protocol.json",
+      "source_sha256": "fb2c79db93624ca63d0f14283e71992932e846b1e936b07c6791159153e5fa93",
+      "published_sha256": "7b75779d8693ca53c9dc08c0ada96de7973bd22c57ccbdc66b290ba4d89898c4",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-prefill-borrow-20261007-v1/result.json",
+      "published": "orin/evidence/strata-gyro-prefill-borrow-20261007-v1/result.json",
+      "source_sha256": "227de4f4350f71cceac9ac78e2c7c991c418d6522ec02a87f4139c2c67224e8e",
+      "published_sha256": "c00eaaf622d6487ac196577c2f508aaeb96782fa736773b2dfa683381cc5ebc1",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-prefill-borrow-20261007-v1/summary.json",
+      "published": "orin/evidence/strata-gyro-prefill-borrow-20261007-v1/summary.json",
+      "source_sha256": "35856a1f0e2ac355cf89e7d05c2eb267d91ba934e48f373bbb1935dec07608f0",
+      "published_sha256": "35856a1f0e2ac355cf89e7d05c2eb267d91ba934e48f373bbb1935dec07608f0",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-prefill-chunk-own-20261007-v2/README.md",
+      "published": "orin/evidence/strata-gyro-prefill-chunk-own-20261007-v2/README.md",
+      "source_sha256": "db859228168c7614f97fa38543d7a6ad70d1683aceba172c60b59b8dbfc93d91",
+      "published_sha256": "611fc1ec968d94537eb2217fa8e0367a123a0203ace052ceac9316c22dfe6144",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-prefill-chunk-own-20261007-v2/protocol.json",
+      "published": "orin/evidence/strata-gyro-prefill-chunk-own-20261007-v2/protocol.json",
+      "source_sha256": "5d9562912dbda80e9f3ab5cb5e38aabec034ec4da8287933ad3a5af61b881db7",
+      "published_sha256": "cc80b2015f51310977cb05a541075cdc0b32cdc99ab3bc76b87b3ab75cf6a337",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-prefill-chunk-own-20261007-v2/result.json",
+      "published": "orin/evidence/strata-gyro-prefill-chunk-own-20261007-v2/result.json",
+      "source_sha256": "81742d77b1c7ba549b81122e1fb79b474ad1f8378d5a4c926fbe631a0bfd1558",
+      "published_sha256": "254243a7672ef871b88b67dff54cf12690ada8ffbcd6956d3ae1206567a1dd27",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-prefill-chunk-own-20261007-v2/summary.json",
+      "published": "orin/evidence/strata-gyro-prefill-chunk-own-20261007-v2/summary.json",
+      "source_sha256": "68270d1967f2e0d2607fe163afa83dc8344c6ddaa4f895424f0167d75198eb66",
+      "published_sha256": "68270d1967f2e0d2607fe163afa83dc8344c6ddaa4f895424f0167d75198eb66",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-profile-20261007-v1/README.md",
+      "published": "orin/evidence/strata-gyro-profile-20261007-v1/README.md",
+      "source_sha256": "832415431e0367104d23bc62c9515d9f38931f6d4c454d718def668941963af7",
+      "published_sha256": "97c2dffe88acb1f1937a94a2252aba74486356e75fa1e8998a24165e2f4e2b66",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-profile-20261007-v1/decode2k-stats_cuda_api_sum.csv",
+      "published": "orin/evidence/strata-gyro-profile-20261007-v1/decode2k-stats_cuda_api_sum.csv",
+      "source_sha256": "c70c506767fdb066efd56d5b0c97d53d9ede780de0f31b58a6721d685f5e0a53",
+      "published_sha256": "c70c506767fdb066efd56d5b0c97d53d9ede780de0f31b58a6721d685f5e0a53",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-profile-20261007-v1/decode2k-stats_cuda_gpu_kern_sum.csv",
+      "published": "orin/evidence/strata-gyro-profile-20261007-v1/decode2k-stats_cuda_gpu_kern_sum.csv",
+      "source_sha256": "9ddf567676ab453d62029f176765e865cbe05ab21225ca223cf2d4c078e711f9",
+      "published_sha256": "9ddf567676ab453d62029f176765e865cbe05ab21225ca223cf2d4c078e711f9",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-profile-20261007-v1/decode2k-stats_cuda_gpu_mem_time_sum.csv",
+      "published": "orin/evidence/strata-gyro-profile-20261007-v1/decode2k-stats_cuda_gpu_mem_time_sum.csv",
+      "source_sha256": "be4781baf7eebde1f6545dc0b6ab144bd110d6810ae4b889b43bb74ea53eb027",
+      "published_sha256": "be4781baf7eebde1f6545dc0b6ab144bd110d6810ae4b889b43bb74ea53eb027",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-profile-20261007-v1/kernel-phases.json",
+      "published": "orin/evidence/strata-gyro-profile-20261007-v1/kernel-phases.json",
+      "source_sha256": "c39bd022bcd52d9c0e6f2b411e45c2ae96a51ace54f6a562d28ea6907c9be9da",
+      "published_sha256": "c39bd022bcd52d9c0e6f2b411e45c2ae96a51ace54f6a562d28ea6907c9be9da",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-profile-20261007-v1/large-artifacts.sha256",
+      "published": "orin/evidence/strata-gyro-profile-20261007-v1/large-artifacts.sha256",
+      "source_sha256": "f012c24c2eafb0f2f396e695509095dd19a62e7ab35442dcee959987312032c0",
+      "published_sha256": "f012c24c2eafb0f2f396e695509095dd19a62e7ab35442dcee959987312032c0",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-profile-20261007-v1/prefill25k-stats_cuda_api_sum.csv",
+      "published": "orin/evidence/strata-gyro-profile-20261007-v1/prefill25k-stats_cuda_api_sum.csv",
+      "source_sha256": "4213518217cdc04ad65a48d427d7d754f331cae396bfe5ead80599ac52403ea0",
+      "published_sha256": "4213518217cdc04ad65a48d427d7d754f331cae396bfe5ead80599ac52403ea0",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-profile-20261007-v1/prefill25k-stats_cuda_gpu_kern_sum.csv",
+      "published": "orin/evidence/strata-gyro-profile-20261007-v1/prefill25k-stats_cuda_gpu_kern_sum.csv",
+      "source_sha256": "9ead883b97b34bb0cfcdedfb0d6fa726135bdb72f901d6bb3bb67f664077c2d8",
+      "published_sha256": "9ead883b97b34bb0cfcdedfb0d6fa726135bdb72f901d6bb3bb67f664077c2d8",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-profile-20261007-v1/prefill25k-stats_cuda_gpu_mem_time_sum.csv",
+      "published": "orin/evidence/strata-gyro-profile-20261007-v1/prefill25k-stats_cuda_gpu_mem_time_sum.csv",
+      "source_sha256": "aa267f975717523d8cf987f3e351a21017744f5bbd0ba80011ec47c3b11cac03",
+      "published_sha256": "aa267f975717523d8cf987f3e351a21017744f5bbd0ba80011ec47c3b11cac03",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-profile-20261007-v1/protocol.json",
+      "published": "orin/evidence/strata-gyro-profile-20261007-v1/protocol.json",
+      "source_sha256": "2b65dc0a8f0c21b503e3db2ca5f714bc139217ac9e8bec20c9c07b8a4bca7c4c",
+      "published_sha256": "2853cc464daddda406af94f0652d366e7d0017f0f22241d8a62b550e039a3d2a",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-profile-20261007-v1/result.json",
+      "published": "orin/evidence/strata-gyro-profile-20261007-v1/result.json",
+      "source_sha256": "98d84d8492833cde5b869c4785549e4ec56c94ca97d1906f539c7e7b0af0e683",
+      "published_sha256": "41254bcc17d8a457b15a20fbdeda40f13ee8c5d4128b54b92a33db0005dee09b",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-profile-sub8-graph-20261008-v1/README.md",
+      "published": "orin/evidence/strata-gyro-profile-sub8-graph-20261008-v1/README.md",
+      "source_sha256": "90cb0a3f158358d077810041ecf977ac6c55aef52356bc855670af1340ab6484",
+      "published_sha256": "90cb0a3f158358d077810041ecf977ac6c55aef52356bc855670af1340ab6484",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-profile-sub8-graph-20261008-v1/protocol.json",
+      "published": "orin/evidence/strata-gyro-profile-sub8-graph-20261008-v1/protocol.json",
+      "source_sha256": "a4fad59f59b309bee9303b663bd0132e22a90191b16914d38b979b2fbeb6f718",
+      "published_sha256": "9c0e831e667548ef1dcfbb421e6aa03dc98866279960d3cee7b6374181a00786",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-profile-sub8-graph-20261008-v1/result.json",
+      "published": "orin/evidence/strata-gyro-profile-sub8-graph-20261008-v1/result.json",
+      "source_sha256": "2edef674fac4e0d9c65e37db1a2f535a869899ec4214357087ac4d98ede2265d",
+      "published_sha256": "22f91dd38919ceadf5ac2afa6e6021ef01ead3fc02b69415f461134c06c502af",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-prompt-fixed-cost-20261008-v1/README.md",
+      "published": "orin/evidence/strata-gyro-prompt-fixed-cost-20261008-v1/README.md",
+      "source_sha256": "148327d994af584f624095104aeccc5f0ef7aeef3e3f077071e9f9d97ae74544",
+      "published_sha256": "148327d994af584f624095104aeccc5f0ef7aeef3e3f077071e9f9d97ae74544",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-prompt-fixed-cost-20261008-v1/compare.txt",
+      "published": "orin/evidence/strata-gyro-prompt-fixed-cost-20261008-v1/compare.txt",
+      "source_sha256": "b416ddc6a8c59800930c5929e66f7f0f868729d9f8612c490519eb09bb8ba42e",
+      "published_sha256": "b416ddc6a8c59800930c5929e66f7f0f868729d9f8612c490519eb09bb8ba42e",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-prompt-fixed-cost-20261008-v1/nsys-kernels-requests-4-5.json",
+      "published": "orin/evidence/strata-gyro-prompt-fixed-cost-20261008-v1/nsys-kernels-requests-4-5.json",
+      "source_sha256": "d2de9e6d1bd91efb269136804260b0525d639611950592ce9dc30dba4e093990",
+      "published_sha256": "d2de9e6d1bd91efb269136804260b0525d639611950592ce9dc30dba4e093990",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-prompt-fixed-cost-20261008-v1/prompt-timing-dq.txt",
+      "published": "orin/evidence/strata-gyro-prompt-fixed-cost-20261008-v1/prompt-timing-dq.txt",
+      "source_sha256": "6a3ef716ac375450f5a5558a33d8526b08372d6d60ddd52fef6479d160ab8d06",
+      "published_sha256": "6a3ef716ac375450f5a5558a33d8526b08372d6d60ddd52fef6479d160ab8d06",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-prompt-fixed-cost-20261008-v1/prompt-timing-dqpark.txt",
+      "published": "orin/evidence/strata-gyro-prompt-fixed-cost-20261008-v1/prompt-timing-dqpark.txt",
+      "source_sha256": "c0bcbefe660fb9a35bd221f7dfedb5490c5b429abd253bfd950cb4392115707d",
+      "published_sha256": "c0bcbefe660fb9a35bd221f7dfedb5490c5b429abd253bfd950cb4392115707d",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-prompt-fixed-cost-20261008-v1/prompt-timing-p.txt",
+      "published": "orin/evidence/strata-gyro-prompt-fixed-cost-20261008-v1/prompt-timing-p.txt",
+      "source_sha256": "1c68e379c6bfe686a59ee32d1a3b19fcfcf0f39a65eaabbaf077be70bcca7193",
+      "published_sha256": "1c68e379c6bfe686a59ee32d1a3b19fcfcf0f39a65eaabbaf077be70bcca7193",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-prompt-fixed-cost-20261008-v1/replay-dq-timings.json",
+      "published": "orin/evidence/strata-gyro-prompt-fixed-cost-20261008-v1/replay-dq-timings.json",
+      "source_sha256": "870d87ce9a73660c1913895daa105aed43b3322c78dd99972d8718bb8b2caae5",
+      "published_sha256": "870d87ce9a73660c1913895daa105aed43b3322c78dd99972d8718bb8b2caae5",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-prompt-fixed-cost-20261008-v1/replay-dqpark-timings.json",
+      "published": "orin/evidence/strata-gyro-prompt-fixed-cost-20261008-v1/replay-dqpark-timings.json",
+      "source_sha256": "588da9a3af29cbcb892ea40757070f0b063e2a6772be0a08c9dfc4fe60cde74f",
+      "published_sha256": "588da9a3af29cbcb892ea40757070f0b063e2a6772be0a08c9dfc4fe60cde74f",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-prompt-fixed-cost-20261008-v1/replay-p-timings.json",
+      "published": "orin/evidence/strata-gyro-prompt-fixed-cost-20261008-v1/replay-p-timings.json",
+      "source_sha256": "48cd1878ffd54810f6202a9a197ec353f728299709ee221356093cc61a036026",
+      "published_sha256": "48cd1878ffd54810f6202a9a197ec353f728299709ee221356093cc61a036026",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-sub8-ab-20261008-v1/README.md",
+      "published": "orin/evidence/strata-gyro-sub8-ab-20261008-v1/README.md",
+      "source_sha256": "2a575459298d4e8e3e381bb4f3313baa918d8bc9619c316ac1a39c1013ab45d5",
+      "published_sha256": "2728db8051e4d935c4e6789426a5b53535feacb09cdfb6e8b75c783016129282",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-sub8-ab-20261008-v1/protocol.json",
+      "published": "orin/evidence/strata-gyro-sub8-ab-20261008-v1/protocol.json",
+      "source_sha256": "1205b3bd4ba05fb2b29b66073b23588f32396eea71fcd5f216c7f705afd93dd2",
+      "published_sha256": "252cf245a6ea67175cd095a4448ed9ee85295dd93c4345c6f6638762b8bb4469",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-sub8-ab-20261008-v1/result.json",
+      "published": "orin/evidence/strata-gyro-sub8-ab-20261008-v1/result.json",
+      "source_sha256": "11e6fd4e8c666f2ea1936ce3f0b9a1d126f62aeb60d8b1512b3afd50bfe6359a",
+      "published_sha256": "17ca67bbc6698b2f3fc422cd2e0fdee724533a15ae28db229ce85d903c41f2f4",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-sub8-ab-20261008-v1/summary.json",
+      "published": "orin/evidence/strata-gyro-sub8-ab-20261008-v1/summary.json",
+      "source_sha256": "fc45b3000a4b8ccd03e47586e95280584d35f46c9ebb927ee35a2a13967c2294",
+      "published_sha256": "fc45b3000a4b8ccd03e47586e95280584d35f46c9ebb927ee35a2a13967c2294",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "evidence/strata-gyro-tq2t-stage-lut-ab-20261007-v1/README.md",
+      "published": "orin/evidence/strata-gyro-tq2t-stage-lut-ab-20261007-v1/README.md",
+      "source_sha256": "dbabdfc193544c45974270f661fd12e30452f67272c868c399aca5fe19d0f010",
+      "published_sha256": "4e31c9d2ac0601e511b2d22602ffdb0bed1ae81bf2c927fccd7698a9a98f5ae2",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-tq2t-stage-lut-ab-20261007-v1/protocol.json",
+      "published": "orin/evidence/strata-gyro-tq2t-stage-lut-ab-20261007-v1/protocol.json",
+      "source_sha256": "1cff29d5a565762088d7406a55b9d1f1f881d591e6f5aca86884bf1c7caf26b5",
+      "published_sha256": "35ebbff0c81c2609cd5b7ee9f31775b03474cdffa6164357870f7e687ba9a10b",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-tq2t-stage-lut-ab-20261007-v1/result.json",
+      "published": "orin/evidence/strata-gyro-tq2t-stage-lut-ab-20261007-v1/result.json",
+      "source_sha256": "d568a7b8fc877ddc589b2f43584b6f9d3ec90558dd688cf99ec34f48b4c06708",
+      "published_sha256": "6cfe82f7bbb49c95de869c778001e56e42134362dca551c2e3fc96cc667ee033",
+      "treatment": "testbed paths and identifiers replaced; Markdown links adapted"
+    },
+    {
+      "source": "evidence/strata-gyro-tq2t-stage-lut-ab-20261007-v1/summary.json",
+      "published": "orin/evidence/strata-gyro-tq2t-stage-lut-ab-20261007-v1/summary.json",
+      "source_sha256": "513e473072fa58dd28b948f156ede839ff2bd02d5e5607b928e8f9af0f8e186d",
+      "published_sha256": "513e473072fa58dd28b948f156ede839ff2bd02d5e5607b928e8f9af0f8e186d",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/agention-llama-tq-mmq-lut-xptrs-tmpl.patch",
+      "published": "orin/patches/agention-llama-tq-mmq-lut-xptrs-tmpl.patch",
+      "source_sha256": "37b0e392eeb28b7ff84b3949493dc011c0dcebff23c65ea376bc57430e8b1dde",
+      "published_sha256": "37b0e392eeb28b7ff84b3949493dc011c0dcebff23c65ea376bc57430e8b1dde",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/agention-llama-tq-mmq-lut-xptrs.patch",
+      "published": "orin/patches/agention-llama-tq-mmq-lut-xptrs.patch",
+      "source_sha256": "d49f24fe0fd8bdf1d94ca3a3be1e87572c51b61413a39d42ef28956d3252fd31",
+      "published_sha256": "d49f24fe0fd8bdf1d94ca3a3be1e87572c51b61413a39d42ef28956d3252fd31",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/agention-llama-tq-mmq-shared-lut.patch",
+      "published": "orin/patches/agention-llama-tq-mmq-shared-lut.patch",
+      "source_sha256": "ec0de873e8484d26d5c9ffa6af3da6896c5336f06feb41ec9d218ea49b3c0114",
+      "published_sha256": "ec0de873e8484d26d5c9ffa6af3da6896c5336f06feb41ec9d218ea49b3c0114",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-arm64.patch",
+      "published": "orin/patches/strata-orin-arm64.patch",
+      "source_sha256": "3eefbceb0ea74612a76fff00f557dbc2eb074a83161374a084cb7b3cb6c318ee",
+      "published_sha256": "3eefbceb0ea74612a76fff00f557dbc2eb074a83161374a084cb7b3cb6c318ee",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-exp-lb6.patch",
+      "published": "orin/patches/strata-orin-exp-lb6.patch",
+      "source_sha256": "c3d69cc263051d7acc81899c50544321cfc5b43b62c55e06fb59346b523b4f45",
+      "published_sha256": "c3d69cc263051d7acc81899c50544321cfc5b43b62c55e06fb59346b523b4f45",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-exp-stage4.patch",
+      "published": "orin/patches/strata-orin-exp-stage4.patch",
+      "source_sha256": "cd8a153622e35429e3e0022c79ad2a79c04f23583c36b0506697fbda62de6bb2",
+      "published_sha256": "cd8a153622e35429e3e0022c79ad2a79c04f23583c36b0506697fbda62de6bb2",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-sub8-direct-off.patch",
+      "published": "orin/patches/strata-orin-sub8-direct-off.patch",
+      "source_sha256": "34084009a92e8fca085213a8d7df012160be9ffb0d72e22f0c551c0be7471336",
+      "published_sha256": "34084009a92e8fca085213a8d7df012160be9ffb0d72e22f0c551c0be7471336",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-sub8-direct.patch",
+      "published": "orin/patches/strata-orin-sub8-direct.patch",
+      "source_sha256": "a064b357623640191a6a520a744f57b867e24bcbcb74174efab26e5ef2c29633",
+      "published_sha256": "a064b357623640191a6a520a744f57b867e24bcbcb74174efab26e5ef2c29633",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-sub8-dqpairs.patch",
+      "published": "orin/patches/strata-orin-sub8-dqpairs.patch",
+      "source_sha256": "0545692c00b5f5427762b134544e4273fa3ee14c36f7607bc3de055fefcbd054",
+      "published_sha256": "0545692c00b5f5427762b134544e4273fa3ee14c36f7607bc3de055fefcbd054",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-sub8-dqpark.patch",
+      "published": "orin/patches/strata-orin-sub8-dqpark.patch",
+      "source_sha256": "1d2e5ea446e5a1f0c5a8aeefef1e0cb68db0c150348e0bd46ee50dd00130ca01",
+      "published_sha256": "1d2e5ea446e5a1f0c5a8aeefef1e0cb68db0c150348e0bd46ee50dd00130ca01",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-sub8-f16cache.patch",
+      "published": "orin/patches/strata-orin-sub8-f16cache.patch",
+      "source_sha256": "42d27f83f6ce8d68cb5ddf0d765d21dab8e9c77d2bb8f4c7182c658d0e76e99c",
+      "published_sha256": "42d27f83f6ce8d68cb5ddf0d765d21dab8e9c77d2bb8f4c7182c658d0e76e99c",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-sub8-grlo.patch",
+      "published": "orin/patches/strata-orin-sub8-grlo.patch",
+      "source_sha256": "13cfa3cd15913c29a3db75ba14cc1168bcee325c6484088469d7769301b71100",
+      "published_sha256": "13cfa3cd15913c29a3db75ba14cc1168bcee325c6484088469d7769301b71100",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-sub8-grpres.patch",
+      "published": "orin/patches/strata-orin-sub8-grpres.patch",
+      "source_sha256": "72f3c457c8174026fca77d1ca65c507a54598a66c614ef2b6caf21b23bd77258",
+      "published_sha256": "72f3c457c8174026fca77d1ca65c507a54598a66c614ef2b6caf21b23bd77258",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-sub8-grup.patch",
+      "published": "orin/patches/strata-orin-sub8-grup.patch",
+      "source_sha256": "9d1e3421320df8989bd982770285da2aa088591548d4c19389fcc846217bfe36",
+      "published_sha256": "9d1e3421320df8989bd982770285da2aa088591548d4c19389fcc846217bfe36",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-sub8-mmqptr-off.patch",
+      "published": "orin/patches/strata-orin-sub8-mmqptr-off.patch",
+      "source_sha256": "9f9d9646d91fedd162648057fdb124e6327b113d31bec98e7430ab30f1f072ee",
+      "published_sha256": "9f9d9646d91fedd162648057fdb124e6327b113d31bec98e7430ab30f1f072ee",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-sub8-native.patch",
+      "published": "orin/patches/strata-orin-sub8-native.patch",
+      "source_sha256": "4bd4773574fd867f9a74023acb3a79aca3f19cf0bb1960e0f113d69aa141b122",
+      "published_sha256": "4bd4773574fd867f9a74023acb3a79aca3f19cf0bb1960e0f113d69aa141b122",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-sub8-ptime.patch",
+      "published": "orin/patches/strata-orin-sub8-ptime.patch",
+      "source_sha256": "ca6c1e049fe72eebecf5dca04a2df885cef728904a83c8a4cc674ef8bfb56170",
+      "published_sha256": "ca6c1e049fe72eebecf5dca04a2df885cef728904a83c8a4cc674ef8bfb56170",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-sub8-recycle.patch",
+      "published": "orin/patches/strata-orin-sub8-recycle.patch",
+      "source_sha256": "04fc55b4b54b4c779081b74766b646203cef60a437d3142ff974d90a39de07b9",
+      "published_sha256": "04fc55b4b54b4c779081b74766b646203cef60a437d3142ff974d90a39de07b9",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-tq2t-prefetch.patch",
+      "published": "orin/patches/strata-orin-tq2t-prefetch.patch",
+      "source_sha256": "156441c82a9dba23c345586e1a90aa4fc913f20c960a71cba83d3b696208e365",
+      "published_sha256": "156441c82a9dba23c345586e1a90aa4fc913f20c960a71cba83d3b696208e365",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-tq2t-rpw4-sub8.patch",
+      "published": "orin/patches/strata-orin-tq2t-rpw4-sub8.patch",
+      "source_sha256": "7cfa1366aa7ab589693287ca76ddec15eb525598282f21207a29d78929942450",
+      "published_sha256": "7cfa1366aa7ab589693287ca76ddec15eb525598282f21207a29d78929942450",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-tq2t-stage-lut-x.patch",
+      "published": "orin/patches/strata-orin-tq2t-stage-lut-x.patch",
+      "source_sha256": "7b6db5981ba5391d6807e4d61199223f6ff1765bdd388e561b1c01599ca19b1d",
+      "published_sha256": "7b6db5981ba5391d6807e4d61199223f6ff1765bdd388e561b1c01599ca19b1d",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-tq2t-stage-lut.patch",
+      "published": "orin/patches/strata-orin-tq2t-stage-lut.patch",
+      "source_sha256": "a228d277af95a55433ab91103a78fb94af468db9172ae4482f053d29330c697b",
+      "published_sha256": "a228d277af95a55433ab91103a78fb94af468db9172ae4482f053d29330c697b",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-tq2t-stage.patch",
+      "published": "orin/patches/strata-orin-tq2t-stage.patch",
+      "source_sha256": "5b13163905f906d7b1e9ec88f1e03fd0b3c436a47ecbc8afd58fddfd3d353331",
+      "published_sha256": "5b13163905f906d7b1e9ec88f1e03fd0b3c436a47ecbc8afd58fddfd3d353331",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "scripts/analyze-strata-gyro-nsys.py",
+      "published": "orin/tools/analyze-strata-gyro-nsys.py",
+      "source_sha256": "4b9239a965910207ec207bbb8a1051325dac9d243690c47bd1bb97f254b11304",
+      "published_sha256": "4b9239a965910207ec207bbb8a1051325dac9d243690c47bd1bb97f254b11304",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "scripts/bench-strata-gyro-gr.sh",
+      "published": "orin/tools/bench-strata-gyro-gr.sh",
+      "source_sha256": "0e3b00be40939d440465c364b2384ed76fc571b0dc3502b3d700f072a37ad88b",
+      "published_sha256": "2b623983d0d6e256812f0ba4a357d1d8d11f563f78000fb625530b52ad914158",
+      "treatment": "runtime path and device path parameterized; removed testbed ownership change; ASTOP before/after and pipeline failure propagation added"
+    },
+    {
+      "source": "scripts/bench-strata-gyro-grouped.sh",
+      "published": "orin/tools/bench-strata-gyro-grouped.sh",
+      "source_sha256": "32e2e4e9d2a0847f61bb7297b4906f9cdd4a8643dfdcd97da28623799e54a629",
+      "published_sha256": "a82fde5daba4aeca48c0c8f7705503bf61f869b93d823a56f7cad1522aae9ec3",
+      "treatment": "runtime path and device path parameterized; removed testbed ownership change; ASTOP before/after and pipeline failure propagation added"
+    },
+    {
+      "source": "scripts/compare-strata-gyro-nsys-kernels.py",
+      "published": "orin/tools/compare-strata-gyro-nsys-kernels.py",
+      "source_sha256": "674826207cd47a69c837ad72c1f07e86ab61a2f830f224e0fa78442d088ad267",
+      "published_sha256": "674826207cd47a69c837ad72c1f07e86ab61a2f830f224e0fa78442d088ad267",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "scripts/compare-strata-replays.py",
+      "published": "orin/tools/compare-strata-replays.py",
+      "source_sha256": "ab8e78fdc0e3b826590d6d76ed2988cf3b7cc54bdc7d94e4062858fffd2de30b",
+      "published_sha256": "ab8e78fdc0e3b826590d6d76ed2988cf3b7cc54bdc7d94e4062858fffd2de30b",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "scripts/prefetch-gyro-model.py",
+      "published": "orin/tools/prefetch-gyro-model.py",
+      "source_sha256": "fff3363bd3ad201cdc7f07baf1dc4b445a7c3d514b0ace7c65ef86d9b771e4a2",
+      "published_sha256": "fff3363bd3ad201cdc7f07baf1dc4b445a7c3d514b0ace7c65ef86d9b771e4a2",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "scripts/replay-strata-requests.py",
+      "published": "orin/tools/replay-strata-requests.py",
+      "source_sha256": "0ac09cdf6851fc73d23ed7e66ece387d38663d588c23780c70c7e9372b3de330",
+      "published_sha256": "0ac09cdf6851fc73d23ed7e66ece387d38663d588c23780c70c7e9372b3de330",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "scripts/strata-gyro-benchmark.py",
+      "published": "orin/tools/strata-gyro-benchmark.py",
+      "source_sha256": "1c361c3140a709bf5d72ca4b2f54c8850c7b2a212f44db02f289cdce4baf80d9",
+      "published_sha256": "1c361c3140a709bf5d72ca4b2f54c8850c7b2a212f44db02f289cdce4baf80d9",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "scripts/strata-gyro-profile.py",
+      "published": "orin/tools/strata-gyro-profile.py",
+      "source_sha256": "769b2141d13365d2a00200d0c2ffe5bce70dd23bc10089559301a92e56c9bf3d",
+      "published_sha256": "769b2141d13365d2a00200d0c2ffe5bce70dd23bc10089559301a92e56c9bf3d",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "scripts/strata-request-recorder.py",
+      "published": "orin/tools/strata-request-recorder.py",
+      "source_sha256": "8604270d5b0c2a3112c1864cd5b35e91d895a2aba71365203238f85819e60008",
+      "published_sha256": "8604270d5b0c2a3112c1864cd5b35e91d895a2aba71365203238f85819e60008",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "scripts/summarize-strata-gyro-benchmark.py",
+      "published": "orin/tools/summarize-strata-gyro-benchmark.py",
+      "source_sha256": "6dd36e6c1f5fcc79bc5f1a18578df18484487dda0166ed11f5b392a44f60ebb1",
+      "published_sha256": "6dd36e6c1f5fcc79bc5f1a18578df18484487dda0166ed11f5b392a44f60ebb1",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "scripts/summarize-strata-prompt-timing.py",
+      "published": "orin/tools/summarize-strata-prompt-timing.py",
+      "source_sha256": "b3516a3c42949ed9be40d9357cc10b779e1d2ae51a3c2829ff323a5f84b07e6f",
+      "published_sha256": "b3516a3c42949ed9be40d9357cc10b779e1d2ae51a3c2829ff323a5f84b07e6f",
+      "treatment": "byte-identical"
+    }
+  ]
+}

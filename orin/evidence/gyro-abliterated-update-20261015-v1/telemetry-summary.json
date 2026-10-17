@@ -1,0 +1,56 @@
+{
+  "samples": 993,
+  "first_utc": "2026-10-15T05:50:10Z",
+  "last_utc": "2026-10-15T07:13:25Z",
+  "incomplete_rows": 0,
+  "memory_pressure_states": [
+    "normal",
+    "warning"
+  ],
+  "metrics": {
+    "memory_used_bytes": {
+      "available_samples": 993,
+      "min": 10460635136,
+      "max": 61238173696,
+      "first": 60536786944,
+      "last": 57175990272
+    },
+    "headroom_bytes": {
+      "available_samples": 993,
+      "min": 4694372352,
+      "max": 55471910912,
+      "first": 5395759104,
+      "last": 8756555776
+    },
+    "swap_used_bytes": {
+      "available_samples": 993,
+      "min": 414818304,
+      "max": 943824896,
+      "first": 943562752,
+      "last": 415604736
+    },
+    "gpu_utilization_percent": {
+      "available_samples": 993,
+      "min": 0.0,
+      "max": 100.0,
+      "first": 0.0,
+      "last": 99.9
+    },
+    "gpu_temperature_c": {
+      "available_samples": 327,
+      "min": 41.75,
+      "max": 64.0,
+      "first": 46.062,
+      "last": 56.0
+    },
+    "gpu_frequency_mhz": {
+      "available_samples": 993,
+      "min": 306.0,
+      "max": 1300.5,
+      "first": 306.0,
+      "last": 1300.5
+    },
+    "gpu_power_watts": null
+  },
+  "scope": "Native recording across download, reconstruction, preparation, candidate validation and production startup; unavailable metrics remain null"
+}
