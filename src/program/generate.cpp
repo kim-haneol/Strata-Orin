@@ -500,6 +500,7 @@ struct Options {
     /// prompt again, the v0.1.2 behaviour).  One is the GDN recurrence of the 36 layers, the QSA indexer tails and
     /// the PLE history (~118 MB of host RAM); the KV cache itself is positional and stays where it is.
     int prompt_cache = 6;
+    bool prompt_cache_spread = false;
     int64_t conversation_cache_mib = 0; // opt-in host RAM for independent conversations
     int conversation_cache_slots = 4;
     int64_t conversation_cache_min_free_mib = 2560;
@@ -615,6 +616,7 @@ void usage() {
                  "  --vision             --serve takes images too (GENI requests; embeddings from strata-vision)\n"
                  "  --prompt-cache N     --serve: keep N conversation checkpoints between requests (default 6, ~118 MB\n"
                  "                       of RAM each; 0 = read every prompt from the start)\n"
+                 "  --prompt-cache-spread  keep checkpoints spread back from the conversation end (opt-in)\n"
                  "  --conversation-cache-mib N  --serve: RAM budget for parked conversations (default 0 = off)\n"
                  "  --conversation-cache-slots N  --serve: at most N parked conversations (default 4)\n"
                  "  --conversation-cache-min-free-mib N  --serve: physical RAM floor when parking (default 2560)\n"
@@ -1415,6 +1417,7 @@ int main(int argc, char** argv) {
         else if (a == "--serve") o.serve = true;
         else if (a == "--vision") o.vision = true;
         else if (a == "--prompt-cache") o.prompt_cache = std::max(0, std::atoi(next("--prompt-cache")));
+        else if (a == "--prompt-cache-spread") o.prompt_cache_spread = true;
         else if (a == "--conversation-cache-mib" || a == "--conversation-cache-slots" ||
                  a == "--conversation-cache-min-free-mib") {
             const std::string value = next(a.c_str());
@@ -5395,8 +5398,20 @@ int main(int argc, char** argv) {
                 std::vector<uint64_t> stamps;
                 stamps.reserve(checks.size());
                 for (const ConvCheckpoint& k : checks) stamps.push_back(k.used);
-                const size_t victim = strata::program::conv_cache::eviction_victim(stamps.data(), stamps.size(),
-                                                                                   o.prompt_cache);
+                std::vector<int64_t> lens;
+                if (o.prompt_cache_spread)
+                    for (const ConvCheckpoint& k : checks) lens.push_back((int64_t) k.ids.size());
+                const size_t victim = o.prompt_cache_spread
+                    ? strata::program::conv_cache::spread_victim(lens.data(), stamps.data(), stamps.size(),
+                                                                 o.prompt_cache, nullptr, nullptr)
+                    : strata::program::conv_cache::eviction_victim(stamps.data(), stamps.size(), o.prompt_cache);
+                static const bool policy_trace = [] {
+                    const char* e = std::getenv("STRATA_CKPT_POLICY_TRACE");
+                    return e != nullptr && std::atoi(e) != 0;
+                }();
+                if (policy_trace)
+                    std::fprintf(stderr, "strata cache: %s evicts checkpoint=%lld\n",
+                                 o.prompt_cache_spread ? "spread" : "lru", (long long) checks[victim].ids.size());
                 if (ckpt_recycle && stages.empty() && ckpt_spare.empty())
                     ckpt_spare.push_back(std::move(checks[victim]));
                 checks.erase(checks.begin() + (std::ptrdiff_t) victim);
