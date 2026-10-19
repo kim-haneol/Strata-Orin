@@ -501,6 +501,9 @@ template<int TY> struct TqInfo;
 template<> struct TqInfo<144> { using block_t = block_tq2_t; };   // byte-aligned, no K
 template<> struct TqInfo<145> { using block_t = block_tqk6; static constexpr int K = 6; };
 template<> struct TqInfo<146> { using block_t = block_tqk7; static constexpr int K = 7; };
+template<> struct TqInfo<147> { using block_t = block_tqp5; static constexpr int K = 5; };
+template<> struct TqInfo<148> { using block_t = block_tqp6; static constexpr int K = 6; };
+template<> struct TqInfo<149> { using block_t = block_tqp7; static constexpr int K = 7; };
 __device__ __forceinline__ float tq_h2f(uint32_t bits) { return __half2float(__ushort_as_half((unsigned short) bits)); }
 // the four unscaled weights of the step with state s: (a.x, a.y, b.x, b.y)
 __device__ __forceinline__ void tq_step(uint32_t s, float2& a, float2& b) {
@@ -536,6 +539,32 @@ __device__ __forceinline__ void tq_states4(const uint8_t* qs, int l, uint32_t s[
         for (int i = 0; i < 4; ++i) s[i] = (uint32_t) (v >> (r + (3 - i) * K)) & 0xFFFFu;
     }
 }
+// Pair-trellis state decoder: Agention e6ab9d50, adapted for the native expert path.
+template <int TY>
+static __device__ __forceinline__ void tqp_states8(const uint8_t * qs, const int l, uint32_t s[8]) {
+    constexpr int K      = TqInfo<TY>::K;
+    constexpr int nwords = 4*K;
+    const uint16_t * qs16 = (const uint16_t *) qs;
+    const int S   = (56 - 8*l)*K;
+    const int wb  = S >> 4;
+    const int r   = S & 15;
+    const int wi1 = wb + 1 >= nwords ? wb + 1 - nwords : wb + 1;
+    const int wi2 = wb + 2 >= nwords ? wb + 2 - nwords : wb + 2;
+    const int wi3 = wb + 3 >= nwords ? wb + 3 - nwords : wb + 3;
+    uint64_t v = (uint64_t) qs16[wb] | ((uint64_t) qs16[wi1] << 16) |
+                 ((uint64_t) qs16[wi2] << 32) | ((uint64_t) qs16[wi3] << 48);
+    v >>= r;
+    if constexpr (8 + 7*K + TQ_STATE_BITS > 64) {
+        const int wi4 = wb + 4 >= nwords ? wb + 4 - nwords : wb + 4;
+        // r is 0 or 8; for r = 0 the fifth word is not needed (and a shift by 64 is undefined)
+        v |= r ? (uint64_t) qs16[wi4] << (64 - r) : 0;
+    }
+#pragma unroll
+    for (int j = 0; j < 8; ++j) {
+        s[j] = (uint32_t) (v >> ((7 - j)*K)) & TQ_STATE_MASK;
+    }
+}
+
 // lane iqs/4 of block kbx against the q8_1 blocks aligned with the block's start (4 per trellis block).  Split in
 // two, like the IQ types' decode-once kernels below: tq_load decodes the lane's 16 codebook values (weight side only),
 // tq_apply does the activation side.  vec_dot_tq_q8_1 is apply(load()), so the per-entry and the decode-once kernels
@@ -550,13 +579,24 @@ template<int TY>
 __device__ __forceinline__ TqLane tq_load(const void* __restrict__ vbq, int kbx, int iqs,
                                           const uint16_t* __restrict__ lut = tq_lut_i8) {
     const auto* b = (const typename TqInfo<TY>::block_t*) vbq + kbx;
-    uint32_t s[4];
-    tq_states4<TY>(b->qs, iqs / 4, s);
     TqLane r;
+    if constexpr (TY >= 147 && TY <= 149) {
+        uint32_t s[8];
+        tqp_states8<TY>(b->qs, iqs / 4, s);
 #pragma unroll
-    for (int i = 0; i < 4; ++i) {
-        const uint32_t x = (s[i] & TQ_STATE_MASK) * 0x9e3779b1u;
-        r.q[i] = (int) ((uint32_t) lut[x >> 21] | ((uint32_t) lut[(x >> 10) & 2047u] << 16));
+        for (int i = 0; i < 4; ++i) {
+            const uint32_t lo = (s[2*i] * 0x9e3779b1u) >> 21;
+            const uint32_t hi = (s[2*i+1] * 0x9e3779b1u) >> 21;
+            r.q[i] = (int) ((uint32_t) lut[lo] | ((uint32_t) lut[hi] << 16));
+        }
+    } else {
+        uint32_t s[4];
+        tq_states4<TY>(b->qs, iqs / 4, s);
+#pragma unroll
+        for (int i = 0; i < 4; ++i) {
+            const uint32_t x = (s[i] & TQ_STATE_MASK) * 0x9e3779b1u;
+            r.q[i] = (int) ((uint32_t) lut[x >> 21] | ((uint32_t) lut[(x >> 10) & 2047u] << 16));
+        }
     }
     r.d = tq_h2f(b->d);
     return r;
@@ -614,12 +654,18 @@ template<> struct Fmt<145> { static constexpr int qk = 128, ipb = 8, step = 4;
     __device__ static float dot(const void* v, const block_q8_1* y, int kbx, int iqs) { return vec_dot_tq_q8_1<145>(v, y, kbx, iqs); } };
 template<> struct Fmt<146> { static constexpr int qk = 128, ipb = 8, step = 4;
     __device__ static float dot(const void* v, const block_q8_1* y, int kbx, int iqs) { return vec_dot_tq_q8_1<146>(v, y, kbx, iqs); } };
+template<> struct Fmt<147> { static constexpr int qk = 128, ipb = 8, step = 4;
+    __device__ static float dot(const void* v, const block_q8_1* y, int kbx, int iqs) { return vec_dot_tq_q8_1<147>(v, y, kbx, iqs); } };
+template<> struct Fmt<148> { static constexpr int qk = 128, ipb = 8, step = 4;
+    __device__ static float dot(const void* v, const block_q8_1* y, int kbx, int iqs) { return vec_dot_tq_q8_1<148>(v, y, kbx, iqs); } };
+template<> struct Fmt<149> { static constexpr int qk = 128, ipb = 8, step = 4;
+    __device__ static float dot(const void* v, const block_q8_1* y, int kbx, int iqs) { return vec_dot_tq_q8_1<149>(v, y, kbx, iqs); } };
 
 // The formats of each role, one list each so a type cannot be in one switch and missing from another.  Every
 // entry is a kernel template for each CUDA architecture of the build, hence two lists rather than one.
-#define STRATA_GU_FMTS(X) X(16) X(17) X(18) X(21) X(22) X(23) X(29) X(42) X(12) X(13) X(6) X(8) X(144) X(145)
-#define STRATA_D_FMTS(X) X(20) X(23) X(42) X(7) X(6) X(8) X(144) X(146)
-#define STRATA_MMVQ_FMTS(X) X(16) X(17) X(18) X(20) X(21) X(22) X(23) X(29) X(42) X(12) X(13) X(7) X(6) X(8) X(144) X(145) X(146)
+#define STRATA_GU_FMTS(X) X(16) X(17) X(18) X(21) X(22) X(23) X(29) X(42) X(12) X(13) X(6) X(8) X(144) X(145) X(147) X(148) X(149)
+#define STRATA_D_FMTS(X) X(20) X(23) X(42) X(7) X(6) X(8) X(144) X(146) X(147) X(148) X(149)
+#define STRATA_MMVQ_FMTS(X) X(16) X(17) X(18) X(20) X(21) X(22) X(23) X(29) X(42) X(12) X(13) X(7) X(6) X(8) X(144) X(145) X(146) X(147) X(148) X(149)
 
 __device__ __forceinline__ float warp_sum(float v) {
 #pragma unroll
@@ -973,6 +1019,9 @@ template<> struct Split<42> {   // Q2_0
 template<> inline constexpr bool kSplit<144> = true;
 template<> inline constexpr bool kSplit<145> = true;
 template<> inline constexpr bool kSplit<146> = true;
+template<> inline constexpr bool kSplit<149> = true;
+template<> inline constexpr bool kSplit<148> = true;
+template<> inline constexpr bool kSplit<147> = true;
 template<int TY> struct SplitTq {
     using W = TqLane;
     // STAGE_GRID (TQ2_T): s_grid is a shared-memory copy of the int8 codebook (stage_iq_grid<144>).  The lanes'
@@ -988,6 +1037,9 @@ template<int TY> struct SplitTq {
 template<> struct Split<144> : SplitTq<144> {};
 template<> struct Split<145> : SplitTq<145> {};
 template<> struct Split<146> : SplitTq<146> {};
+template<> struct Split<149> : SplitTq<149> {};
+template<> struct Split<148> : SplitTq<148> {};
+template<> struct Split<147> : SplitTq<147> {};
 
 // One row against the n <= NC activations x + off[0..n) (n >= 1, warp-uniform; offsets in q8_1 blocks, 32-bit to
 // spare registers), the whole warp.  Per activation this is row_dot: the same calls k, lane-strided the same way,
@@ -1934,17 +1986,30 @@ __device__ void dq_tq(const void* vx, int64_t ibs, dst_t* yy, int tid) {
     const int blk = tid >> 4, l = (tid >> 1) & 7, half = tid & 1;
     const auto* b = (const typename TqInfo<TY>::block_t*) vx + 2 * ibs + blk;
     const float d = tq_h2f(b->d);
-    uint32_t s[4];
-    tq_states4<TY>(b->qs, l, s);
     dst_t* y = yy + blk * 128 + 16 * l + 8 * half;
+    if constexpr (TY >= 147 && TY <= 149) {
+        uint32_t states[8];
+        tqp_states8<TY>(b->qs, l, states);
 #pragma unroll
-    for (int i = 0; i < 2; ++i) {
-        float2 a, c;
-        tq_step(s[2 * half + i], a, c);
-        y[4 * i + 0] = cvt<dst_t>(d * a.x);
-        y[4 * i + 1] = cvt<dst_t>(d * a.y);
-        y[4 * i + 2] = cvt<dst_t>(d * c.x);
-        y[4 * i + 3] = cvt<dst_t>(d * c.y);
+        for (int i = 0; i < 4; ++i) {
+            const uint32_t idx = (states[4*half+i] * 0x9e3779b1u) >> 21;
+            const uint32_t pair = ((const uint32_t*) tq_lut_f16)[idx];
+            const float2 v = make_float2(tq_h2f(pair & 0xFFFFu), tq_h2f(pair >> 16));
+            y[2*i] = cvt<dst_t>(d * v.x);
+            y[2*i+1] = cvt<dst_t>(d * v.y);
+        }
+    } else {
+        uint32_t states[4];
+        tq_states4<TY>(b->qs, l, states);
+#pragma unroll
+        for (int i = 0; i < 2; ++i) {
+            float2 a, c;
+            tq_step(states[2 * half + i], a, c);
+            y[4 * i + 0] = cvt<dst_t>(d * a.x);
+            y[4 * i + 1] = cvt<dst_t>(d * a.y);
+            y[4 * i + 2] = cvt<dst_t>(d * c.x);
+            y[4 * i + 3] = cvt<dst_t>(d * c.y);
+        }
     }
 }
 
@@ -1973,6 +2038,9 @@ __device__ __forceinline__ void dq_dispatch(int ty, const void* vx, int64_t ibs,
         case 144: dq_tq<144>(vx, ibs, y, tid); break;
         case 145: dq_tq<145>(vx, ibs, y, tid); break;
         case 146: dq_tq<146>(vx, ibs, y, tid); break;
+        case 147: dq_tq<147>(vx, ibs, y, tid); break;
+        case 148: dq_tq<148>(vx, ibs, y, tid); break;
+        case 149: dq_tq<149>(vx, ibs, y, tid); break;
         default: break;
     }
 }
@@ -1995,7 +2063,7 @@ __global__ void dequant_gu_kernel(int ty, const void* __restrict__ gate, const v
 // the types dq_dispatch dequantizes
 bool is_iq(int t) {
     return t == 16 || t == 17 || t == 18 || t == 20 || t == 21 || t == 22 || t == 23 || t == 29 || t == 42 || t == 11 ||
-           t == 12 || t == 13 || t == 7 || t == 6 || t == 8 || t == 144 || t == 145 || t == 146;
+           t == 12 || t == 13 || t == 7 || t == 6 || t == 8 || t == 144 || t == 145 || t == 146 || t == 147 || t == 148 || t == 149;
 }
 // values per block of the types the grouped expert kernels take (0 = none)
 int gu_qk(int t) {
@@ -2117,6 +2185,9 @@ size_t iq_row_bytes(int t, int64_t n) noexcept {
         case 144: return (size_t) (n / 128) * sizeof(block_tq2_t);   // APR trellis types
         case 145: return (size_t) (n / 128) * sizeof(block_tqk6);
         case 146: return (size_t) (n / 128) * sizeof(block_tqk7);
+        case 147: return (size_t) (n / 128) * sizeof(block_tqp5);
+        case 148: return (size_t) (n / 128) * sizeof(block_tqp6);
+        case 149: return (size_t) (n / 128) * sizeof(block_tqp7);
         default: return 0;
     }
 }

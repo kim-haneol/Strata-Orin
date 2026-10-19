@@ -32,6 +32,15 @@ typedef struct {
 } block_tqk7;
 static_assert(sizeof(block_tqk7) == 30, "wrong tqk7 block size/padding");
 
+// Pair-trellis blocks from Agention 50f7a8a2 (MIT): 64 two-weight steps, circular bit stream.
+#define QK_TQP 128
+typedef struct { uint16_t d; uint8_t qs[8*5]; } block_tqp5;
+typedef struct { uint16_t d; uint8_t qs[8*6]; } block_tqp6;
+typedef struct { uint16_t d; uint8_t qs[8*7]; } block_tqp7;
+static_assert(sizeof(block_tqp5) == 42, "wrong tqp5 block size/padding");
+static_assert(sizeof(block_tqp6) == 50, "wrong tqp6 block size/padding");
+static_assert(sizeof(block_tqp7) == 58, "wrong tqp7 block size/padding");
+
 #if defined(__CUDACC__) || defined(__HIPCC__)
 // point i = (tq_lut_f16[2i], tq_lut_f16[2i+1]) as fp16 bit patterns; 16-byte aligned so a point reads as one u32
 alignas(16) static const __device__ uint16_t tq_lut_f16[4096] = {

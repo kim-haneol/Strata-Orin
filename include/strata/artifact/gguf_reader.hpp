@@ -121,6 +121,9 @@ inline const char* ggml_type_name(uint32_t t) {
         return "TQK6";
     case 146:
         return "TQK7";
+    case 147: return "TQP5";
+    case 148: return "TQP6";
+    case 149: return "TQP7";
     default:
         return "?";
     }
@@ -241,6 +244,9 @@ inline bool block_geometry(uint32_t t, int& elems, int& bytes) {
         elems = 128;
         bytes = 30;
         return true;
+    case 147: elems = 128; bytes = 42; return true;
+    case 148: elems = 128; bytes = 50; return true;
+    case 149: elems = 128; bytes = 58; return true;
     default:
         return false;
     }
