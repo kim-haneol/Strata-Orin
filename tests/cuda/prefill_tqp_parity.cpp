@@ -149,11 +149,11 @@ Metrics run_product(Context & ctx, cudaStream_t stream, const std::string & name
     DeviceBuffer dw(w.size());
     DeviceBuffer dxq(q8_bytes(rows, cols));
     DeviceBuffer dy((size_t) rows * (size_t) out_rows * sizeof(float));
-    cuda_check(cudaMemcpy(dx.p, x.data(), x.size() * sizeof(float), cudaMemcpyHostToDevice), "copy x");
-    cuda_check(cudaMemcpy(dsrc.p, src_ids.data(), src_ids.size() * sizeof(int32_t), cudaMemcpyHostToDevice), "copy src ids");
-    cuda_check(cudaMemcpy(ddst.p, dst_ids.data(), dst_ids.size() * sizeof(int32_t), cudaMemcpyHostToDevice), "copy dst ids");
-    cuda_check(cudaMemcpy(dbounds.p, bounds.data(), bounds.size() * sizeof(int32_t), cudaMemcpyHostToDevice), "copy bounds");
-    cuda_check(cudaMemcpy(dw.p, w.data(), w.size(), cudaMemcpyHostToDevice), "copy weights and zero tail");
+    cuda_check(cudaMemcpyAsync(dx.p, x.data(), x.size() * sizeof(float), cudaMemcpyHostToDevice, stream), "copy x");
+    cuda_check(cudaMemcpyAsync(dsrc.p, src_ids.data(), src_ids.size() * sizeof(int32_t), cudaMemcpyHostToDevice, stream), "copy src ids");
+    cuda_check(cudaMemcpyAsync(ddst.p, dst_ids.data(), dst_ids.size() * sizeof(int32_t), cudaMemcpyHostToDevice, stream), "copy dst ids");
+    cuda_check(cudaMemcpyAsync(dbounds.p, bounds.data(), bounds.size() * sizeof(int32_t), cudaMemcpyHostToDevice, stream), "copy bounds");
+    cuda_check(cudaMemcpyAsync(dw.p, w.data(), w.size(), cudaMemcpyHostToDevice, stream), "copy weights and zero tail");
     // on the test's stream: a plain cudaMemset may run on the null stream AFTER the MMQ kernel on this non-blocking
     // stream, overwriting the result with the sentinel (seen as "all outputs unwritten", intermittently, on a busy GPU)
     cuda_check(cudaMemsetAsync(dy.p, 0xff, (size_t) rows * (size_t) out_rows * sizeof(float), stream),
@@ -276,7 +276,8 @@ bool run_real_iq3_first_expert(Context & ctx, cudaStream_t stream, const std::st
 
 int main(int argc, char ** argv) {
     try {
-        if (argc > 2) throw std::runtime_error("usage: mmq-parity-test [optional-native-pack-dir]");
+        if (argc > 2) throw std::runtime_error("usage: mmq-parity-test [--trellis-only|optional-native-pack-dir]");
+        const bool trellis_only = argc == 2 && std::string(argv[1]) == "--trellis-only";
         cuda_check(cudaSetDevice(0), "cudaSetDevice");
         cudaStream_t stream = nullptr;
         cuda_check(cudaStreamCreateWithFlags(&stream, cudaStreamNonBlocking), "create stream");
@@ -285,7 +286,7 @@ int main(int argc, char ** argv) {
             Context ctx; // reuse one MMQ context/pool across every pass below
             const std::vector<std::vector<int>> batches{{1, 3, 3}, {4, 1, 2}, {2, 3}};
             int trial = 0;
-            for (const auto & counts : batches) {
+            for (const auto & counts : trellis_only ? std::vector<std::vector<int>>{} : batches) {
                 const int rows = std::accumulate(counts.begin(), counts.end(), 0);
                 const int n = (int) counts.size();
                 const auto src = permutation(rows, trial + 1, false);
@@ -303,20 +304,25 @@ int main(int argc, char ** argv) {
             // activations)
             for (const ggml_type t : {(ggml_type) 144, (ggml_type) 147, (ggml_type) 148, (ggml_type) 149}) {
                 if (!supported((int) t)) throw std::runtime_error("required trellis MMQ instance missing: " + std::to_string((int) t));
-                const std::vector<int> counts{2, 3};
-                const auto src = permutation(5, 1, false), dst = permutation(5, 2, true);
                 const std::string tn = ggml_type_name(t);
                 const char* rep = std::getenv("MMQ_PARITY_REPEAT");   // repeat each product (flakiness screen)
                 const int reps = rep ? std::max(1, std::atoi(rep)) : 1;
-                const auto wgu = synthetic_q2(2, 1280, 2560, 5, t), wd = synthetic_q2(2, 2560, 640, 6, t);
+                int pass = 0;
+                for (const auto & counts : batches) {
+                const int rows = std::accumulate(counts.begin(), counts.end(), 0);
+                const int n = (int) counts.size();
+                const auto src = permutation(rows, pass + 1, false), dst = permutation(rows, pass + 2, true);
+                const auto wgu = synthetic_q2(n, 1280, 2560, 5 + pass, t), wd = synthetic_q2(n, 2560, 640, 6 + pass, t);
                 for (int r = 0; r < reps; ++r) {
-                    run_product(ctx, stream, "synthetic-" + tn + "-GU", t, 1280, 2560, wgu, counts,
-                                make_activations(5, 2560, 5), src, dst);
-                    run_product(ctx, stream, "synthetic-" + tn + "-down", t, 2560, 640, wd, counts,
-                                make_activations(5, 640, 6), src, dst);
+                    run_product(ctx, stream, "synthetic-" + tn + "-GU-pass" + std::to_string(pass), t, 1280, 2560, wgu, counts,
+                                make_activations(rows, 2560, 5 + pass), src, dst);
+                    run_product(ctx, stream, "synthetic-" + tn + "-down-pass" + std::to_string(pass), t, 2560, 640, wd, counts,
+                                make_activations(rows, 640, 6 + pass), src, dst);
+                }
+                ++pass;
                 }
             }
-            if (argc == 2) run_real_iq3_first_expert(ctx, stream, argv[1]);
+            if (argc == 2 && !trellis_only) run_real_iq3_first_expert(ctx, stream, argv[1]);
         }
         cuda_check(cudaStreamSynchronize(stream), "final synchronize");
         cuda_check(cudaStreamDestroy(stream), "destroy stream");
