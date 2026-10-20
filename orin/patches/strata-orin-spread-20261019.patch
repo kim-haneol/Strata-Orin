@@ -1,0 +1,231 @@
+From 001cd2811a1e8e677609ff39bfa3b245b269500f Mon Sep 17 00:00:00 2001
+From: Kim Haneol <50127697+kim-haneol@users.noreply.github.com>
+Date: Mon, 19 Oct 2026 10:08:54 +0000
+Subject: [PATCH] Backport opt-in checkpoint spread policy preserving Orin
+ recycling
+
+---
+ include/strata/program/conv_cache.hpp | 59 ++++++++++++++++++++++
+ src/program/conv_cache_test.cpp       | 70 +++++++++++++++++++++++++++
+ src/program/generate.cpp              | 19 +++++++-
+ 3 files changed, 146 insertions(+), 2 deletions(-)
+
+diff --git a/include/strata/program/conv_cache.hpp b/include/strata/program/conv_cache.hpp
+index 7fe4bfa..d8e97f3 100644
+--- a/include/strata/program/conv_cache.hpp
++++ b/include/strata/program/conv_cache.hpp
+@@ -40,4 +40,63 @@ inline size_t eviction_victim(const uint64_t* stamps, size_t n, int64_t cap) {
+     return v;
+ }
+ 
++/// --prompt-cache-tail: the extra checkpoint near the prompt's end (`tail[i]`) is the first to go - it serves
++/// only a branch of the last request - unless it is the newest item (the one just saved: `n > 1` and the newest
++/// stamp).  With no such item this is the plain policy.  Never the root.
++inline size_t eviction_victim(const uint64_t* stamps, size_t n, int64_t cap, const bool* tail) {
++    if (tail != nullptr && n >= 2 && cap >= 2) {
++        size_t newest = 0;
++        for (size_t i = 1; i < n; ++i)
++            if (stamps[i] > stamps[newest]) newest = i;
++        for (size_t i = 1; i < n; ++i)
++            if (tail[i] && i != newest) return i;
++    }
++    return eviction_victim(stamps, n, cap);
++}
++
++/// The pin=N shared prefixes (`pinned[i]`): they are never the victim, whatever their stamp - the queries that branch
++/// from one keep coming back to it, and a least-recently-used rule would drop it while they still do.  The root and
++/// the tail rule are as above.  When every other item is pinned too, the policy falls back to the oldest pinned one:
++/// the cache still keeps to its `cap` (the caller limits how many pins it takes, so this is a backstop).
++inline size_t eviction_victim(const uint64_t* stamps, size_t n, int64_t cap, const bool* tail, const bool* pinned) {
++    if (pinned == nullptr) return eviction_victim(stamps, n, cap, tail);
++    if (cap < 2 || n < 2) return 0;
++    size_t newest = 0;
++    for (size_t i = 1; i < n; ++i)
++        if (stamps[i] > stamps[newest]) newest = i;
++    if (tail != nullptr)
++        for (size_t i = 1; i < n; ++i)
++            if (tail[i] && !pinned[i] && i != newest) return i;
++    size_t v = n;                    // the least recently used among the unpinned non-root items
++    for (size_t i = 1; i < n; ++i)
++        if (!pinned[i] && (v == n || stamps[i] < stamps[v])) v = i;
++    if (v != n) return v;
++    v = 1;                           // all pinned: the oldest of them (never the root, index 0)
++    for (size_t i = 2; i < n; ++i)
++        if (stamps[i] < stamps[v]) v = i;
++    return v;
++}
++
++/// --prompt-cache-spread: the item whose removal leaves the smallest gap for its distance from the newest, so the kept
++/// points thin out geometrically towards the root and an edit d tokens before the end reads about d again.  `lens`:
++/// the chain's token counts.  Never the root, the newest or a pinned item; the tail rule first, as above.
++inline size_t spread_victim(const int64_t* lens, const uint64_t* stamps, size_t n, int64_t cap, const bool* tail,
++                            const bool* pinned) {
++    if (n >= 3 && cap >= 2) {
++        auto candidate = [&](size_t i) { return !(pinned && pinned[i]); };
++        if (tail != nullptr)
++            for (size_t i = 1; i + 1 < n; ++i)
++                if (tail[i] && candidate(i)) return i;
++        size_t v = n;
++        double best = 0;
++        for (size_t i = 1; i + 1 < n; ++i) {
++            if (!candidate(i)) continue;
++            const double gap = double(lens[i + 1] - lens[i - 1]) / double(lens[n - 1] - lens[i - 1]);
++            if (v == n || gap < best) { v = i; best = gap; }
++        }
++        if (v != n) return v;
++    }
++    return eviction_victim(stamps, n, cap, tail, pinned);
++}
++
+ }  // namespace strata::program::conv_cache
+diff --git a/src/program/conv_cache_test.cpp b/src/program/conv_cache_test.cpp
+index f4a0c2b..40da795 100644
+--- a/src/program/conv_cache_test.cpp
++++ b/src/program/conv_cache_test.cpp
+@@ -20,6 +20,7 @@
+ #include <vector>
+ 
+ using strata::program::conv_cache::eviction_victim;
++using strata::program::conv_cache::spread_victim;
+ 
+ namespace {
+ int g_fail = 0;
+@@ -29,8 +30,52 @@ void check(bool ok, const char* what) {
+ }
+ }  // namespace
+ 
++// a conversation of `turns` turns of `turn` tokens each after a `root`-token system prompt, a checkpoint at every turn's
++// end and at most `cap` kept; returns how many tokens a request whose prompt differs `back` tokens before the end reuses
++int64_t reuse_after_edit(bool spread, int64_t root, int64_t turn, int turns, int64_t cap, int64_t back) {
++    std::vector<int64_t> lens = {root};
++    std::vector<uint64_t> stamps = {1};
++    for (int t = 1; t <= turns; ++t) {
++        lens.push_back(root + t * turn);
++        stamps.push_back(uint64_t(t + 1));
++        while ((int64_t) lens.size() > cap) {
++            const size_t v = spread ? spread_victim(lens.data(), stamps.data(), lens.size(), cap, nullptr, nullptr)
++                                    : eviction_victim(stamps.data(), stamps.size(), cap);
++            lens.erase(lens.begin() + (std::ptrdiff_t) v);
++            stamps.erase(stamps.begin() + (std::ptrdiff_t) v);
++        }
++    }
++    const int64_t edit = lens.back() - back;
++    int64_t reuse = 0;
++    for (int64_t l : lens)
++        if (l <= edit) reuse = l;
++    return reuse;
++}
++
+ int main() {
+     std::printf("conv_cache_test\n");
++    {   // --prompt-cache-spread: 200 turns of 1,000 tokens after a 9,525-token system prompt, 6 checkpoints
++        const int64_t end = 9525 + 200 * 1000;
++        const int64_t lru6 = reuse_after_edit(false, 9525, 1000, 200, 6, 6000);
++        const int64_t spread6 = reuse_after_edit(true, 9525, 1000, 200, 6, 6000);
++        std::printf("  an edit 6K before the end: least recent use reuses %lld, spread %lld of %lld\n", (long long) lru6,
++                    (long long) spread6, (long long) end);
++        check(lru6 == 9525, "least recent use: an edit 6K back falls through to the root");
++        check(end - spread6 < 4 * 6000, "spread: an edit 6K back reads less than 24K again");
++        const int64_t spread42 = reuse_after_edit(true, 9525, 1000, 200, 6, 42000);
++        check(end - spread42 < 4 * 42000, "spread: an edit 42K back reads less than 168K again");
++        check(reuse_after_edit(true, 9525, 1000, 200, 6, 500) == end - 1000, "spread: the turn before is still kept");
++    }
++    {
++        const std::vector<int64_t> lens = {100, 200, 300, 400};
++        const std::vector<uint64_t> stamps = {1, 2, 3, 4};
++        const bool pinned[] = {false, true, true, false};
++        check(spread_victim(lens.data(), stamps.data(), 4, 3, nullptr, pinned) ==
++                  eviction_victim(stamps.data(), 4, 3, nullptr, pinned),
++              "spread: every candidate pinned - the plain policy");
++        check(spread_victim(lens.data(), stamps.data(), 2, 1, nullptr, nullptr) == 0,
++              "spread: two items, one slot - the plain policy");
++    }
+     {
+         const std::vector<uint64_t> stamps = {1, 2, 3, 4, 5, 6, 7};   // chat A: root + six turns, one over
+         check(eviction_victim(stamps.data(), stamps.size(), 6) == 1,
+@@ -62,6 +107,31 @@ int main() {
+         const size_t b = eviction_victim(stamps.data(), stamps.size(), 4);
+         check(a == 1 && b == 1, "ties among equally stale leaves: the earlier index, deterministically");
+     }
++    {   // --prompt-cache-tail: the tail checkpoint goes first; never the root, never the newest item
++        const std::vector<uint64_t> st = {1, 2, 3, 4, 5, 6, 7};
++        const bool t2[7] = {false, false, false, true, false, false, false};
++        check(eviction_victim(st.data(), st.size(), 6, t2) == 3, "a stale tail checkpoint leaves before the oldest leaf");
++        const bool t3[7] = {false, false, false, false, false, false, true};
++        check(eviction_victim(st.data(), st.size(), 6, t3) == 1, "the newest item, even a tail, is not the victim");
++        const bool t4[7] = {true, false, false, false, false, false, false};
++        check(eviction_victim(st.data(), st.size(), 6, t4) == 1, "the root is never the victim, tail flag or not");
++        check(eviction_victim(st.data(), st.size(), 6, nullptr) == 1, "no tail flags: the plain policy");
++    }
++    {   // pin=N: a pinned shared prefix is never the victim, however stale its stamp
++        const std::vector<uint64_t> st = {1, 2, 30, 4, 5, 6, 7};
++        const bool pin1[7] = {false, true, false, false, false, false, false};
++        check(eviction_victim(st.data(), st.size(), 6, nullptr, pin1) == 3,
++              "the oldest checkpoint is pinned: the next least recently used leaves");
++        check(eviction_victim(st.data(), st.size(), 6, nullptr, nullptr) == 1, "no pin flags: the plain policy");
++        const bool pin2[7] = {false, true, false, true, false, false, false};
++        check(eviction_victim(st.data(), st.size(), 6, nullptr, pin2) == 4, "two pins: the third oldest leaves");
++        const bool tail3[7] = {false, false, false, true, false, false, false};
++        check(eviction_victim(st.data(), st.size(), 6, tail3, pin2) == 4, "a pinned item is not taken as the tail either");
++        const bool all[4] = {false, true, true, true};
++        const std::vector<uint64_t> s4 = {1, 9, 3, 5};
++        check(eviction_victim(s4.data(), s4.size(), 4, nullptr, all) == 2, "everything pinned: the oldest pin leaves, never the root");
++        check(eviction_victim(s4.data(), s4.size(), 1, nullptr, all) == 0, "a one-slot budget keeps no pin: the oldest leaves");
++    }
+     std::printf(g_fail ? "FAIL\n" : "PASS\n");
+     return g_fail ? 1 : 0;
+ }
+diff --git a/src/program/generate.cpp b/src/program/generate.cpp
+index 94e66fc..8a89d1d 100644
+--- a/src/program/generate.cpp
++++ b/src/program/generate.cpp
+@@ -500,6 +500,7 @@ struct Options {
+     /// prompt again, the v0.1.2 behaviour).  One is the GDN recurrence of the 36 layers, the QSA indexer tails and
+     /// the PLE history (~118 MB of host RAM); the KV cache itself is positional and stays where it is.
+     int prompt_cache = 6;
++    bool prompt_cache_spread = false;
+     int64_t conversation_cache_mib = 0; // opt-in host RAM for independent conversations
+     int conversation_cache_slots = 4;
+     int64_t conversation_cache_min_free_mib = 2560;
+@@ -615,6 +616,7 @@ void usage() {
+                  "  --vision             --serve takes images too (GENI requests; embeddings from strata-vision)\n"
+                  "  --prompt-cache N     --serve: keep N conversation checkpoints between requests (default 6, ~118 MB\n"
+                  "                       of RAM each; 0 = read every prompt from the start)\n"
++                 "  --prompt-cache-spread  keep checkpoints spread back from the conversation end (opt-in)\n"
+                  "  --conversation-cache-mib N  --serve: RAM budget for parked conversations (default 0 = off)\n"
+                  "  --conversation-cache-slots N  --serve: at most N parked conversations (default 4)\n"
+                  "  --conversation-cache-min-free-mib N  --serve: physical RAM floor when parking (default 2560)\n"
+@@ -1415,6 +1417,7 @@ int main(int argc, char** argv) {
+         else if (a == "--serve") o.serve = true;
+         else if (a == "--vision") o.vision = true;
+         else if (a == "--prompt-cache") o.prompt_cache = std::max(0, std::atoi(next("--prompt-cache")));
++        else if (a == "--prompt-cache-spread") o.prompt_cache_spread = true;
+         else if (a == "--conversation-cache-mib" || a == "--conversation-cache-slots" ||
+                  a == "--conversation-cache-min-free-mib") {
+             const std::string value = next(a.c_str());
+@@ -5395,8 +5398,20 @@ int main(int argc, char** argv) {
+                 std::vector<uint64_t> stamps;
+                 stamps.reserve(checks.size());
+                 for (const ConvCheckpoint& k : checks) stamps.push_back(k.used);
+-                const size_t victim = strata::program::conv_cache::eviction_victim(stamps.data(), stamps.size(),
+-                                                                                   o.prompt_cache);
++                std::vector<int64_t> lens;
++                if (o.prompt_cache_spread)
++                    for (const ConvCheckpoint& k : checks) lens.push_back((int64_t) k.ids.size());
++                const size_t victim = o.prompt_cache_spread
++                    ? strata::program::conv_cache::spread_victim(lens.data(), stamps.data(), stamps.size(),
++                                                                 o.prompt_cache, nullptr, nullptr)
++                    : strata::program::conv_cache::eviction_victim(stamps.data(), stamps.size(), o.prompt_cache);
++                static const bool policy_trace = [] {
++                    const char* e = std::getenv("STRATA_CKPT_POLICY_TRACE");
++                    return e != nullptr && std::atoi(e) != 0;
++                }();
++                if (policy_trace)
++                    std::fprintf(stderr, "strata cache: %s evicts checkpoint=%lld\n",
++                                 o.prompt_cache_spread ? "spread" : "lru", (long long) checks[victim].ids.size());
+                 if (ckpt_recycle && stages.empty() && ckpt_spare.empty())
+                     ckpt_spare.push_back(std::move(checks[victim]));
+                 checks.erase(checks.begin() + (std::ptrdiff_t) victim);
+-- 
+2.47.3
+

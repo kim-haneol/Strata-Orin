@@ -1,0 +1,8 @@
+{
+  "repo": "agentionai/Qwen3.8-Flash-Next-Gyro-GGUF",
+  "revision": "aa0a0c3e24f9e08716ae806d40489abc7db6237f",
+  "filename": "Qwen3.8-Flash-Next-Gyro-L-TQ3_0.gguf",
+  "size": 108323559808,
+  "sha256": "5428a5646eaeaa56cc00a892f92e7546aeadb255233503969ad25cf48c7f359b",
+  "cache": "${RUN}/hf-cache/hub"
+}

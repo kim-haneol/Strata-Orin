@@ -16,4 +16,11 @@ targets=(strata strata-device native_expert_parity native_hadamard_test
 if [[ -f "$src/tests/cuda/mmq_gather_group_test.cpp" ]]; then
     targets+=(mmq_gather_group_test)
 fi
+# The extension adds checkpoint policy and pair-trellis validation targets.
+if [[ -f "$src/src/program/conv_cache_test.cpp" ]]; then
+    targets+=(conv_cache_test)
+fi
+if [[ -f "$src/tests/cuda/prefill_tqp_parity.cpp" ]]; then
+    targets+=(prefill_tqp_parity)
+fi
 cmake --build "$build" -j "${GYRO_BUILD_JOBS:-4}" --target "${targets[@]}"

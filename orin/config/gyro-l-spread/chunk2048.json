@@ -1,0 +1,103 @@
+{
+  "protocol": "orin-gyro-l-chunk2048-20261019-v2",
+  "runtime_directory": "${RUNTIME}",
+  "workload": "Korean explanation of inference latency with varied reference notes",
+  "input_lengths": [
+    2048
+  ],
+  "output_tokens": 512,
+  "concurrency": 1,
+  "warmup_requests_per_length_and_mode": 1,
+  "measured_requests_per_length_and_mode": 3,
+  "mode_order": [
+    "l-unified"
+  ],
+  "max_context": 262144,
+  "prefill_chunk": 2048,
+  "kv": "int8",
+  "verifier_capacity": 4,
+  "mtp_max_t": {
+    "m-baseline": 4,
+    "m-unified": 4,
+    "l-unified": 4
+  },
+  "spec_min_p": 0.5,
+  "expert_cache": 24576,
+  "pool_workers": 2,
+  "prompt_cache": 0,
+  "prompt_cache_every": 0,
+  "conversation_cache_mib": 0,
+  "short_read": 0,
+  "suffix_draft": 0,
+  "sampling": {
+    "temperature": 0
+  },
+  "eos_ids": [
+    2147483647
+  ],
+  "power_mode": "MAXN",
+  "input_scope": "Same exact tokenizer IDs for Korean explanation prompts at 2K/25K/80K; synthetic, not private Hermes history.",
+  "off_scope": "All headline modes use the same MTP cap 4/confidence .5. Separate L smoke covers MTP removed.",
+  "eos_scope": "Unreachable EOS id forces exactly 512 tokens, including any natural end-of-turn followed by continuation. Record natural EOS positions; not an answer-quality evaluation.",
+  "timers": {
+    "internal_prompt_ms": "DONE.prompt_ms: engine r0 to prompt completion after expert-cache refill, including reset, target prefill and draft KV prefill. Last input token is processed by first verify window.",
+    "internal_prefill_tps": "(input_tokens - 1) / (DONE.prompt_ms / 1000), after verifying zero reused tokens and final PP position=input_tokens-1.",
+    "last_pp_ms": "Cumulative engine r0-to-last-prefill-chunk timer; includes target and draft prefill. Excludes subsequent cache refill; not a pure target kernel timer.",
+    "internal_decode_ms": "DONE.decode_ms: first verify window (last prompt token and first output), subsequent verify/draft windows, completion bookkeeping.",
+    "internal_decode_tps": "512 / (DONE.decode_ms / 1000).",
+    "ttft_seconds": "IPC client time immediately before GEN serialization/write to first received token; excludes model startup, includes prefill/first generation/IPC.",
+    "stream_decode_tps": "511 / (last_token_received - first_token_received); tokens accepted together arrive in bursts.",
+    "elapsed_seconds": "IPC client time immediately before GEN serialization/write to DONE receipt; excludes model startup."
+  },
+  "limitations": [
+    "Same requested expert slots and resource options; record actual resident slots/offloaded counters if memory trims L.",
+    "Current M is Huihui abliterated and L is original lineage; not a pure quantization quality comparison.",
+    "Native IPC TTFT/E2E excludes HTTP and model startup; cache-branch suite separately records HTTP SSE TTFT.",
+    "CPU/GPU clock/power/temperature/null semantics are recorded with ASTOP.",
+    "After full-L short smoke reached only 0.325 GiB available, every common mode reserves 6144 MiB before owned prefill buffers; actual L expert slots may be smaller. This is a memory-constrained runtime comparison."
+  ],
+  "body_rows": 1600,
+  "mode_input_lengths": {},
+  "mode_build": {
+    "m-baseline": "${RUN}/build-spread",
+    "m-unified": "${RUN}/build-l",
+    "l-unified": "${RUN}/build-l"
+  },
+  "mode_native": {
+    "m-baseline": "${MODEL_M}",
+    "m-unified": "${MODEL_M}",
+    "l-unified": "${MODEL_L}"
+  },
+  "mode_pack": {
+    "m-baseline": "${RUN}/packs/gyro-m",
+    "m-unified": "${RUN}/packs/gyro-m",
+    "l-unified": "${RUN}/packs/gyro-l"
+  },
+  "tokenizer_model": "${MODEL_M}",
+  "mtp_runtime": "${MTP}",
+  "require_zero_decode_offload": false,
+  "mode_args": {
+    "m-baseline": [
+      "--no-prefill-borrow"
+    ],
+    "m-unified": [
+      "--no-prefill-borrow"
+    ],
+    "l-unified": [
+      "--no-prefill-borrow",
+      "--vram-reserve-mib",
+      "6144"
+    ]
+  },
+  "mode_env": {
+    "m-baseline": {
+      "STRATA_DENSE_F16_CACHE_MIB": "0"
+    },
+    "m-unified": {
+      "STRATA_DENSE_F16_CACHE_MIB": "0"
+    },
+    "l-unified": {
+      "STRATA_DENSE_F16_CACHE_MIB": "0"
+    }
+  }
+}

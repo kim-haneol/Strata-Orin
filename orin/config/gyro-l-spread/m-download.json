@@ -1,0 +1,8 @@
+{
+  "repo": "agentionai/Qwen3.8-Flash-Next-Gyro-abliterated-Huihui-GGUF",
+  "revision": "aca61b2202b6e0a91a761236b65c151a68f88c16",
+  "filename": "Qwen3.8-Flash-Next-Gyro-M-abliterated-TQ2_0.gguf",
+  "size": 91965774560,
+  "sha256": "9f31a8d1f449f67cfd3b7eb6d500f4ae37d95be6e3f83b8d4a1572646b99874e",
+  "cache": "${RUN}/hf-cache/hub"
+}
