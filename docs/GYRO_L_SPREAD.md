@@ -15,7 +15,7 @@ Three primary experimental tracks address distinct operational questions:
 - **Running Gyro-L within the 64 GB memory budget:** Using a text-only, INT8 KV-cache configuration with a 6,144 MiB VRAM reserve, Gyro-L passed all seven bounded API and long-context checks, including a prompt of **253,952 input tokens** within a 262,144-token context capacity. Although that configuration left room for 8,192 output tokens, the test capped generation at 512 tokens and did not evaluate 8,192-token output generation.
 - **Comparing Gyro-M and Gyro-L under common engine settings:** Under a matched protocol (`chunk1024`, with dense FP16 weight caching disabled), Gyro-M generated tokens at **23.77–25.00 tok/s** and Gyro-L at **18.45–19.24 tok/s** across 2,048-, 25,000-, and 80,000-token inputs. These figures measure stream decode throughput rather than end-to-end request latency or output quality.
 
-The [evidence index](../orin/evidence/gyro-l-spread-20261020-v1/README.md) links the selected numerical records, source bindings, and scope boundaries. Note the distinction between the historical GPU measurements (recorded October 19, 2026) and the publication validation (October 20, 2026): publication checks reconstruct the recorded source trees and verify the exported artifacts, but do not run new GPU benchmarks.
+The [evidence index](../orin/evidence/gyro-l-spread-20261020-v1/README.md) links the selected numerical records, source bindings, and scope boundaries. Publication validation reconstructs the recorded source trees and verifies the exported artifacts; it adds no new GPU measurements.
 
 ---
 
@@ -38,7 +38,7 @@ Prior to this campaign, the deployed engine checkout on the Orin target containe
 | Published unified code | `orin-gyro-l-spread-code-20261020`; engine, build, packing, and test paths match the measured source |
 | Measured GGML | Base `93a24e52cc12687213c0432af41c7fe2ab1a0eda` plus the shared-LUT and Gyro-L patches; resulting tree `61915afdbd3ce8d6d83560d470a6b1f77a688f3b` |
 
-The historical whole-tree hash (`b07039e21728a3b974b12118a1c70ce3f9873274`) describes the standalone engine checkout used during measurement. Because the public repository also packages reports, evidence records, and helper scripts, its top-level Git tree hash differs from the standalone checkout. The [Source bindings](../orin/evidence/gyro-l-spread-20261020-v1/source-bindings.json) manifest maps the measured executables to their exact source trees, and the publication validation record verifies that the engine, build, packing, and test paths in `orin-gyro-l-spread-code-20261020` match the measured source.
+The public repository adds reports, evidence, and helpers to the measured engine checkout, so its whole-tree hash differs. [Source bindings](../orin/evidence/gyro-l-spread-20261020-v1/source-bindings.json) map the executables to the measured source trees; publication validation checks that the engine, build, packing, and test paths match.
 
 ### Model lineages
 
@@ -72,7 +72,7 @@ The evaluation fixture modeled a **49,152-token** parent conversation (including
 | LRU | 49,197 | 7,699 | 41,498 | 128.324 | 128.620 | 130.220 |
 | Spread | 49,197 | 49,145 | 52 | 1.326 | 1.639 | 3.181 |
 
-With LRU, the return request reused **7,699** tokens and read the remaining **41,498** again. Under the spread policy, a checkpoint at token **49,145** was retained, leaving only **52** tokens to be processed.
+By retaining a checkpoint near the parent's end, spread reduced the return request's recomputation from **41,498 tokens to 52**.
 
 For that final return request, the observed HTTP TTFT speedup was **78.47×** and the HTTP total-time speedup was **40.94×**. The supporting artifacts are the [LRU](../orin/evidence/gyro-l-spread-20261020-v1/cache-lru.json) and [spread](../orin/evidence/gyro-l-spread-20261020-v1/cache-spread.json) result records and the unchanged [fixture generator/client](../orin/tools/gyro-l-spread/bench-gyro-cache-branch.py). All eight request hashes and assistant answers matched across both modes.
 
@@ -125,13 +125,13 @@ At each input length (2,048, 25,000, and 80,000 tokens), the harness ran one war
 | M | 80,000 | 324.73 | 246.475 | 23.77 | 267.970 |
 | L | 80,000 | 180.67 | 442.915 | 18.45 | 470.635 |
 
-Table values are means across the three measured runs. The [Common results](../orin/evidence/gyro-l-spread-20261020-v1/common-performance-v4.json) artifact stores the means and engine settings; [summary.json](../orin/evidence/gyro-l-spread-20261020-v1/summary.json) retains standard deviations, ranges, internal decode timers, and per-request ASTOP, CPU-core, and process statistics; and [comparisons.json](../orin/evidence/gyro-l-spread-20261020-v1/comparisons.json) records the cross-model ratios.
+Table values are three-run means. [Common results](../orin/evidence/gyro-l-spread-20261020-v1/common-performance-v4.json) stores the means and engine settings; [summary.json](../orin/evidence/gyro-l-spread-20261020-v1/summary.json) provides standard deviations, ranges, internal decode timers, and per-request ASTOP, CPU-core, and process statistics; [comparisons.json](../orin/evidence/gyro-l-spread-20261020-v1/comparisons.json) records the cross-model ratios.
 
 Under these matched settings, Gyro-M's internal prefill rate was **1.524–1.800×** Gyro-L's, and its stream decode rate was **1.289–1.317×** Gyro-L's. This experiment measures overall operational speed under shared settings; it does not isolate the individual contributions of quantization kernels, weight supply, and actual expert residency, nor does it rank model answer quality.
 
 ### Did Gyro-L support regress Gyro-M?
 
-To verify that adding Gyro-L support did not degrade Gyro-M performance or alter its outputs, the 2,048-token workload was compared between the spread-only baseline executable and the unified Gyro-L-capable executable. Both builds generated the exact same 512 output token IDs for the fresh-process warmup request and all three measured 2K requests. Mean stream decode rates were **24.989 and 24.996 tok/s**, and mean internal prefill rates were **341.738 and 342.361 tok/s**, respectively. This [bounded M regression check](../orin/evidence/gyro-l-spread-20261020-v1/m-2k-regression-v4.json) found no regression in that bounded check. (Bitwise output equality was required only between the two Gyro-M builds, not between the distinct Gyro-M and Gyro-L models.)
+The [bounded M regression check](../orin/evidence/gyro-l-spread-20261020-v1/m-2k-regression-v4.json) compared the spread-only and unified executables on the 2,048-token workload. Both builds generated the exact same 512 output token IDs for the fresh-process warmup request and all three measured 2K requests. Mean stream decode rates were **24.989 and 24.996 tok/s**, and mean internal prefill rates were **341.738 and 342.361 tok/s**, respectively. No regression was observed in this 2K test. (Bitwise output equality was required only between the two Gyro-M builds, not between the distinct Gyro-M and Gyro-L models.)
 
 Note that the common M/L table intentionally runs Gyro-M at `chunk1024` with dense FP16 weight caching disabled to match Gyro-L's memory-constrained settings. It does not represent Gyro-M's restored production configuration (`chunk8192` with automatic dense FP16 weight caching). Likewise, the [older 32K chunk sweep](../orin/evidence/strata-gyro-prefill-chunk-own-20261007-v2/README.md) is a separate experiment at a 32K context capacity and must not be mixed with this 262K table.
 
@@ -165,7 +165,7 @@ The three long-context requests used independent synthetic inputs rather than pr
 | 128,000 | All three recovered | 739.135 |
 | 253,952 | All three recovered | 1,491.998 |
 
-At **253,952** input tokens within the 262,144-token context window, **8,192 tokens of capacity** remained for generation. However, the test request set `max_tokens` to **512**, and the model finished naturally before hitting that limit. Accordingly, this result validates 253,952-token prefill and short response generation within the 262,144-token budget, but does not constitute an 8,192-token output test, a comprehensive long-context quality evaluation, or a multi-user concurrency test. Whole-conversation parking restore was explicitly skipped. See the [API results](../orin/evidence/gyro-l-spread-20261020-v1/l-context-result.json) for per-check records.
+At **253,952** input tokens within the 262,144-token context window, **8,192 tokens of capacity** remained for generation. However, the test request set `max_tokens` to **512**, and the model finished naturally before hitting that limit. This validates long-input prefill and a short response, without establishing 8,192-token output generation, comprehensive long-context quality, or multi-user concurrency. Whole-conversation parking restore was explicitly skipped. See the [API results](../orin/evidence/gyro-l-spread-20261020-v1/l-context-result.json) for per-check records.
 
 Across Gyro-L startup, the three long-context requests, the remaining API checks, and process cleanup, ASTOP recorded:
 
@@ -189,13 +189,11 @@ A separate Gyro-L process evaluated `chunk2048` against `chunk1024` under the sa
 | chunk1024 | 23,106 | 224.61 | 9.196 | 19.24 | 35.751 |
 | chunk2048 | 22,858 | 282.92 | 7.324 | 18.98 | 34.242 |
 
-Increasing the chunk size to `chunk2048` improved internal prefill throughput by **1.260×** and reduced total IPC time by **1.044×**, but it also reduced the number of admitted GPU expert slots from **23,106** to **22,858**. Because owned prefill buffers compete directly with expert cache residency—the engine's allocation precheck reserves `Prefill::bytes_needed` plus 512 MiB of headroom—allocating larger prefill buffers leaves room for fewer GPU-resident experts and can increase decode cache misses. Consequently, faster prefill at 2K does not by itself establish a better overall configuration.
+Chunk2048 improved internal prefill throughput by **1.260×** and reduced total IPC time by **1.044×**, but admitted fewer GPU-resident experts. Owned prefill buffers compete with expert residency for memory, so larger buffers can increase decode cache misses. The allocation precheck uses `Prefill::bytes_needed` plus 512 MiB of headroom. Faster prefill at 2K does not by itself establish a better overall configuration.
 
 Output hashes differed between `chunk1024` and `chunk2048`, and Gyro-L outputs were not bit-identical across the three repeats of a single setting either. Neither logit/state equivalence nor equal answer quality was established. Chunk2048 remains a bounded 2K candidate check, while chunk1024 is the configuration validated across the long-context suite. Chunk1024 is not a hard model limit; chunks4096/8192 were not tested for Gyro-L. See the [chunk protocol](../orin/config/gyro-l-spread/chunk2048.json) and [comparison record](../orin/evidence/gyro-l-spread-20261020-v1/comparisons.json).
 
 ### Verification boundaries and campaign findings
-
-Several methodological boundaries and diagnostic findings from the campaign are preserved as part of the engineering record:
 
 - **MTP guards in draft-off versus draft-on smoke tests:** Initial attempts to run with `--spec 0` or without MTP weights were rejected by native pack and server validation guards. The successful draft-off smoke test therefore kept MTP weights loaded and disabled drafting via `cap1/suffix0`, recording `offered/accepted0/0` (0 offered, 0 accepted). The draft-on smoke test used `cap4` and observed `3/3` accepted draft tokens on a five-token arithmetic response. Note that earlier `off_scope` wording in the frozen protocol referring to “MTP removed” describes the rejected initial candidate rather than the final draft-off smoke test.
 - **MMQ parity stream-ordering fix:** An initial quantized matrix-multiplication (MMQ) control mismatch also reproduced on the pre-extension baseline GGML tree. Inspection showed that the test's non-blocking CUDA stream lacked ordering guarantees for its host-to-device input copy. Placing input copies, sentinel setup, and kernel compute onto the same CUDA stream fixed the race condition without relaxing numerical tolerances. The final parity suite passed all **78 matrix products**: six `Q2_0` controls plus `M/TQP5/TQP6/TQP7` formats across three routed batch patterns, `gate-up/down` projections, and three repeats. See the [parity log](../orin/evidence/gyro-l-spread-20261020-v1/mmq-parity.log).
