@@ -1,0 +1,308 @@
+{
+  "sources": {
+    "src-spread": {
+      "head": "50a2f52e033fa1630c85a0c44c85296fd06882d3",
+      "tree": "1d9f444adc8b5ee61b06fe4e0fc38ab9a691bd3e",
+      "status": ""
+    },
+    "ggml-baseline": {
+      "head": "92d9989d3bdcaea1c09f2f5556e6875d861b2b2a",
+      "tree": "01f81d2075654714d00ee5413cfbec2b7887388f",
+      "status": ""
+    },
+    "src-l": {
+      "head": "a144885a4b165d6e8fb4834a37e008f970a575da",
+      "tree": "b07039e21728a3b974b12118a1c70ce3f9873274",
+      "status": ""
+    },
+    "ggml-l": {
+      "head": "5cadaabf47286d8ca71f9f2829fbd3717da61f92",
+      "tree": "61915afdbd3ce8d6d83560d470a6b1f77a688f3b",
+      "status": ""
+    }
+  },
+  "configs": {
+    "m-unified.json": {
+      "sha256": "a144e0ba758ef3f5cfc19a9e1bdfedfb51fd5d1c47bef536ce01d84ed99b3df3",
+      "config": {
+        "exe": "${RUN}/build-l/strata",
+        "args": [
+          "--pack",
+          "${RUN}/packs/gyro-m",
+          "--native",
+          "${MODEL_M}",
+          "--ple-gguf",
+          "${MODEL_M}",
+          "--mmap-experts",
+          "--expert-cache",
+          "24576",
+          "--expert-profile",
+          "${REPO}/data/expert-profile.bin",
+          "--pool-workers",
+          "2",
+          "--no-prefill-borrow",
+          "--prefill",
+          "1024",
+          "--max-context",
+          "262144",
+          "--kv",
+          "int8",
+          "--spec",
+          "4",
+          "--spec-min-p",
+          "0.5",
+          "--mtp",
+          "${MTP}",
+          "--conversation-cache-mib",
+          "0",
+          "--conversation-cache-slots",
+          "4",
+          "--prompt-cache",
+          "6",
+          "--prompt-cache-spread"
+        ],
+        "cwd": "${REPO}",
+        "tokenizer": "${RUN}/packs/gyro-m/tokenizer",
+        "model_name": "qwen38-flash-next-gyro-m",
+        "log": "${RUN}/logs/m-unified-engine.log",
+        "host": "127.0.0.1",
+        "port": 18094,
+        "env": {
+          "STRATA_DENSE_F16_CACHE_MIB": "0",
+          "STRATA_CKPT_POLICY_TRACE": "1"
+        }
+      }
+    },
+    "l-off.json": {
+      "sha256": "7abdf25c1adbcb9a4411d28a098b97c1f201d43939843ad5c88025af8ba82ed8",
+      "config": {
+        "exe": "${RUN}/build-l/strata",
+        "args": [
+          "--pack",
+          "${RUN}/packs/gyro-l",
+          "--native",
+          "${MODEL_L}",
+          "--ple-gguf",
+          "${MODEL_L}",
+          "--mmap-experts",
+          "--expert-cache",
+          "24576",
+          "--expert-profile",
+          "${REPO}/data/expert-profile.bin",
+          "--pool-workers",
+          "2",
+          "--no-prefill-borrow",
+          "--prefill",
+          "1024",
+          "--max-context",
+          "262144",
+          "--kv",
+          "int8",
+          "--spec",
+          "0",
+          "--spec-min-p",
+          "0.5",
+          "--conversation-cache-mib",
+          "0",
+          "--conversation-cache-slots",
+          "4",
+          "--prompt-cache",
+          "6",
+          "--prompt-cache-spread"
+        ],
+        "cwd": "${REPO}",
+        "tokenizer": "${RUN}/packs/gyro-l/tokenizer",
+        "model_name": "qwen38-flash-next-gyro-l",
+        "log": "${RUN}/logs/l-off-engine.log",
+        "host": "127.0.0.1",
+        "port": 18094,
+        "env": {
+          "STRATA_DENSE_F16_CACHE_MIB": "0",
+          "STRATA_CKPT_POLICY_TRACE": "1"
+        }
+      }
+    },
+    "m-spread.json": {
+      "sha256": "3162a158d14492a069cc194ed0b6e00494b2244783fe4d010ef357d24839c9b9",
+      "config": {
+        "exe": "${RUN}/build-spread/strata",
+        "args": [
+          "--pack",
+          "${RUN}/packs/gyro-m",
+          "--native",
+          "${MODEL_M}",
+          "--ple-gguf",
+          "${MODEL_M}",
+          "--mmap-experts",
+          "--expert-cache",
+          "24576",
+          "--expert-profile",
+          "${REPO}/data/expert-profile.bin",
+          "--pool-workers",
+          "2",
+          "--no-prefill-borrow",
+          "--prefill",
+          "1024",
+          "--max-context",
+          "262144",
+          "--kv",
+          "int8",
+          "--spec",
+          "4",
+          "--spec-min-p",
+          "0.5",
+          "--mtp",
+          "${MTP}",
+          "--conversation-cache-mib",
+          "0",
+          "--conversation-cache-slots",
+          "4",
+          "--prompt-cache",
+          "6",
+          "--prompt-cache-spread"
+        ],
+        "cwd": "${REPO}",
+        "tokenizer": "${RUN}/packs/gyro-m/tokenizer",
+        "model_name": "qwen38-flash-next-gyro-m",
+        "log": "${RUN}/logs/m-spread-engine.log",
+        "host": "127.0.0.1",
+        "port": 18094,
+        "env": {
+          "STRATA_DENSE_F16_CACHE_MIB": "0",
+          "STRATA_CKPT_POLICY_TRACE": "1"
+        }
+      }
+    },
+    "l-on.json": {
+      "sha256": "62bb670db2623bee53e7ee93e9fdb54188f8833664e6989301fd9f16f9c05ef6",
+      "config": {
+        "exe": "${RUN}/build-l/strata",
+        "args": [
+          "--pack",
+          "${RUN}/packs/gyro-l",
+          "--native",
+          "${MODEL_L}",
+          "--ple-gguf",
+          "${MODEL_L}",
+          "--mmap-experts",
+          "--expert-cache",
+          "24576",
+          "--expert-profile",
+          "${REPO}/data/expert-profile.bin",
+          "--pool-workers",
+          "2",
+          "--no-prefill-borrow",
+          "--prefill",
+          "1024",
+          "--max-context",
+          "262144",
+          "--kv",
+          "int8",
+          "--spec",
+          "4",
+          "--spec-min-p",
+          "0.5",
+          "--mtp",
+          "${MTP}",
+          "--conversation-cache-mib",
+          "0",
+          "--conversation-cache-slots",
+          "4",
+          "--prompt-cache",
+          "6",
+          "--prompt-cache-spread"
+        ],
+        "cwd": "${REPO}",
+        "tokenizer": "${RUN}/packs/gyro-l/tokenizer",
+        "model_name": "qwen38-flash-next-gyro-l",
+        "log": "${RUN}/logs/l-on-engine.log",
+        "host": "127.0.0.1",
+        "port": 18094,
+        "env": {
+          "STRATA_DENSE_F16_CACHE_MIB": "0",
+          "STRATA_CKPT_POLICY_TRACE": "1"
+        }
+      }
+    },
+    "m-lru.json": {
+      "sha256": "dc8c033faf073b2af83287e05424eeb87557f846a24d620359a7186f9b74386d",
+      "config": {
+        "exe": "${RUN}/build-spread/strata",
+        "args": [
+          "--pack",
+          "${RUN}/packs/gyro-m",
+          "--native",
+          "${MODEL_M}",
+          "--ple-gguf",
+          "${MODEL_M}",
+          "--mmap-experts",
+          "--expert-cache",
+          "24576",
+          "--expert-profile",
+          "${REPO}/data/expert-profile.bin",
+          "--pool-workers",
+          "2",
+          "--no-prefill-borrow",
+          "--prefill",
+          "1024",
+          "--max-context",
+          "262144",
+          "--kv",
+          "int8",
+          "--spec",
+          "4",
+          "--spec-min-p",
+          "0.5",
+          "--mtp",
+          "${MTP}",
+          "--conversation-cache-mib",
+          "0",
+          "--conversation-cache-slots",
+          "4",
+          "--prompt-cache",
+          "6"
+        ],
+        "cwd": "${REPO}",
+        "tokenizer": "${RUN}/packs/gyro-m/tokenizer",
+        "model_name": "qwen38-flash-next-gyro-m",
+        "log": "${RUN}/logs/m-lru-engine.log",
+        "host": "127.0.0.1",
+        "port": 18094,
+        "env": {
+          "STRATA_DENSE_F16_CACHE_MIB": "0",
+          "STRATA_CKPT_POLICY_TRACE": "1"
+        }
+      }
+    }
+  },
+  "artifacts": {
+    "build-spread/strata": {
+      "size": 48636432,
+      "sha256": "ec504bcd7b21acf4cfd333efdf2f54f79b51735d3177f63ad99e02881f1d9b53"
+    },
+    "build-l/strata": {
+      "size": 58051120,
+      "sha256": "852898814839bb0df5895e2fdbe62c221be6445510bd74625dff2e15f6f2e59d"
+    },
+    "build-l/prefill_tqp_parity": {
+      "size": 41594336,
+      "sha256": "b0004c73c04343c0cc5507bf37c233f801a40737268b1e58395e2193f7c92dc2"
+    },
+    "fixtures/cache-branch.json": {
+      "size": 128653,
+      "sha256": "eb2d9637080ccd662209fb3f2028195455721887a034d856c30817f6dda1a8c1"
+    },
+    "fixtures/context/manifest.json": {
+      "size": 2053,
+      "sha256": "94b820f1412051d2a230f38b5f810bbfd6d6ef9701f30c5ea3b0efcf3d0cf755"
+    },
+    "packs/gyro-l/dense.bin": {
+      "size": 1485688320,
+      "sha256": "e9588a855a18984a01c4202eaa295fb7211b341d49c440b0f203b5c310048954"
+    },
+    "packs/gyro-l/native_experts.txt": {
+      "size": 3478,
+      "sha256": "5470b5f80dd10d97a53d6cb06623b4df86ada50417a10e47d1eb65ee6642ed8a"
+    }
+  }
+}

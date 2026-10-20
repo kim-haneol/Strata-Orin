@@ -1,0 +1,32 @@
+{
+  "assistant": {
+    "role": "assistant",
+    "content": "42입니다."
+  },
+  "usage": {
+    "prompt_tokens": 32,
+    "completion_tokens": 5,
+    "total_tokens": 37,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 32,
+    "prompt_ms": 1827.0,
+    "prompt_per_token_ms": 57.094,
+    "prompt_per_second": 17.5,
+    "predicted_n": 5,
+    "predicted_ms": 818.9,
+    "predicted_per_token_ms": 163.78,
+    "predicted_per_second": 6.1,
+    "draft_n": 3,
+    "draft_n_accepted": 3
+  },
+  "finish_reason": "stop",
+  "ttft_seconds": 2.411686547100544,
+  "wall_seconds": 2.953967228066176,
+  "request_sha256": "728c9d9371815834eee4d36b4e0c69e31211293d63f5f016290a9b23ab2627ef",
+  "passed": true
+}

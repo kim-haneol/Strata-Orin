@@ -1,0 +1,19 @@
+{
+  "scope": "Fixed-profile, graphed single-GPU decode used by this campaign",
+  "offloaded": "DONE trailing counter: routed entries computed by GPU from outside its local cache (PCIe/direct or peer); not CPU fallback.",
+  "cpu_routed_entries": "lookups - hits, because fixed-profile token graph admits no entries during a token and its refused entries are dispatched to CPU pool. Counts token/expert entries, not distinct experts or jobs.",
+  "cpu_routed_fraction": "sum(lookups-hits) / sum(lookups+offloaded)",
+  "source": [
+    "src/program/generate.cpp:7432-7453",
+    "src/core/expert_source.cpp:1933-1965",
+    "src/core/expert_source.cpp:2174-2187",
+    "include/strata/core/expert_source.hpp:355-357"
+  ],
+  "l_80000_first_measured": {
+    "hits": 301669,
+    "lookups": 301920,
+    "offloaded": 0,
+    "cpu_routed_entries": 251,
+    "cpu_routed_fraction": 0.0008313460519342872
+  }
+}

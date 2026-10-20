@@ -1,0 +1,30 @@
+{
+  "scope": "2K/512 measured runs, 3 per mode; all prefix cache disabled, INT8, chunk1024, dense FP16 cache0, MTPcap4",
+  "modes": {
+    "m-baseline": {
+      "internal_prefill_tps": 341.7381310667799,
+      "internal_decode_tps": 24.96789615466825,
+      "stream_decode_tps": 24.98917220331143,
+      "ttft_seconds": 6.05042645893991,
+      "elapsed_seconds": 26.501247447682545,
+      "output_sha256": [
+        "658c647a7e405ece11757e76adc56b010cd8a7cc28b9298373665b0e6cb59e0d",
+        "658c647a7e405ece11757e76adc56b010cd8a7cc28b9298373665b0e6cb59e0d",
+        "658c647a7e405ece11757e76adc56b010cd8a7cc28b9298373665b0e6cb59e0d"
+      ]
+    },
+    "m-unified": {
+      "internal_prefill_tps": 342.3611307681157,
+      "internal_decode_tps": 24.97528583391736,
+      "stream_decode_tps": 24.996228290104828,
+      "ttft_seconds": 6.039206207962707,
+      "elapsed_seconds": 26.484351094656933,
+      "output_sha256": [
+        "658c647a7e405ece11757e76adc56b010cd8a7cc28b9298373665b0e6cb59e0d",
+        "658c647a7e405ece11757e76adc56b010cd8a7cc28b9298373665b0e6cb59e0d",
+        "658c647a7e405ece11757e76adc56b010cd8a7cc28b9298373665b0e6cb59e0d"
+      ]
+    }
+  },
+  "all_measured_outputs_equal": true
+}

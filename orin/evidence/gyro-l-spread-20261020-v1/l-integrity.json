@@ -1,0 +1,10 @@
+{
+  "path": "${MODEL_L}",
+  "bytes": 108323559808,
+  "sha256": "5428a5646eaeaa56cc00a892f92e7546aeadb255233503969ad25cf48c7f359b",
+  "expected_sha256": "5428a5646eaeaa56cc00a892f92e7546aeadb255233503969ad25cf48c7f359b",
+  "expected_size": 108323559808,
+  "stat_stable": true,
+  "elapsed_seconds": 138.53767275810242,
+  "passed": true
+}

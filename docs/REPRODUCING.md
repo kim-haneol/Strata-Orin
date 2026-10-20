@@ -1,5 +1,7 @@
 # Reproducing the Jetson AGX Orin Gyro-M experiments
 
+**Snapshot:** check out `orin-reference-20261018` before following this guide (`git checkout orin-reference-20261018`). It preserves the complete initial code, documentation, and evidence. For the later Gyro-L/spread engine, use [GYRO_L_SPREAD.md](GYRO_L_SPREAD.md), which has its own source pins and reproduction procedure. The later `main` intentionally does not match this guide's final-code assertion.
+
 This guide builds the preserved Orin source in this checkout and reconstructs the October 7–9, 2026 text-inference experiments described in [OPTIMIZATION.md](OPTIMIZATION.md). The main target is the original Gyro-M checkpoint with the `f16cache` engine, the `enko` MTP vocabulary, INT8 KV, and a 64K context limit. Later abliterated weights, vision support, and 262K deployment are separate configurations.
 
 The published engine tree was checked against the preserved final Git tree. Commands and configuration fields were inspected, but this documentation pass did **not** perform a fresh download, CUDA build, or inference run. The original measurements remain the evidence for execution on Orin. See the [source and publication record](../orin/README.md).

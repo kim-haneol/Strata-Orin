@@ -1,0 +1,57 @@
+{
+  "scope": "v4 API / v2 performance protocols; source trees in source-bindings.json",
+  "files": {
+    "configs/l-off-v4.json": {
+      "bytes": 1623,
+      "sha256": "25271fd6f74c7cb48b569a53451b1bffce85afa340868143da1a40c78d927f4f"
+    },
+    "configs/l-on-v4.json": {
+      "bytes": 1622,
+      "sha256": "100d285ddf166c1640ec99c21dccc4d3e09a80c67c2337953b6d11e8cc31c964"
+    },
+    "run-gyro-extension-case.sh": {
+      "bytes": 2438,
+      "sha256": "1b6c38628cfa23487f3148a9a87a781011060c61f92c785e2de078279a827217"
+    },
+    "run-gyro-extension-l-validation.sh": {
+      "bytes": 1177,
+      "sha256": "7a74acd8207a880b71fe8524e654a444434fc8f0d7afa298d42cd1730897c1a3"
+    },
+    "run-gyro-extension-performance.sh": {
+      "bytes": 902,
+      "sha256": "9e2493d900f81e40071a53aa9536da6f3a8f7c4d74884a47f0b03b4317ab458b"
+    },
+    "validate-gyro-context.py": {
+      "bytes": 12872,
+      "sha256": "bc2e6ad004b1fa645faf0611e0c49e622e26abc0a246321cdc5c535d20f28596"
+    },
+    "probe-gyro-extension.py": {
+      "bytes": 1045,
+      "sha256": "d8cad86cfc02339bcca9e9a943d49f0a7adcf18710c4e5206a98083a1b59fba6"
+    },
+    "strata-gyro-benchmark.py": {
+      "bytes": 13769,
+      "sha256": "2132b9a2393bbff41337c02c68b1f704d4cc34f214acb0be483dee92e0d97d7c"
+    },
+    "perf-v2/protocol.json": {
+      "bytes": 5467,
+      "sha256": "e2cb1cd4d7a303d6fe0e0d0bd5997416a9148c9b5a5de1fc10a2e0035a1b6e88"
+    },
+    "perf-2048-v2/protocol.json": {
+      "bytes": 5285,
+      "sha256": "580fc9dee44b0e7c15f511b6a335fc1463d5040fdb4b6665ccc9ca2fd948b95b"
+    },
+    "build-spread/strata": {
+      "bytes": 48636432,
+      "sha256": "ec504bcd7b21acf4cfd333efdf2f54f79b51735d3177f63ad99e02881f1d9b53"
+    },
+    "build-l/strata": {
+      "bytes": 58051120,
+      "sha256": "852898814839bb0df5895e2fdbe62c221be6445510bd74625dff2e15f6f2e59d"
+    },
+    "fixtures/context/manifest.json": {
+      "bytes": 2053,
+      "sha256": "94b820f1412051d2a230f38b5f810bbfd6d6ef9701f30c5ea3b0efcf3d0cf755"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "scope": "Mean-based speed ratios for matched1024 profile; different model lineage and actual cache residency included.",
+  "m_over_l": {
+    "2048": {
+      "prefill": 1.5242701723825722,
+      "stream_decode": 1.2988589995468984,
+      "e2e": 1.3498861732069116
+    },
+    "25000": {
+      "prefill": 1.799586543015952,
+      "stream_decode": 1.316674848461515,
+      "e2e": 1.6942008502194197
+    },
+    "80000": {
+      "prefill": 1.7973783611308307,
+      "stream_decode": 1.2888394922301045,
+      "e2e": 1.756297967180723
+    }
+  },
+  "chunk2048": {
+    "same_inputs": true,
+    "same_outputs": false,
+    "prefill_ratio": 1.2596170769057753,
+    "e2e_speedup": 1.0440704038052844,
+    "resident1024": 23106,
+    "resident2048": 22858,
+    "state_logits_equivalence": "not established; output sequences differ and actual residency differs",
+    "adopted_l_chunk": 1024
+  }
+}

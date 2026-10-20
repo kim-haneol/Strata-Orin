@@ -1,0 +1,42 @@
+{
+  "scope": "M unified: warmup excluded, three measured requests per input, output exactly512, prefix cache0",
+  "groups": {
+    "2048": {
+      "internal_prefill_tps": 342.3611307681157,
+      "internal_decode_tps": 24.97528583391736,
+      "stream_decode_tps": 24.996228290104828,
+      "ttft_seconds": 6.039206207962707,
+      "elapsed_seconds": 26.484351094656933,
+      "decode_offloaded": [
+        0,
+        0,
+        0
+      ]
+    },
+    "25000": {
+      "internal_prefill_tps": 333.92923612846886,
+      "internal_decode_tps": 24.564366663313923,
+      "stream_decode_tps": 24.58501497315259,
+      "ttft_seconds": 74.94328257371671,
+      "elapsed_seconds": 95.73014567264666,
+      "decode_offloaded": [
+        0,
+        0,
+        0
+      ]
+    },
+    "80000": {
+      "internal_prefill_tps": 324.72903505968526,
+      "internal_decode_tps": 23.755650921462074,
+      "stream_decode_tps": 23.774661893709133,
+      "ttft_seconds": 246.4749608823719,
+      "elapsed_seconds": 267.97003439239535,
+      "decode_offloaded": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "engine_exit_code": 0
+}

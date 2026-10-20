@@ -1,0 +1,263 @@
+{
+  "label": "spread",
+  "status": "completed",
+  "fixture_sha256": "2b4978b69c675f938a1be4044961da81ecfa51b42ee4c82f22a88a4074272a0f",
+  "requests": [
+    {
+      "assistant": {
+        "role": "assistant",
+        "content": "READY"
+      },
+      "usage": {
+        "prompt_tokens": 49152,
+        "completion_tokens": 2,
+        "total_tokens": 49154,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 49152,
+        "prompt_ms": 148721.0,
+        "prompt_per_token_ms": 3.026,
+        "prompt_per_second": 330.5,
+        "predicted_n": 2,
+        "predicted_ms": 250.4,
+        "predicted_per_token_ms": 125.2,
+        "predicted_per_second": 8.0,
+        "draft_n": 3,
+        "draft_n_accepted": 3
+      },
+      "finish_reason": "stop",
+      "ttft_seconds": 150.148200170137,
+      "wall_seconds": 150.30147952819243,
+      "request_sha256": "6f4e4d3204a06f98254efa3da8eb721001a095b770ea51c5cb5a9940dc77c74c",
+      "name": "parent"
+    },
+    {
+      "assistant": {
+        "role": "assistant",
+        "content": "OK"
+      },
+      "usage": {
+        "prompt_tokens": 50217,
+        "completion_tokens": 2,
+        "total_tokens": 50219,
+        "prompt_tokens_details": {
+          "cached_tokens": 49145
+        }
+      },
+      "timings": {
+        "cache_n": 49145,
+        "prompt_n": 1072,
+        "prompt_ms": 4245.8,
+        "prompt_per_token_ms": 3.961,
+        "prompt_per_second": 252.5,
+        "predicted_n": 2,
+        "predicted_ms": 173.0,
+        "predicted_per_token_ms": 86.5,
+        "predicted_per_second": 11.6,
+        "draft_n": 3,
+        "draft_n_accepted": 2
+      },
+      "finish_reason": "stop",
+      "ttft_seconds": 4.577292358968407,
+      "wall_seconds": 4.691062468802556,
+      "request_sha256": "1df06086a1988b41ed48da429048a09b3b4b08e8ea060e02f9b11b531b47741e",
+      "name": "review-1"
+    },
+    {
+      "assistant": {
+        "role": "assistant",
+        "content": "OK"
+      },
+      "usage": {
+        "prompt_tokens": 51282,
+        "completion_tokens": 2,
+        "total_tokens": 51284,
+        "prompt_tokens_details": {
+          "cached_tokens": 50220
+        }
+      },
+      "timings": {
+        "cache_n": 50220,
+        "prompt_n": 1062,
+        "prompt_ms": 4111.0,
+        "prompt_per_token_ms": 3.871,
+        "prompt_per_second": 258.3,
+        "predicted_n": 2,
+        "predicted_ms": 235.0,
+        "predicted_per_token_ms": 117.5,
+        "predicted_per_second": 8.5,
+        "draft_n": 4,
+        "draft_n_accepted": 4
+      },
+      "finish_reason": "stop",
+      "ttft_seconds": 4.393933566985652,
+      "wall_seconds": 4.573085967916995,
+      "request_sha256": "16d6cb234810f8bf9cca889f66c5edf0aa0d7c95a5fa0d5e6d428b14d23b80f8",
+      "name": "review-2"
+    },
+    {
+      "assistant": {
+        "role": "assistant",
+        "content": "OK"
+      },
+      "usage": {
+        "prompt_tokens": 52347,
+        "completion_tokens": 2,
+        "total_tokens": 52349,
+        "prompt_tokens_details": {
+          "cached_tokens": 51287
+        }
+      },
+      "timings": {
+        "cache_n": 51287,
+        "prompt_n": 1060,
+        "prompt_ms": 4085.9,
+        "prompt_per_token_ms": 3.855,
+        "prompt_per_second": 259.4,
+        "predicted_n": 2,
+        "predicted_ms": 186.1,
+        "predicted_per_token_ms": 93.05,
+        "predicted_per_second": 10.7,
+        "draft_n": 4,
+        "draft_n_accepted": 4
+      },
+      "finish_reason": "stop",
+      "ttft_seconds": 4.373308768961579,
+      "wall_seconds": 4.503420324064791,
+      "request_sha256": "c898ba27329dfefdd6971b578a630aca4f75ab4c083775858a5413d3398c8c53",
+      "name": "review-3"
+    },
+    {
+      "assistant": {
+        "role": "assistant",
+        "content": "OK"
+      },
+      "usage": {
+        "prompt_tokens": 53412,
+        "completion_tokens": 2,
+        "total_tokens": 53414,
+        "prompt_tokens_details": {
+          "cached_tokens": 52352
+        }
+      },
+      "timings": {
+        "cache_n": 52352,
+        "prompt_n": 1060,
+        "prompt_ms": 4012.3,
+        "prompt_per_token_ms": 3.785,
+        "prompt_per_second": 264.2,
+        "predicted_n": 2,
+        "predicted_ms": 186.4,
+        "predicted_per_token_ms": 93.2,
+        "predicted_per_second": 10.7,
+        "draft_n": 4,
+        "draft_n_accepted": 4
+      },
+      "finish_reason": "stop",
+      "ttft_seconds": 4.301363522885367,
+      "wall_seconds": 4.432147946907207,
+      "request_sha256": "a506a62b9fb48ce8e1192e9ba28aa8626069534ead5f2dad11a0e77a361b27cd",
+      "name": "review-4"
+    },
+    {
+      "assistant": {
+        "role": "assistant",
+        "content": "OK"
+      },
+      "usage": {
+        "prompt_tokens": 54477,
+        "completion_tokens": 2,
+        "total_tokens": 54479,
+        "prompt_tokens_details": {
+          "cached_tokens": 53417
+        }
+      },
+      "timings": {
+        "cache_n": 53417,
+        "prompt_n": 1060,
+        "prompt_ms": 4017.6,
+        "prompt_per_token_ms": 3.79,
+        "prompt_per_second": 263.8,
+        "predicted_n": 2,
+        "predicted_ms": 185.8,
+        "predicted_per_token_ms": 92.9,
+        "predicted_per_second": 10.8,
+        "draft_n": 4,
+        "draft_n_accepted": 4
+      },
+      "finish_reason": "stop",
+      "ttft_seconds": 4.3106223600916564,
+      "wall_seconds": 4.440761947073042,
+      "request_sha256": "14dc8f886e1291fb575d087342d13660318122783b7202fa3c47c66a2f4e6553",
+      "name": "review-5"
+    },
+    {
+      "assistant": {
+        "role": "assistant",
+        "content": "OK"
+      },
+      "usage": {
+        "prompt_tokens": 55541,
+        "completion_tokens": 2,
+        "total_tokens": 55543,
+        "prompt_tokens_details": {
+          "cached_tokens": 54482
+        }
+      },
+      "timings": {
+        "cache_n": 54482,
+        "prompt_n": 1059,
+        "prompt_ms": 4008.9,
+        "prompt_per_token_ms": 3.786,
+        "prompt_per_second": 264.2,
+        "predicted_n": 2,
+        "predicted_ms": 186.2,
+        "predicted_per_token_ms": 93.1,
+        "predicted_per_second": 10.7,
+        "draft_n": 4,
+        "draft_n_accepted": 4
+      },
+      "finish_reason": "stop",
+      "ttft_seconds": 4.304281598888338,
+      "wall_seconds": 4.434963167877868,
+      "request_sha256": "31bc0e6a5679c228ff9fb59fd5120b46dcf38286edd40795654e56fae7daed79",
+      "name": "review-6"
+    },
+    {
+      "assistant": {
+        "role": "assistant",
+        "content": "{\n  \"BEGIN\": \"Cedar-4827\",\n  \"MIDDLE\": \"Quartz-6193\",\n  \"END\": \"Maple-7351\"\n}"
+      },
+      "usage": {
+        "prompt_tokens": 49197,
+        "completion_tokens": 47,
+        "total_tokens": 49244,
+        "prompt_tokens_details": {
+          "cached_tokens": 49145
+        }
+      },
+      "timings": {
+        "cache_n": 49145,
+        "prompt_n": 52,
+        "prompt_ms": 1326.0,
+        "prompt_per_token_ms": 25.5,
+        "prompt_per_second": 39.2,
+        "predicted_n": 47,
+        "predicted_ms": 1600.4,
+        "predicted_per_token_ms": 34.051,
+        "predicted_per_second": 29.4,
+        "draft_n": 41,
+        "draft_n_accepted": 35
+      },
+      "finish_reason": "stop",
+      "ttft_seconds": 1.6390479449182749,
+      "wall_seconds": 3.1811045170761645,
+      "request_sha256": "3629d9117c70aa2e9b7c94cdcbd70d3d085b288f1bae0382d8149a3fd46633d5",
+      "name": "return-parent"
+    }
+  ]
+}

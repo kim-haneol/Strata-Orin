@@ -1,0 +1,329 @@
+{
+  "status": "completed",
+  "manifest_sha256": "94b820f1412051d2a230f38b5f810bbfd6d6ef9701f30c5ea3b0efcf3d0cf755",
+  "tests": [
+    {
+      "name": "short-korean",
+      "elapsed_seconds": 3.0412305369973183,
+      "response": {
+        "id": "chatcmpl-ee3237ac9acc433e9d87062b",
+        "object": "chat.completion",
+        "created": 1792407234,
+        "model": "qwen38-flash-next-gyro-l",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "42입니다."
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 32,
+          "completion_tokens": 5,
+          "total_tokens": 37,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 32,
+          "prompt_ms": 1965.0,
+          "prompt_per_token_ms": 61.406,
+          "prompt_per_second": 16.3,
+          "predicted_n": 5,
+          "predicted_ms": 828.0,
+          "predicted_per_token_ms": 165.6,
+          "predicted_per_second": 6.0,
+          "draft_n": 3,
+          "draft_n_accepted": 3
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "recall-64000",
+      "elapsed_seconds": 370.4820700720884,
+      "response": {
+        "id": "chatcmpl-eba07b09ccf743c09fc27912",
+        "object": "chat.completion",
+        "created": 1792407238,
+        "model": "qwen38-flash-next-gyro-l",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n  \"BEGIN\": \"Cedar-4827\",\n  \"MIDDLE\": \"Quartz-6193\",\n  \"END\": \"Maple-7351\"\n}"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 64000,
+          "completion_tokens": 47,
+          "total_tokens": 64047,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 64000,
+          "prompt_ms": 365562.4,
+          "prompt_per_token_ms": 5.712,
+          "prompt_per_second": 175.1,
+          "predicted_n": 47,
+          "predicted_ms": 3635.9,
+          "predicted_per_token_ms": 77.36,
+          "predicted_per_second": 12.9,
+          "draft_n": 36,
+          "draft_n_accepted": 35
+        }
+      },
+      "passed": true,
+      "expected_prompt_tokens": 64000,
+      "actual_prompt_tokens": 64000,
+      "token_count_matches": true
+    },
+    {
+      "name": "recall-128000",
+      "elapsed_seconds": 739.1353944130242,
+      "response": {
+        "id": "chatcmpl-722723e6091e4098a09d52fd",
+        "object": "chat.completion",
+        "created": 1792407608,
+        "model": "qwen38-flash-next-gyro-l",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n  \"BEGIN\": \"Cedar-4827\",\n  \"MIDDLE\": \"Quartz-6193\",\n  \"END\": \"Maple-7351\"\n}"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 128000,
+          "completion_tokens": 47,
+          "total_tokens": 128047,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 128000,
+          "prompt_ms": 736098.6,
+          "prompt_per_token_ms": 5.751,
+          "prompt_per_second": 173.9,
+          "predicted_n": 47,
+          "predicted_ms": 2372.1,
+          "predicted_per_token_ms": 50.47,
+          "predicted_per_second": 19.8,
+          "draft_n": 36,
+          "draft_n_accepted": 34
+        }
+      },
+      "passed": true,
+      "expected_prompt_tokens": 128000,
+      "actual_prompt_tokens": 128000,
+      "token_count_matches": true
+    },
+    {
+      "name": "recall-253952",
+      "elapsed_seconds": 1491.9984901379794,
+      "response": {
+        "id": "chatcmpl-7cd462dbe3be41b68956eaae",
+        "object": "chat.completion",
+        "created": 1792408348,
+        "model": "qwen38-flash-next-gyro-l",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n  \"BEGIN\": \"Cedar-4827\",\n  \"MIDDLE\": \"Quartz-6193\",\n  \"END\": \"Maple-7351\"\n}"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 253952,
+          "completion_tokens": 47,
+          "total_tokens": 253999,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 253952,
+          "prompt_ms": 1488703.1,
+          "prompt_per_token_ms": 5.862,
+          "prompt_per_second": 170.6,
+          "predicted_n": 47,
+          "predicted_ms": 2264.3,
+          "predicted_per_token_ms": 48.177,
+          "predicted_per_second": 20.8,
+          "draft_n": 35,
+          "draft_n_accepted": 35
+        }
+      },
+      "passed": true,
+      "expected_prompt_tokens": 253952,
+      "actual_prompt_tokens": 253952,
+      "token_count_matches": true
+    },
+    {
+      "name": "tool-call",
+      "elapsed_seconds": 4.160339711932465,
+      "response": {
+        "id": "chatcmpl-e0778cbc7d554b07af9f7625",
+        "object": "chat.completion",
+        "created": 1792409839,
+        "model": "qwen38-flash-next-gyro-l",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_58ad05f33cb348b6a9eefa5d",
+                  "type": "function",
+                  "function": {
+                    "name": "lookup_test_value",
+                    "arguments": "{\"key\":\"ORIN_CHECK\"}"
+                  }
+                }
+              ]
+            },
+            "finish_reason": "tool_calls"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 278,
+          "completion_tokens": 29,
+          "total_tokens": 307,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 278,
+          "prompt_ms": 2396.2,
+          "prompt_per_token_ms": 8.619,
+          "prompt_per_second": 116.0,
+          "predicted_n": 29,
+          "predicted_ms": 1529.3,
+          "predicted_per_token_ms": 52.734,
+          "predicted_per_second": 19.0,
+          "draft_n": 21,
+          "draft_n_accepted": 21
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "tool-result",
+      "elapsed_seconds": 2.025333367055282,
+      "response": {
+        "id": "chatcmpl-632fe79764aa4ac69253e47b",
+        "object": "chat.completion",
+        "created": 1792409843,
+        "model": "qwen38-flash-next-gyro-l",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "The tool returned the value 5391 for the key ORIN_CHECK."
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 350,
+          "completion_tokens": 18,
+          "total_tokens": 368,
+          "prompt_tokens_details": {
+            "cached_tokens": 306
+          }
+        },
+        "timings": {
+          "cache_n": 306,
+          "prompt_n": 44,
+          "prompt_ms": 974.5,
+          "prompt_per_token_ms": 22.148,
+          "prompt_per_second": 45.2,
+          "predicted_n": 18,
+          "predicted_ms": 1029.2,
+          "predicted_per_token_ms": 57.178,
+          "predicted_per_second": 17.5,
+          "draft_n": 14,
+          "draft_n_accepted": 14
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "stream-english",
+      "passed": true,
+      "content": "A prefix cache speeds up repeated prompts by storing the intermediate computational results (Key-Value pairs) of the shared initial text. This allows the model to skip re-processing that identical prefix, significantly reducing computation time and latency for subsequent requests that share the same beginning.",
+      "done": true,
+      "usage": {
+        "prompt_tokens": 26,
+        "completion_tokens": 53,
+        "total_tokens": 79,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      }
+    }
+  ],
+  "health": {
+    "status": "ok",
+    "max_context": 262144,
+    "model": "qwen38-flash-next-gyro-l",
+    "images": false,
+    "api_key": false,
+    "loaded": true,
+    "service": "strata"
+  },
+  "models": {
+    "object": "list",
+    "data": [
+      {
+        "id": "qwen38-flash-next-gyro-l",
+        "object": "model",
+        "status": {
+          "value": "loaded"
+        },
+        "meta": {
+          "n_ctx": 262144
+        },
+        "architecture": {
+          "input_modalities": [
+            "text"
+          ],
+          "output_modalities": [
+            "text"
+          ]
+        }
+      }
+    ]
+  },
+  "not_run": [
+    {
+      "name": "parked-conversation-restore",
+      "reason": "whole-conversation parking disabled by the approved memory plan"
+    }
+  ]
+}

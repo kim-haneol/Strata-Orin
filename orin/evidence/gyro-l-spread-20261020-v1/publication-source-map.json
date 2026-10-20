@@ -1,0 +1,36 @@
+{
+  "engine_baseline_tree": "24603390b080e9011aa02fc779b818a79ea8f9db",
+  "initial_publication_commit": "b3b9424c4e9e298a0a7739d24dd6ec38c40c2841",
+  "initial_publication_tag": "orin-reference-20261018",
+  "engine_commits": [
+    {
+      "measured_commit": "50a2f52e033fa1630c85a0c44c85296fd06882d3",
+      "published_commit": "9ecdbabb204867ae8fb272f9f92f6d4a1141a1e2",
+      "method": "git cherry-pick -x"
+    },
+    {
+      "measured_commit": "002073045d21dfb812c40e3877afec2a6c5bd6b6",
+      "published_commit": "6a6b7e0f4f05626abab428ae8e708674d1111ede",
+      "method": "git cherry-pick -x"
+    },
+    {
+      "measured_commit": "a144885a4b165d6e8fb4834a37e008f970a575da",
+      "published_commit": "899162a8d7f294dc46943b32b4376b76e7e9e9bd",
+      "method": "git cherry-pick -x"
+    }
+  ],
+  "measured_unified_engine_tree": "b07039e21728a3b974b12118a1c70ce3f9873274",
+  "measured_ggml_commit": "5cadaabf47286d8ca71f9f2829fbd3717da61f92",
+  "measured_ggml_tree": "61915afdbd3ce8d6d83560d470a6b1f77a688f3b",
+  "comparison_scope": "Engine/build/packing/test paths match the measured source; extra public documentation and support files change the complete public Git tree.",
+  "model_manifest_sources": {
+    "m": "config/gyro-abliterated-update-20261015.json",
+    "l": "evidence/gyro-l-engine-extension-assessment-20261019-v1/summary.json + final l-integrity.json"
+  },
+  "clients_match_measured_hashes": [
+    "validate-gyro-context.py",
+    "probe-gyro-extension.py",
+    "strata-gyro-benchmark.py"
+  ],
+  "frozen_protocol_correction": "The successful draft-off L smoke retains MTP weights and uses cap1; off_scope in the frozen protocol is an earlier description."
+}

@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "publication_date": "2026-10-20",
+  "measurement_date": "2026-10-19",
+  "initial_snapshot": "orin-reference-20261018",
+  "new_snapshot": "orin-reference-20261020",
+  "measured_strata_commit": "a144885a4b165d6e8fb4834a37e008f970a575da",
+  "published_code_commit": "899162a8d7f294dc46943b32b4376b76e7e9e9bd",
+  "engine_build_pack_and_test_paths_match": true,
+  "ggml_reconstructed_tree": "61915afdbd3ce8d6d83560d470a6b1f77a688f3b",
+  "ggml_reconstruction_method": "Separate index: pinned 93a24e52 + existing shared-LUT patch + Gyro-L patch; exact full tree verified before authoring",
+  "ggml_patch_sha256": {
+    "agention-llama-tq-mmq-shared-lut.patch": "ec0de873e8484d26d5c9ffa6af3da6896c5336f06feb41ec9d218ea49b3c0114",
+    "agention-ggml-gyro-l-20261019.patch": "61425a05a0b8de3d4b3057ccd62a2dda207dc077c5d7f3da09fee37899ebc4c6"
+  },
+  "checkpoint_cpu_tests": {
+    "passed": 23,
+    "failed": 0,
+    "direct_exit": 0,
+    "platform": "local x86_64",
+    "command": "c++ -std=c++20 -O2 -I include src/program/conv_cache_test.cpp; execute test"
+  },
+  "export_manifest_entries": 36,
+  "selected_json_numeric_and_structure_checks": 26,
+  "local_document_links_checked": 114,
+  "new_report_bash_blocks_checked": 9,
+  "python_tools_parsed": 6,
+  "templates_rendered_in_spaced_paths": [
+    "m-lru.json",
+    "m-spread.json",
+    "m-unified.json",
+    "l-on-v4.json",
+    "l-off-v4.json",
+    "m-production.json",
+    "l-production.json",
+    "common-performance.json",
+    "chunk2048.json",
+    "m-download.json",
+    "l-download.json"
+  ],
+  "renderer_refuses_overwrite": true,
+  "common_performance_table_matches_results": true,
+  "old_optimization_report_unchanged": true,
+  "upstream_readme_body_unchanged": true,
+  "report_sha256": "95dfc0a9c2a4c59493a28e1e171837c7b8f9837c4fc05c369494548d805967b9",
+  "fresh_gpu_build": false,
+  "new_inference_or_benchmark": false
+}

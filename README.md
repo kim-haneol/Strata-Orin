@@ -1,8 +1,8 @@
-[Strata](https://github.com/agentionai/Strata) fork for Jetson AGX Orin, optimized for [Gyro-M](https://huggingface.co/agentionai/Qwen3.8-Flash-Next-Gyro-GGUF).
-Around 25 tokens/s in everyday agent use.
+[Strata](https://github.com/agentionai/Strata) reference fork for Jetson AGX Orin, with [Gyro-M and Gyro-L](https://huggingface.co/agentionai/Qwen3.8-Flash-Next-Gyro-GGUF) support and checkpoint spread.
+Gyro-M runs at around 25 tokens/s in everyday agent use. See the reports for measured Gyro-L performance and validation limits.
 For reference only. No ongoing maintenance.
 
-[Optimization notes](docs/OPTIMIZATION.md) · [Reproducing](docs/REPRODUCING.md)
+[Initial Gyro-M optimization](docs/OPTIMIZATION.md) · [Initial reproduction guide](docs/REPRODUCING.md) · [Gyro-L and spread report / reproduction](docs/GYRO_L_SPREAD.md)
 
 ---
 

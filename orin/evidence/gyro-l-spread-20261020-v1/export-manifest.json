@@ -1,0 +1,258 @@
+{
+  "source_record_commit": "f0a73ec92c2af12ffa65199e9c718bd9be79b71d",
+  "scope": "Selected October 19 campaign evidence and reproduction inputs. Synthetic fixture text is preserved verbatim, including Korean. Paths are placeholders, not executable expansion.",
+  "files": [
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/summary.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/summary.json",
+      "source_sha256": "c6dd86ce52bd3edd73331af5a3c4c9ba8087bc3d29c1dbd6d8e7eef1744cbf8a",
+      "published_sha256": "2ffa843712fdca37abf7125da7fcbecc982c55551ff3094745650b5f43b97754",
+      "treatment": "aggregate statistics, telemetry, exits and comparisons retained; nested case/service receipts omitted; paths replaced"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/comparisons.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/comparisons.json",
+      "source_sha256": "24be10ff33ea521a67c84a5c92989147a89f156c4c266880b37e8786f838d162",
+      "published_sha256": "24be10ff33ea521a67c84a5c92989147a89f156c4c266880b37e8786f838d162",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/common-performance-v4.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/common-performance-v4.json",
+      "source_sha256": "d89d81b42f0ab085d61d4e58cdebdbada461735e3c8a8316714f52280c740eea",
+      "published_sha256": "d89d81b42f0ab085d61d4e58cdebdbada461735e3c8a8316714f52280c740eea",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/m-2k-regression-v4.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/m-2k-regression-v4.json",
+      "source_sha256": "5e6b67fdd2a84718d3f62a7a96ba83a3b31723e4797ec50bdb56f8eec5d898bc",
+      "published_sha256": "5e6b67fdd2a84718d3f62a7a96ba83a3b31723e4797ec50bdb56f8eec5d898bc",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/m-comparison-v4.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/m-comparison-v4.json",
+      "source_sha256": "698c6127fbfaf9c3aeae2ee308056db385cd1fe5dee12b16ff4365aa2294a903",
+      "published_sha256": "698c6127fbfaf9c3aeae2ee308056db385cd1fe5dee12b16ff4365aa2294a903",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/cache-lru.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/cache-lru.json",
+      "source_sha256": "c7b9aa32aef68a235f9e5a96aeae4298ccf90d6abff40f2ba5da3d18147de375",
+      "published_sha256": "c7b9aa32aef68a235f9e5a96aeae4298ccf90d6abff40f2ba5da3d18147de375",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/cache-spread.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/cache-spread.json",
+      "source_sha256": "106addb583a9a42d667bace18ca845dd13271534b363c37c21c43b1aca9c258a",
+      "published_sha256": "106addb583a9a42d667bace18ca845dd13271534b363c37c21c43b1aca9c258a",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/source-bindings.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/source-bindings.json",
+      "source_sha256": "fe98930b5724ea353bf97b1bed160a5ea1c69ef2d2f3525fd9909061a6a5a61b",
+      "published_sha256": "38f2fe606ac4db8a7c6ed3eb5dfc7a55215ebe22e7eadd2e2b6c64bab31dd3e3",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/execution-bindings-v4.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/execution-bindings-v4.json",
+      "source_sha256": "a651d5df7ac5e2a4b2526b62ae46af2fb85c8f9f95acff431cc994ad3497e4f9",
+      "published_sha256": "a651d5df7ac5e2a4b2526b62ae46af2fb85c8f9f95acff431cc994ad3497e4f9",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/l-integrity.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/l-integrity.json",
+      "source_sha256": "a935e6f6cc3a820221e382b46387933c95e6e7d96d493c176b59d9d3943a8f09",
+      "published_sha256": "f9b6a5f4d3141d16162b9d517327046281f7139b19d288d96306d9a67d098079",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/l-context-result.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/l-context-result.json",
+      "source_sha256": "b9d769b35bd7527b7e7b475d243ce555a29cbffe3479df0c15141e31ca5ca596",
+      "published_sha256": "b9d769b35bd7527b7e7b475d243ce555a29cbffe3479df0c15141e31ca5ca596",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/l-context-telemetry.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/l-context-telemetry.json",
+      "source_sha256": "28e451797a39b5b165679d9d8b5190ab7e1685e8c603a1adeec3018b20dfd0ce",
+      "published_sha256": "28e451797a39b5b165679d9d8b5190ab7e1685e8c603a1adeec3018b20dfd0ce",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/l-on-v4.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/l-on-v4.json",
+      "source_sha256": "6f439997075d36c8017868965184dd5f1924dda7c2ee7c36335ac5c2762803d5",
+      "published_sha256": "6f439997075d36c8017868965184dd5f1924dda7c2ee7c36335ac5c2762803d5",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/l-off-v4.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/l-off-v4.json",
+      "source_sha256": "05337c24ef4f98c8a55131885f2325bdcfc9489591771954e233d5c1e955994e",
+      "published_sha256": "05337c24ef4f98c8a55131885f2325bdcfc9489591771954e233d5c1e955994e",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/l-off-v3.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/l-off-v3.json",
+      "source_sha256": "1ef812cbc631b0994e7c0a06400b87a64de32b7f6022cfeeb11ad8a7e01bbf29",
+      "published_sha256": "1ef812cbc631b0994e7c0a06400b87a64de32b7f6022cfeeb11ad8a7e01bbf29",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/interrupted-workers.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/interrupted-workers.json",
+      "source_sha256": "8560e8e35577dba061b1180f9ffa8836892799dc94409efe1034c91b28797a48",
+      "published_sha256": "8560e8e35577dba061b1180f9ffa8836892799dc94409efe1034c91b28797a48",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/counter-definitions.json",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/counter-definitions.json",
+      "source_sha256": "1f537e9fd539241a14d0f6b652dbad40a4c6ebf022ac8035308e29cbd1b2c933",
+      "published_sha256": "1f537e9fd539241a14d0f6b652dbad40a4c6ebf022ac8035308e29cbd1b2c933",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "evidence/gyro-engine-extension-20261019-v1/mmq-parity.log",
+      "published": "orin/evidence/gyro-l-spread-20261020-v1/mmq-parity.log",
+      "source_sha256": "bbb9db7bb3f09238c81c10166adac27452cfad2e42128f8a898de12f3d8d5884",
+      "published_sha256": "bbb9db7bb3f09238c81c10166adac27452cfad2e42128f8a898de12f3d8d5884",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "config/gyro-engine-extension-20261019/m-lru.json",
+      "published": "orin/config/gyro-l-spread/m-lru.json",
+      "source_sha256": "dc8c033faf073b2af83287e05424eeb87557f846a24d620359a7186f9b74386d",
+      "published_sha256": "c9fe889e05429973545448f21de03c10e7b3591b13c80bc4a0d27fed3e5e184f",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "config/gyro-engine-extension-20261019/m-spread.json",
+      "published": "orin/config/gyro-l-spread/m-spread.json",
+      "source_sha256": "3162a158d14492a069cc194ed0b6e00494b2244783fe4d010ef357d24839c9b9",
+      "published_sha256": "30aa795f9b803b479ba8037852036ff8f3c556d83aeda3a9fec9f5ee32ee0610",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "config/gyro-engine-extension-20261019/m-unified.json",
+      "published": "orin/config/gyro-l-spread/m-unified.json",
+      "source_sha256": "a144e0ba758ef3f5cfc19a9e1bdfedfb51fd5d1c47bef536ce01d84ed99b3df3",
+      "published_sha256": "3fb70a9ccf4d5c3821af9e09379d6bc057186b47a899596670ad4a394444ffa9",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "config/gyro-engine-extension-20261019/l-on-v4.json",
+      "published": "orin/config/gyro-l-spread/l-on-v4.json",
+      "source_sha256": "100d285ddf166c1640ec99c21dccc4d3e09a80c67c2337953b6d11e8cc31c964",
+      "published_sha256": "c3b40498b4387599f0becdd1c29c1935dda3f30605267753d65da3019f16839b",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "config/gyro-engine-extension-20261019/l-off-v4.json",
+      "published": "orin/config/gyro-l-spread/l-off-v4.json",
+      "source_sha256": "25271fd6f74c7cb48b569a53451b1bffce85afa340868143da1a40c78d927f4f",
+      "published_sha256": "1088357221d627a44d08a7d42c629a9140730dd487a63c30b23494597f7ac300",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "config/gyro-engine-extension-20261019/m-production.json",
+      "published": "orin/config/gyro-l-spread/m-production.json",
+      "source_sha256": "fbddd1b58e55c45e8be5f812b226d603c031ce9bf2296e281c9b34e0858baace",
+      "published_sha256": "13de2d8eccc74f5bec102945150191d843dd8e8d817911f9a0f992cb011da251",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "config/gyro-engine-extension-20261019/l-production.json",
+      "published": "orin/config/gyro-l-spread/l-production.json",
+      "source_sha256": "75c4bac10c4e302b9ebc475bbde3f4de6eb5f2b1347f4b2d9e6006da76af3b55",
+      "published_sha256": "790a5e2b495e49187532631278c0c1134c812c9ba66ddf032138afd959c57e79",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "config/gyro-engine-extension-benchmark-20261019-v2.json",
+      "published": "orin/config/gyro-l-spread/common-performance.json",
+      "source_sha256": "e2cb1cd4d7a303d6fe0e0d0bd5997416a9148c9b5a5de1fc10a2e0035a1b6e88",
+      "published_sha256": "ebc639a0dccdb74f9126921447260ec0d038f06e0a2655b954a0423c613e4feb",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "config/gyro-engine-extension-chunk2048-20261019-v2.json",
+      "published": "orin/config/gyro-l-spread/chunk2048.json",
+      "source_sha256": "580fc9dee44b0e7c15f511b6a335fc1463d5040fdb4b6665ccc9ca2fd948b95b",
+      "published_sha256": "322482d7bdc07cf09f2e2e951498ec1c8a20f375b83d1b1c7a664cdcfedbd118",
+      "treatment": "path placeholders only; values and structure retained"
+    },
+    {
+      "source": "patches/strata-orin-spread-20261019.patch",
+      "published": "orin/patches/strata-orin-spread-20261019.patch",
+      "source_sha256": "875570d369e59d69e2d23f02bc36a83530d75f42c4411ab40d47b180a53f6e6d",
+      "published_sha256": "875570d369e59d69e2d23f02bc36a83530d75f42c4411ab40d47b180a53f6e6d",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/agention-ggml-gyro-l-20261019.patch",
+      "published": "orin/patches/agention-ggml-gyro-l-20261019.patch",
+      "source_sha256": "61425a05a0b8de3d4b3057ccd62a2dda207dc077c5d7f3da09fee37899ebc4c6",
+      "published_sha256": "61425a05a0b8de3d4b3057ccd62a2dda207dc077c5d7f3da09fee37899ebc4c6",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-gyro-l-20261019.patch",
+      "published": "orin/patches/strata-orin-gyro-l-20261019.patch",
+      "source_sha256": "37f74e94a82284b30888a4938671c1063b8ce8a360821b9a9410bc5803125115",
+      "published_sha256": "37f74e94a82284b30888a4938671c1063b8ce8a360821b9a9410bc5803125115",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "patches/strata-orin-cuda-parity-stream-20261019.patch",
+      "published": "orin/patches/strata-orin-cuda-parity-stream-20261019.patch",
+      "source_sha256": "bcd7fd3f901c84600918d60e721cf15c54f422fd20879b8e744b87c8597f000f",
+      "published_sha256": "bcd7fd3f901c84600918d60e721cf15c54f422fd20879b8e744b87c8597f000f",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "scripts/strata-gyro-benchmark.py",
+      "published": "orin/tools/gyro-l-spread/strata-gyro-benchmark.py",
+      "source_sha256": "2132b9a2393bbff41337c02c68b1f704d4cc34f214acb0be483dee92e0d97d7c",
+      "published_sha256": "2132b9a2393bbff41337c02c68b1f704d4cc34f214acb0be483dee92e0d97d7c",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "scripts/bench-gyro-cache-branch.py",
+      "published": "orin/tools/gyro-l-spread/bench-gyro-cache-branch.py",
+      "source_sha256": "cdb37bc2f69856bf2cd5459387f80e92ea1f0400cd8f065ee87c32467de97101",
+      "published_sha256": "cdb37bc2f69856bf2cd5459387f80e92ea1f0400cd8f065ee87c32467de97101",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "scripts/validate-gyro-context.py",
+      "published": "orin/tools/gyro-l-spread/validate-gyro-context.py",
+      "source_sha256": "bc2e6ad004b1fa645faf0611e0c49e622e26abc0a246321cdc5c535d20f28596",
+      "published_sha256": "bc2e6ad004b1fa645faf0611e0c49e622e26abc0a246321cdc5c535d20f28596",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "scripts/probe-gyro-extension.py",
+      "published": "orin/tools/gyro-l-spread/probe-gyro-extension.py",
+      "source_sha256": "d8cad86cfc02339bcca9e9a943d49f0a7adcf18710c4e5206a98083a1b59fba6",
+      "published_sha256": "d8cad86cfc02339bcca9e9a943d49f0a7adcf18710c4e5206a98083a1b59fba6",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "scripts/summarize-gyro-extension.py",
+      "published": "orin/tools/gyro-l-spread/summarize-gyro-extension.py",
+      "source_sha256": "fb50281416b526a7d3ca39d5b621453adfbf36bb6e4c6ceaa63dc84280841157",
+      "published_sha256": "fb50281416b526a7d3ca39d5b621453adfbf36bb6e4c6ceaa63dc84280841157",
+      "treatment": "byte-identical"
+    }
+  ]
+}

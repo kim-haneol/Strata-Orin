@@ -1,0 +1,10 @@
+{
+  "authority": "A zero EXIT-trap file alone is not completion. Require completed client result plus native/direct and systemd status.",
+  "interrupted": {
+    "validation-sequence": "Explicit stop after initial native-pack --spec 0 rejection; initial EXIT trap recorded 0 despite interruption.",
+    "performance-sequence": "Explicitly stopped while waiting for validation.",
+    "l-validation-v3": "Explicitly stopped after successful full-resident off smoke to provide RAM headroom; no long-context test ran in v3.",
+    "performance-v3": "Explicitly stopped while waiting for v3 validation."
+  },
+  "fix": "Future runner versions explicitly map SIGINT/SIGTERM to 130/143. Live v4 runners retain their previously frozen bytes until they finish."
+}
